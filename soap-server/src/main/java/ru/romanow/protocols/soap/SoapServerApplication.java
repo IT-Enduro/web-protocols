@@ -1,4 +1,4 @@
-package ru.romanow.protocols;
+package ru.romanow.protocols.soap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,9 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by romanow on 02.09.16
  */
 @SpringBootApplication
-public class Application {
+public class SoapServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SoapServerApplication.class, args);
     }
 }

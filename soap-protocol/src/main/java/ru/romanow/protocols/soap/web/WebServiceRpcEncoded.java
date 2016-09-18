@@ -1,7 +1,7 @@
-package ru.romanow.protocols.web;
+package ru.romanow.protocols.soap.web;
 
-import ru.romanow.protocols.model.TestObjectRequest;
-import ru.romanow.protocols.model.TestObjectResponse;
+import ru.romanow.protocols.soap.model.TestObjectRequest;
+import ru.romanow.protocols.soap.model.TestObjectResponse;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -12,11 +12,11 @@ import javax.jws.soap.SOAPBinding;
 /**
  * Created by ronin on 16.09.16
  */
-@WebService(name = "WebServiceDocumentLiteral")
-@SOAPBinding(style = SOAPBinding.Style.DOCUMENT,
-        use = SOAPBinding.Use.LITERAL,
-        parameterStyle = SOAPBinding.ParameterStyle.BARE)
-public interface WebServiceDocumentLiteral {
+@WebService(name = "WebServiceRpcEncoded")
+@SOAPBinding(style = SOAPBinding.Style.RPC,
+        use = SOAPBinding.Use.ENCODED,
+        parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
+public interface WebServiceRpcEncoded {
 
     @WebMethod(operationName = "processRequest")
     @WebResult(name = "TestObjectResponse")

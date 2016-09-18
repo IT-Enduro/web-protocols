@@ -60,7 +60,11 @@ project("soap-client") {
     apply plugin: 'no.nils.wsdl2java'
 
     wsdl2java {
-        generatedWsdlDir = file("${projectDir}/generated-sources/src/main/java")
+        generatedWsdlDir = file("${projectDir}/src/main/generated")
+        wsdlsToGenerate = [
+                ['-p','ru.romanow.protocols.soap.generated.model',
+                 "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
+        ]
     }
 
     wsdl2javaExt {
@@ -70,6 +74,7 @@ project("soap-client") {
     dependencies {
         compile project(":soap-protocol")
 
+        compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     }
 }
 

@@ -1,4 +1,4 @@
-package ru.romanow.protocols.model;
+package ru.romanow.protocols.soap.model;
 
 import com.google.common.base.MoreObjects;
 

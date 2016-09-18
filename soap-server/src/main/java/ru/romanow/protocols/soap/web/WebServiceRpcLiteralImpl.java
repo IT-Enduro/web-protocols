@@ -1,4 +1,4 @@
-package ru.romanow.protocols.web;
+package ru.romanow.protocols.soap.web;
 
 /**
  * Created by ronin on 16.09.16

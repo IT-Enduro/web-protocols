@@ -1,9 +1,9 @@
-package ru.romanow.protocols.web;
+package ru.romanow.protocols.soap.web;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import ru.romanow.protocols.model.TestObjectRequest;
-import ru.romanow.protocols.model.TestObjectResponse;
+import ru.romanow.protocols.soap.model.TestObjectRequest;
+import ru.romanow.protocols.soap.model.TestObjectResponse;
 
 /**
  * Created by ronin on 16.09.16

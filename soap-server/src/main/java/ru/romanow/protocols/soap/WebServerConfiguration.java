@@ -1,4 +1,4 @@
-package ru.romanow.protocols;
+package ru.romanow.protocols.soap;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
@@ -7,7 +7,7 @@ import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.romanow.protocols.web.*;
+import ru.romanow.protocols.soap.web.*;
 
 import javax.xml.ws.Endpoint;
 

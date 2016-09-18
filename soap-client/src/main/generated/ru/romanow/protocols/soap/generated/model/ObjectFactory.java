@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ProcessRequest_QNAME = new QName("http://web.protocols.romanow.ru/", "processRequest");
-    private final static QName _ProcessRequestResponse_QNAME = new QName("http://web.protocols.romanow.ru/", "processRequestResponse");
+    private final static QName _ProcessRequest_QNAME = new QName("http://web.soap.protocols.romanow.ru/", "processRequest");
+    private final static QName _ProcessRequestResponse_QNAME = new QName("http://web.soap.protocols.romanow.ru/", "processRequestResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ru.romanow.protocols.soap.generated.model
@@ -70,7 +70,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link ProcessRequest }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://web.protocols.romanow.ru/", name = "processRequest")
+    @XmlElementDecl(namespace = "http://web.soap.protocols.romanow.ru/", name = "processRequest")
     public JAXBElement<ProcessRequest> createProcessRequest(ProcessRequest value) {
         return new JAXBElement<ProcessRequest>(_ProcessRequest_QNAME, ProcessRequest.class, null, value);
     }
@@ -79,7 +79,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link ProcessRequestResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://web.protocols.romanow.ru/", name = "processRequestResponse")
+    @XmlElementDecl(namespace = "http://web.soap.protocols.romanow.ru/", name = "processRequestResponse")
     public JAXBElement<ProcessRequestResponse> createProcessRequestResponse(ProcessRequestResponse value) {
         return new JAXBElement<ProcessRequestResponse>(_ProcessRequestResponse_QNAME, ProcessRequestResponse.class, null, value);
     }

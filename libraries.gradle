@@ -1,0 +1,10 @@
+ext {
+    guavaVersion = "19.0"
+    cxfVersion = "3.1.7"
+    commonsLangVersion = "3.4"
+
+    logbackVersion = "1.1.7"
+
+    junitVersion = "4.12"
+    mockitoVersion = "1.9.5"
+}

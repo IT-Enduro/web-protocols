@@ -1,0 +1,93 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "no.nils:wsdl2java:${wsdl2javaVersion}"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.14"
+}
+
+configure(subprojects) { project ->
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'spring-boot'
+    apply from: '../libraries.gradle'
+
+    buildDir = "build"
+    group 'ru.romanow.protocols'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+project("api") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile "com.google.guava:guava:${guavaVersion}"
+        compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    }
+}
+
+project("soap-protocol") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":api")
+
+    }
+}
+
+project("soap-client") {
+    apply from: '../libraries.gradle'
+    apply plugin: 'no.nils.wsdl2java'
+
+    wsdl2java {
+        generatedWsdlDir = file("${projectDir}/generated-sources/src/main/java")
+    }
+
+    wsdl2javaExt {
+        cxfVersion = "${cxfVersion}"
+    }
+
+    dependencies {
+        compile project(":soap-protocol")
+
+    }
+}
+
+project("soap-server") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":soap-protocol")
+
+        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+
+        compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
+        compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
+        compile "org.apache.cxf:cxf-rt-transports-http-jetty:${cxfVersion}"
+
+        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+
+        testCompile "junit:junit:${junitVersion}"
+        testCompile "org.mockito:mockito-all:${mockitoVersion}"
+    }
+}

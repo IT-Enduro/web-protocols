@@ -99,20 +99,12 @@ project("soap-server") {
     }
 }
 
-project("xml-rpc-protocol") {
-    apply from: '../libraries.gradle'
-
-    dependencies {
-        compile project(":api")
-    }
-}
-
 project("xml-rpc-server") {
     apply plugin: 'war'
     apply from: '../libraries.gradle'
 
     dependencies {
-        compile project(":xml-rpc-protocol")
+        compile project(":api")
 
         compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
@@ -127,12 +119,13 @@ project("xml-rpc-client") {
     apply from: '../libraries.gradle'
 
     dependencies {
-        compile project(":xml-rpc-protocol")
+        compile project(":api")
 
         compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
 
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
+        compile "commons-httpclient:commons-httpclient:${commonsHttpClientVersion}"
 
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
     }

@@ -8,11 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import ru.romanow.protocols.rpc.service.Handler;
+import ru.romanow.protocols.rpc.service.RemoteService;
 import ru.romanow.protocols.rpc.service.spring.SpringHandlerMapping;
 import ru.romanow.protocols.rpc.service.spring.SpringRequestProcessorFactoryFactory;
-import ru.romanow.protocols.rpc.service.TestService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +27,7 @@ public class XmlRpcController {
     private static final int MAX_THREADS = 1;
 
     @Autowired
-    private TestService service;
+    private RemoteService remoteService;
 
     private XmlRpcServletServer server;
 
@@ -47,14 +45,14 @@ public class XmlRpcController {
         handlerMapping.setRequestProcessorFactoryFactory(
                 new SpringRequestProcessorFactoryFactory());
 
-        Map<String, Handler> handlers = new HashMap<>();
-        handlers.put("processRequest", service);
+        Map<String, RemoteService> handlers = new HashMap<>();
+        handlers.put("processor", remoteService);
         handlerMapping.setHandlerMappings(handlers);
 
         server.setHandlerMapping(handlerMapping);
     }
 
-    @RequestMapping(value="/rpc", method= RequestMethod.POST)
+    @RequestMapping(value = "/")
     public void serve(HttpServletRequest request, HttpServletResponse response)
             throws XmlRpcException {
         try {

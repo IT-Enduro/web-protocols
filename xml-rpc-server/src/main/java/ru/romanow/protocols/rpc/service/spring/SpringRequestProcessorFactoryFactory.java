@@ -3,7 +3,7 @@ package ru.romanow.protocols.rpc.service.spring;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.server.RequestProcessorFactoryFactory;
 import org.apache.xmlrpc.server.RequestProcessorFactoryFactory.StatelessProcessorFactoryFactory;
-import ru.romanow.protocols.rpc.service.Handler;
+import ru.romanow.protocols.rpc.service.RemoteService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,21 +15,21 @@ public class SpringRequestProcessorFactoryFactory
         extends StatelessProcessorFactoryFactory
         implements RequestProcessorFactoryFactory {
 
-    private Map<Class<? extends Handler>, Handler> classHandlerMappings;
+    private Map<Class<? extends RemoteService>, RemoteService> classHandlerMappings;
 
-    protected void init(Map<String,Handler> handlerMappings) {
+    protected void init(Map<String, RemoteService> handlerMappings) {
         classHandlerMappings = new HashMap<>();
         for (String key : handlerMappings.keySet()) {
-            Handler handler = handlerMappings.get(key);
-            Class<? extends Handler> clazz = handler.getClass();
-            classHandlerMappings.put(clazz, handler);
+            RemoteService remoteService = handlerMappings.get(key);
+            Class<? extends RemoteService> clazz = remoteService.getClass();
+            classHandlerMappings.put(clazz, remoteService);
         }
     }
 
     @Override
     public RequestProcessorFactory getRequestProcessorFactory(Class cls)
             throws XmlRpcException {
-        final Handler handler = classHandlerMappings.get(cls);
-        return pRequest -> handler;
+        final RemoteService remoteService = classHandlerMappings.get(cls);
+        return request -> remoteService;
     }
 }

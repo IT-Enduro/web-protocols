@@ -23,5 +23,6 @@ public class XmlRpcClientApplication
     @Override
     public void run(String... args) throws Exception {
         client.testRequest();
+        client.testSum();
     }
 }

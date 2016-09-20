@@ -1,19 +1,21 @@
 package ru.romanow.protocols.rpc.service;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.XmlRpcRequest;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-import org.apache.xmlrpc.client.XmlRpcClientRequestImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.romanow.protocols.soap.model.TestObjectRequest;
 
 import javax.annotation.PostConstruct;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 
 /**
  * Created by ronin on 20.09.16
@@ -45,9 +47,23 @@ public class RpcClientImpl
 
     @Override
     public void testRequest() throws XmlRpcException {
-        XmlRpcRequest request = new XmlRpcClientRequestImpl(
-                config, "processor.processRequest", Lists.newArrayList());
-        Object response = client.execute(request);
-        logger.info("{}", response);
+        TestObjectRequest request =
+                new TestObjectRequest()
+                        .setId(RandomUtils.nextInt(0, 10))
+                        .setSearchString(RandomStringUtils.randomAlphanumeric(10));
+
+        logger.info("Make request to [processor.processRequest] {}", request);
+        Object response = client.execute("processor.processRequest", Collections.singletonList(request));
+        logger.info("Method [processor.processRequest] return {}", response);
+    }
+
+    @Override
+    public void testSum() throws XmlRpcException {
+        int a = RandomUtils.nextInt(0, 100);
+        int b = RandomUtils.nextInt(0, 100);
+
+        logger.info("Make request to [processor.sum] {} and {}", a, b);
+        Object sum = client.execute("processor.sum", Lists.newArrayList(a, b));
+        logger.info("Method [processor.sum] return {} + {} = {}", a, b, sum);
     }
 }

@@ -53,7 +53,6 @@ project("soap-protocol") {
 
     dependencies {
         compile project(":api")
-
     }
 }
 
@@ -81,6 +80,7 @@ project("soap-client") {
 }
 
 project("soap-server") {
+    apply plugin: 'war'
     apply from: '../libraries.gradle'
 
     dependencies {
@@ -96,5 +96,44 @@ project("soap-server") {
 
         testCompile "junit:junit:${junitVersion}"
         testCompile "org.mockito:mockito-all:${mockitoVersion}"
+    }
+}
+
+project("xml-rpc-protocol") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":api")
+    }
+}
+
+project("xml-rpc-server") {
+    apply plugin: 'war'
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":xml-rpc-protocol")
+
+        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+
+        compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
+        compile "org.apache.xmlrpc:xmlrpc-server:${xmlrpcVersion}"
+
+        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    }
+}
+
+project("xml-rpc-client") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":xml-rpc-protocol")
+
+        compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+
+        compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
+        compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
+
+        compile "ch.qos.logback:logback-classic:${logbackVersion}"
     }
 }

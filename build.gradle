@@ -35,6 +35,7 @@ configure(subprojects) { project ->
     }
 
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 }
@@ -126,6 +127,23 @@ project("xml-rpc-client") {
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
         compile "commons-httpclient:commons-httpclient:${commonsHttpClientVersion}"
+
+        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+    }
+}
+
+project("rest-server") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":api")
+
+        compile "ru.romanow.core:commons:${commonsVersion}"
+
+        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+
+        compile "io.swagger:swagger-annotations:${swaggerVersion}"
+        compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
 
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
     }

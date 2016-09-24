@@ -139,6 +139,7 @@ project("rest-server") {
         compile project(":api")
 
         compile "ru.romanow.core:commons:${commonsVersion}"
+        compile "javax.xml.bind:jaxb-api:${jaxbVersion}"
 
         compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 

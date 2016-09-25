@@ -8,6 +8,8 @@ import ru.romanow.protocols.soap.generated.model.TestObjectResponse;
 import ru.romanow.protocols.soap.generated.model.WebServiceDocumentLiteralWrappedImplService;
 import ru.romanow.protocols.soap.generated.model.WebServiceDocumentWrapped;
 
+import java.net.MalformedURLException;
+
 /**
  * Created by ronin on 18.09.16
  */
@@ -18,7 +20,7 @@ public class WebServiceClientImpl
 
     private final WebServiceDocumentWrapped webService;
 
-    public WebServiceClientImpl() {
+    public WebServiceClientImpl() throws MalformedURLException {
         WebServiceDocumentLiteralWrappedImplService service =
                 new WebServiceDocumentLiteralWrappedImplService();
         webService = service.getWebServiceDocumentLiteralWrappedImplPort();

@@ -19,7 +19,7 @@ public class WebServerConfiguration {
 
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(), "/ws/*");
+        return new ServletRegistrationBean(new CXFServlet(), "/*");
     }
 
     @Bean(name = Bus.DEFAULT_BUS_ID)

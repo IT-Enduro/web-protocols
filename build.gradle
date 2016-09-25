@@ -64,7 +64,9 @@ project("soap-client") {
     wsdl2java {
         generatedWsdlDir = file("${projectDir}/src/main/generated")
         wsdlsToGenerate = [
-                ['-p','ru.romanow.protocols.soap.generated.model',
+                ['-p','ru.romanow.protocols.soap.generated.literal.model',
+                 "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
+                ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
                  "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
         ]
     }

@@ -37,6 +37,7 @@ configure(subprojects) { project ->
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
     }
 }
 
@@ -65,12 +66,12 @@ project("soap-client") {
 
     wsdl2java {
         generatedWsdlDir = file("${projectDir}/src/main/generated")
-//        wsdlsToGenerate = [
-//                ['-p','ru.romanow.protocols.soap.generated.literal.model',
-//                 "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
-//                ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
-//                 "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
-//        ]
+        wsdlsToGenerate = [
+                ['-p','ru.romanow.protocols.soap.generated.literal.model',
+                 "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
+                ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
+                 "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
+        ]
     }
 
     wsdl2javaExt {
@@ -127,7 +128,7 @@ project("xml-rpc-client") {
     dependencies {
         compile project(":api")
 
-        compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter"
 
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
@@ -146,7 +147,7 @@ project("rest-server") {
 
         compile "javax.xml.bind:jaxb-api:${jaxbVersion}"
 
-        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter-web"
 
         compile "io.swagger:swagger-annotations:${swaggerVersion}"
         compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
@@ -227,14 +228,19 @@ project("grpc-server") {
 
         compile "org.lognet:grpc-spring-boot-starter:${grpcSpringVersion}"
 
+        compile "org.springframework.boot:spring-boot-starter"
         compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("grpc-client") {
+    apply plugin: 'org.springframework.boot'
     apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":grpc-protocol")
+
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }

@@ -5,18 +5,18 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "com.google.protobuf:protobuf-gradle-plugin:${protobufPluginVersion}"
         classpath "no.nils:wsdl2java:${wsdl2javaVersion}"
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.14"
+    gradleVersion = "3.5"
 }
 
 configure(subprojects) { project ->
     apply plugin: 'java'
     apply plugin: 'idea'
-    apply plugin: 'spring-boot'
     apply from: '../libraries.gradle'
 
     buildDir = "build"
@@ -50,6 +50,7 @@ project("api") {
 }
 
 project("soap-protocol") {
+    apply plugin: 'org.springframework.boot'
     apply from: '../libraries.gradle'
 
     dependencies {
@@ -58,17 +59,18 @@ project("soap-protocol") {
 }
 
 project("soap-client") {
-    apply from: '../libraries.gradle'
+    apply plugin: 'org.springframework.boot'
     apply plugin: 'no.nils.wsdl2java'
+    apply from: '../libraries.gradle'
 
     wsdl2java {
         generatedWsdlDir = file("${projectDir}/src/main/generated")
-        wsdlsToGenerate = [
-                ['-p','ru.romanow.protocols.soap.generated.literal.model',
-                 "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
-                ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
-                 "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
-        ]
+//        wsdlsToGenerate = [
+//                ['-p','ru.romanow.protocols.soap.generated.literal.model',
+//                 "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
+//                ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
+//                 "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
+//        ]
     }
 
     wsdl2javaExt {
@@ -78,47 +80,48 @@ project("soap-client") {
     dependencies {
         compile project(":soap-protocol")
 
-        compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("soap-server") {
     apply plugin: 'war'
+    apply plugin: 'org.springframework.boot'
     apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":soap-protocol")
 
-        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter-web"
 
         compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
         compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
         compile "org.apache.cxf:cxf-rt-transports-http-jetty:${cxfVersion}"
 
-        compile "ch.qos.logback:logback-classic:${logbackVersion}"
-
-        testCompile "junit:junit:${junitVersion}"
-        testCompile "org.mockito:mockito-all:${mockitoVersion}"
+        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("xml-rpc-server") {
     apply plugin: 'war'
+    apply plugin: 'org.springframework.boot'
     apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":api")
 
-        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter-web"
 
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-server:${xmlrpcVersion}"
 
-        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("xml-rpc-client") {
+    apply plugin: 'org.springframework.boot'
     apply from: '../libraries.gradle'
 
     dependencies {
@@ -130,17 +133,17 @@ project("xml-rpc-client") {
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
         compile "commons-httpclient:commons-httpclient:${commonsHttpClientVersion}"
 
-        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("rest-server") {
+    apply plugin: 'org.springframework.boot'
     apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":api")
 
-        compile "ru.romanow.core:commons:${commonsVersion}"
         compile "javax.xml.bind:jaxb-api:${jaxbVersion}"
 
         compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
@@ -148,6 +151,90 @@ project("rest-server") {
         compile "io.swagger:swagger-annotations:${swaggerVersion}"
         compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
 
-        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+        compile "org.springframework.boot:spring-boot-starter-logging"
+    }
+}
+
+project("grpc-protocol") {
+    apply plugin: 'com.google.protobuf'
+    apply from: '../libraries.gradle'
+
+    protobuf {
+        protoc {
+            artifact = "com.google.protobuf:protoc:${protobufVersion}"
+        }
+        plugins {
+            grpc {
+                artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+            }
+        }
+        generateProtoTasks {
+            ofSourceSet('main').each { task ->
+                task.builtins {
+                    java{
+                        outputSubDir = 'generated'
+                    }
+                }
+                task.plugins {
+                    grpc {
+                        outputSubDir = 'generated'
+                    }
+                }
+            }
+        }
+        generatedFilesBaseDir = "$projectDir/src/"
+    }
+
+    sourceSets {
+        main {
+            proto {
+                srcDir 'src/main/proto'
+            }
+            java {
+                srcDirs 'src/main/java'
+            }
+        }
+    }
+
+    idea {
+        module {
+            sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/generated");
+        }
+    }
+
+    task cleanGenerated {
+        doFirst{
+            delete("${projectDir}/src/main/generated")
+        }
+    }
+
+    clean.dependsOn cleanGenerated
+
+    dependencies {
+        compile "io.grpc:grpc-netty:${grpcVersion}"
+        compile "io.grpc:grpc-protobuf:${grpcVersion}"
+        compile "io.grpc:grpc-stub:${grpcVersion}"
+        compile "com.google.protobuf:protobuf-java:${protobufVersion}"
+    }
+}
+
+project("grpc-server") {
+    apply plugin: 'org.springframework.boot'
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":grpc-protocol")
+
+        compile "org.lognet:grpc-spring-boot-starter:${grpcSpringVersion}"
+
+        compile "org.springframework.boot:spring-boot-starter-logging"
+    }
+}
+
+project("grpc-client") {
+    apply from: '../libraries.gradle'
+
+    dependencies {
+        compile project(":grpc-protocol")
     }
 }

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package ru.romanow.protocols.grpc;
+
+service TestService {
+
+    rpc SimpleRequest(TestRequest) returns (TestResponse) {};
+}
+
+message TestRequest {
+    repeated string messages = 1;
+    int32 size = 2;
+}
+
+message TestResponse {
+    int32 result = 1;
+    repeated string values = 2;
+    Status status = 3;
+}
+
+enum Status {
+    UNKNOWN = 0;
+    DONE = 1;
+    FAIL = 2;
+    PAUSED = 3;
+}

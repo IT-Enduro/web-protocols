@@ -9,5 +9,9 @@ include 'soap-client'
 include 'xml-rpc-server'
 include 'xml-rpc-client'
 
+include 'grpc-protocol'
+include 'grpc-server'
+include 'grpc-client'
+
 include 'rest-server'
 

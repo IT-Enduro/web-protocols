@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.romanow.core.commons.annotations.LogRequest;
 import ru.romanow.protocols.soap.model.TestObjectRequest;
 import ru.romanow.protocols.soap.model.TestObjectResponse;
 import ru.romanow.protocols.soap.model.XmlTestObjectResponse;
@@ -26,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 @Api(value = "/", description = "Simple rest controller")
 @RestController
 public class TestRestController {
-    private static final Logger logger = LoggerFactory.getLogger(TestRestController.class);
 
     @ApiOperation(value = "Ping", httpMethod = "GET", response = String.class)
     @RequestMapping(value = "/ping", method = RequestMethod.GET)
@@ -41,7 +39,6 @@ public class TestRestController {
         return "ok";
     }
 
-    @LogRequest(classLogger = TestRestController.class)
     @ApiOperation(value = "Operation return simple response", httpMethod = "POST")
     @ApiResponse(code = 200, message = "Success", response = TestObjectResponse.class)
     @RequestMapping(value = "/process", method = RequestMethod.POST)

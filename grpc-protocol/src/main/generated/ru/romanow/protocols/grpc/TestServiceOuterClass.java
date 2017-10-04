@@ -135,23 +135,23 @@ public final class TestServiceOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
     java.util.List<java.lang.String>
-        getMessagesList();
+        getMessageList();
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
-    int getMessagesCount();
+    int getMessageCount();
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
-    java.lang.String getMessages(int index);
+    java.lang.String getMessage(int index);
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
     com.google.protobuf.ByteString
-        getMessagesBytes(int index);
+        getMessageBytes(int index);
 
     /**
      * <code>int32 size = 2;</code>
@@ -171,7 +171,7 @@ public final class TestServiceOuterClass {
       super(builder);
     }
     private TestRequest() {
-      messages_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       size_ = 0;
     }
 
@@ -206,10 +206,10 @@ public final class TestServiceOuterClass {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                messages_ = new com.google.protobuf.LazyStringArrayList();
+                message_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000001;
               }
-              messages_.add(s);
+              message_.add(s);
               break;
             }
             case 16: {
@@ -226,7 +226,7 @@ public final class TestServiceOuterClass {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          messages_ = messages_.getUnmodifiableView();
+          message_ = message_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -245,33 +245,33 @@ public final class TestServiceOuterClass {
     }
 
     private int bitField0_;
-    public static final int MESSAGES_FIELD_NUMBER = 1;
-    private com.google.protobuf.LazyStringList messages_;
+    public static final int MESSAGE_FIELD_NUMBER = 1;
+    private com.google.protobuf.LazyStringList message_;
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
     public com.google.protobuf.ProtocolStringList
-        getMessagesList() {
-      return messages_;
+        getMessageList() {
+      return message_;
     }
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
-    public int getMessagesCount() {
-      return messages_.size();
+    public int getMessageCount() {
+      return message_.size();
     }
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
-    public java.lang.String getMessages(int index) {
-      return messages_.get(index);
+    public java.lang.String getMessage(int index) {
+      return message_.get(index);
     }
     /**
-     * <code>repeated string messages = 1;</code>
+     * <code>repeated string message = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getMessagesBytes(int index) {
-      return messages_.getByteString(index);
+        getMessageBytes(int index) {
+      return message_.getByteString(index);
     }
 
     public static final int SIZE_FIELD_NUMBER = 2;
@@ -295,8 +295,8 @@ public final class TestServiceOuterClass {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < messages_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, messages_.getRaw(i));
+      for (int i = 0; i < message_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_.getRaw(i));
       }
       if (size_ != 0) {
         output.writeInt32(2, size_);
@@ -311,11 +311,11 @@ public final class TestServiceOuterClass {
       size = 0;
       {
         int dataSize = 0;
-        for (int i = 0; i < messages_.size(); i++) {
-          dataSize += computeStringSizeNoTag(messages_.getRaw(i));
+        for (int i = 0; i < message_.size(); i++) {
+          dataSize += computeStringSizeNoTag(message_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getMessagesList().size();
+        size += 1 * getMessageList().size();
       }
       if (size_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -337,8 +337,8 @@ public final class TestServiceOuterClass {
       ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest other = (ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest) obj;
 
       boolean result = true;
-      result = result && getMessagesList()
-          .equals(other.getMessagesList());
+      result = result && getMessageList()
+          .equals(other.getMessageList());
       result = result && (getSize()
           == other.getSize());
       result = result && unknownFields.equals(other.unknownFields);
@@ -352,9 +352,9 @@ public final class TestServiceOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getMessagesCount() > 0) {
-        hash = (37 * hash) + MESSAGES_FIELD_NUMBER;
-        hash = (53 * hash) + getMessagesList().hashCode();
+      if (getMessageCount() > 0) {
+        hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+        hash = (53 * hash) + getMessageList().hashCode();
       }
       hash = (37 * hash) + SIZE_FIELD_NUMBER;
       hash = (53 * hash) + getSize();
@@ -487,7 +487,7 @@ public final class TestServiceOuterClass {
       }
       public Builder clear() {
         super.clear();
-        messages_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000001);
         size_ = 0;
 
@@ -516,10 +516,10 @@ public final class TestServiceOuterClass {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          messages_ = messages_.getUnmodifiableView();
+          message_ = message_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000001);
         }
-        result.messages_ = messages_;
+        result.message_ = message_;
         result.size_ = size_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -563,13 +563,13 @@ public final class TestServiceOuterClass {
 
       public Builder mergeFrom(ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest other) {
         if (other == ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest.getDefaultInstance()) return this;
-        if (!other.messages_.isEmpty()) {
-          if (messages_.isEmpty()) {
-            messages_ = other.messages_;
+        if (!other.message_.isEmpty()) {
+          if (message_.isEmpty()) {
+            message_ = other.message_;
             bitField0_ = (bitField0_ & ~0x00000001);
           } else {
-            ensureMessagesIsMutable();
-            messages_.addAll(other.messages_);
+            ensureMessageIsMutable();
+            message_.addAll(other.message_);
           }
           onChanged();
         }
@@ -604,96 +604,96 @@ public final class TestServiceOuterClass {
       }
       private int bitField0_;
 
-      private com.google.protobuf.LazyStringList messages_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureMessagesIsMutable() {
+      private com.google.protobuf.LazyStringList message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureMessageIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          messages_ = new com.google.protobuf.LazyStringArrayList(messages_);
+          message_ = new com.google.protobuf.LazyStringArrayList(message_);
           bitField0_ |= 0x00000001;
          }
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
       public com.google.protobuf.ProtocolStringList
-          getMessagesList() {
-        return messages_.getUnmodifiableView();
+          getMessageList() {
+        return message_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public int getMessagesCount() {
-        return messages_.size();
+      public int getMessageCount() {
+        return message_.size();
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public java.lang.String getMessages(int index) {
-        return messages_.get(index);
+      public java.lang.String getMessage(int index) {
+        return message_.get(index);
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getMessagesBytes(int index) {
-        return messages_.getByteString(index);
+          getMessageBytes(int index) {
+        return message_.getByteString(index);
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public Builder setMessages(
+      public Builder setMessage(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureMessagesIsMutable();
-        messages_.set(index, value);
+  ensureMessageIsMutable();
+        message_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public Builder addMessages(
+      public Builder addMessage(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureMessagesIsMutable();
-        messages_.add(value);
+  ensureMessageIsMutable();
+        message_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public Builder addAllMessages(
+      public Builder addAllMessage(
           java.lang.Iterable<java.lang.String> values) {
-        ensureMessagesIsMutable();
+        ensureMessageIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, messages_);
+            values, message_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public Builder clearMessages() {
-        messages_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearMessage() {
+        message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string messages = 1;</code>
+       * <code>repeated string message = 1;</code>
        */
-      public Builder addMessagesBytes(
+      public Builder addMessageBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureMessagesIsMutable();
-        messages_.add(value);
+        ensureMessageIsMutable();
+        message_.add(value);
         onChanged();
         return this;
       }
@@ -777,28 +777,28 @@ public final class TestServiceOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 result = 1;</code>
+     * <code>int64 duration = 1;</code>
      */
-    int getResult();
+    long getDuration();
 
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
     java.util.List<java.lang.String>
-        getValuesList();
+        getResultMessageList();
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
-    int getValuesCount();
+    int getResultMessageCount();
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
-    java.lang.String getValues(int index);
+    java.lang.String getResultMessage(int index);
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
     com.google.protobuf.ByteString
-        getValuesBytes(int index);
+        getResultMessageBytes(int index);
 
     /**
      * <code>.ru.romanow.protocols.grpc.Status status = 3;</code>
@@ -822,8 +822,8 @@ public final class TestServiceOuterClass {
       super(builder);
     }
     private TestResponse() {
-      result_ = 0;
-      values_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      duration_ = 0L;
+      resultMessage_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       status_ = 0;
     }
 
@@ -857,16 +857,16 @@ public final class TestServiceOuterClass {
             }
             case 8: {
 
-              result_ = input.readInt32();
+              duration_ = input.readInt64();
               break;
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                values_ = new com.google.protobuf.LazyStringArrayList();
+                resultMessage_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
-              values_.add(s);
+              resultMessage_.add(s);
               break;
             }
             case 24: {
@@ -884,7 +884,7 @@ public final class TestServiceOuterClass {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          values_ = values_.getUnmodifiableView();
+          resultMessage_ = resultMessage_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -903,42 +903,42 @@ public final class TestServiceOuterClass {
     }
 
     private int bitField0_;
-    public static final int RESULT_FIELD_NUMBER = 1;
-    private int result_;
+    public static final int DURATION_FIELD_NUMBER = 1;
+    private long duration_;
     /**
-     * <code>int32 result = 1;</code>
+     * <code>int64 duration = 1;</code>
      */
-    public int getResult() {
-      return result_;
+    public long getDuration() {
+      return duration_;
     }
 
-    public static final int VALUES_FIELD_NUMBER = 2;
-    private com.google.protobuf.LazyStringList values_;
+    public static final int RESULTMESSAGE_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList resultMessage_;
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
     public com.google.protobuf.ProtocolStringList
-        getValuesList() {
-      return values_;
+        getResultMessageList() {
+      return resultMessage_;
     }
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
-    public int getValuesCount() {
-      return values_.size();
+    public int getResultMessageCount() {
+      return resultMessage_.size();
     }
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
-    public java.lang.String getValues(int index) {
-      return values_.get(index);
+    public java.lang.String getResultMessage(int index) {
+      return resultMessage_.get(index);
     }
     /**
-     * <code>repeated string values = 2;</code>
+     * <code>repeated string resultMessage = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getValuesBytes(int index) {
-      return values_.getByteString(index);
+        getResultMessageBytes(int index) {
+      return resultMessage_.getByteString(index);
     }
 
     public static final int STATUS_FIELD_NUMBER = 3;
@@ -969,11 +969,11 @@ public final class TestServiceOuterClass {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (result_ != 0) {
-        output.writeInt32(1, result_);
+      if (duration_ != 0L) {
+        output.writeInt64(1, duration_);
       }
-      for (int i = 0; i < values_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, values_.getRaw(i));
+      for (int i = 0; i < resultMessage_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, resultMessage_.getRaw(i));
       }
       if (status_ != ru.romanow.protocols.grpc.TestServiceOuterClass.Status.UNKNOWN.getNumber()) {
         output.writeEnum(3, status_);
@@ -986,17 +986,17 @@ public final class TestServiceOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (result_ != 0) {
+      if (duration_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, result_);
+          .computeInt64Size(1, duration_);
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < values_.size(); i++) {
-          dataSize += computeStringSizeNoTag(values_.getRaw(i));
+        for (int i = 0; i < resultMessage_.size(); i++) {
+          dataSize += computeStringSizeNoTag(resultMessage_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getValuesList().size();
+        size += 1 * getResultMessageList().size();
       }
       if (status_ != ru.romanow.protocols.grpc.TestServiceOuterClass.Status.UNKNOWN.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
@@ -1018,10 +1018,10 @@ public final class TestServiceOuterClass {
       ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse other = (ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse) obj;
 
       boolean result = true;
-      result = result && (getResult()
-          == other.getResult());
-      result = result && getValuesList()
-          .equals(other.getValuesList());
+      result = result && (getDuration()
+          == other.getDuration());
+      result = result && getResultMessageList()
+          .equals(other.getResultMessageList());
       result = result && status_ == other.status_;
       result = result && unknownFields.equals(other.unknownFields);
       return result;
@@ -1034,11 +1034,12 @@ public final class TestServiceOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + RESULT_FIELD_NUMBER;
-      hash = (53 * hash) + getResult();
-      if (getValuesCount() > 0) {
-        hash = (37 * hash) + VALUES_FIELD_NUMBER;
-        hash = (53 * hash) + getValuesList().hashCode();
+      hash = (37 * hash) + DURATION_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getDuration());
+      if (getResultMessageCount() > 0) {
+        hash = (37 * hash) + RESULTMESSAGE_FIELD_NUMBER;
+        hash = (53 * hash) + getResultMessageList().hashCode();
       }
       hash = (37 * hash) + STATUS_FIELD_NUMBER;
       hash = (53 * hash) + status_;
@@ -1171,9 +1172,9 @@ public final class TestServiceOuterClass {
       }
       public Builder clear() {
         super.clear();
-        result_ = 0;
+        duration_ = 0L;
 
-        values_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        resultMessage_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
         status_ = 0;
 
@@ -1201,12 +1202,12 @@ public final class TestServiceOuterClass {
         ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse result = new ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.result_ = result_;
+        result.duration_ = duration_;
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          values_ = values_.getUnmodifiableView();
+          resultMessage_ = resultMessage_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
-        result.values_ = values_;
+        result.resultMessage_ = resultMessage_;
         result.status_ = status_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -1250,16 +1251,16 @@ public final class TestServiceOuterClass {
 
       public Builder mergeFrom(ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse other) {
         if (other == ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse.getDefaultInstance()) return this;
-        if (other.getResult() != 0) {
-          setResult(other.getResult());
+        if (other.getDuration() != 0L) {
+          setDuration(other.getDuration());
         }
-        if (!other.values_.isEmpty()) {
-          if (values_.isEmpty()) {
-            values_ = other.values_;
+        if (!other.resultMessage_.isEmpty()) {
+          if (resultMessage_.isEmpty()) {
+            resultMessage_ = other.resultMessage_;
             bitField0_ = (bitField0_ & ~0x00000002);
           } else {
-            ensureValuesIsMutable();
-            values_.addAll(other.values_);
+            ensureResultMessageIsMutable();
+            resultMessage_.addAll(other.resultMessage_);
           }
           onChanged();
         }
@@ -1294,122 +1295,122 @@ public final class TestServiceOuterClass {
       }
       private int bitField0_;
 
-      private int result_ ;
+      private long duration_ ;
       /**
-       * <code>int32 result = 1;</code>
+       * <code>int64 duration = 1;</code>
        */
-      public int getResult() {
-        return result_;
+      public long getDuration() {
+        return duration_;
       }
       /**
-       * <code>int32 result = 1;</code>
+       * <code>int64 duration = 1;</code>
        */
-      public Builder setResult(int value) {
+      public Builder setDuration(long value) {
         
-        result_ = value;
+        duration_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int32 result = 1;</code>
+       * <code>int64 duration = 1;</code>
        */
-      public Builder clearResult() {
+      public Builder clearDuration() {
         
-        result_ = 0;
+        duration_ = 0L;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.LazyStringList values_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureValuesIsMutable() {
+      private com.google.protobuf.LazyStringList resultMessage_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureResultMessageIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          values_ = new com.google.protobuf.LazyStringArrayList(values_);
+          resultMessage_ = new com.google.protobuf.LazyStringArrayList(resultMessage_);
           bitField0_ |= 0x00000002;
          }
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
       public com.google.protobuf.ProtocolStringList
-          getValuesList() {
-        return values_.getUnmodifiableView();
+          getResultMessageList() {
+        return resultMessage_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public int getValuesCount() {
-        return values_.size();
+      public int getResultMessageCount() {
+        return resultMessage_.size();
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public java.lang.String getValues(int index) {
-        return values_.get(index);
+      public java.lang.String getResultMessage(int index) {
+        return resultMessage_.get(index);
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
       public com.google.protobuf.ByteString
-          getValuesBytes(int index) {
-        return values_.getByteString(index);
+          getResultMessageBytes(int index) {
+        return resultMessage_.getByteString(index);
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public Builder setValues(
+      public Builder setResultMessage(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureValuesIsMutable();
-        values_.set(index, value);
+  ensureResultMessageIsMutable();
+        resultMessage_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public Builder addValues(
+      public Builder addResultMessage(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureValuesIsMutable();
-        values_.add(value);
+  ensureResultMessageIsMutable();
+        resultMessage_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public Builder addAllValues(
+      public Builder addAllResultMessage(
           java.lang.Iterable<java.lang.String> values) {
-        ensureValuesIsMutable();
+        ensureResultMessageIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, values_);
+            values, resultMessage_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public Builder clearValues() {
-        values_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearResultMessage() {
+        resultMessage_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string values = 2;</code>
+       * <code>repeated string resultMessage = 2;</code>
        */
-      public Builder addValuesBytes(
+      public Builder addResultMessageBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureValuesIsMutable();
-        values_.add(value);
+        ensureResultMessageIsMutable();
+        resultMessage_.add(value);
         onChanged();
         return this;
       }
@@ -1526,15 +1527,15 @@ public final class TestServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\021TestService.proto\022\031ru.romanow.protocol" +
-      "s.grpc\"-\n\013TestRequest\022\020\n\010messages\030\001 \003(\t\022" +
-      "\014\n\004size\030\002 \001(\005\"a\n\014TestResponse\022\016\n\006result\030" +
-      "\001 \001(\005\022\016\n\006values\030\002 \003(\t\0221\n\006status\030\003 \001(\0162!." +
-      "ru.romanow.protocols.grpc.Status*5\n\006Stat" +
-      "us\022\013\n\007UNKNOWN\020\000\022\010\n\004DONE\020\001\022\010\n\004FAIL\020\002\022\n\n\006P" +
-      "AUSED\020\0032q\n\013TestService\022b\n\rSimpleRequest\022" +
-      "&.ru.romanow.protocols.grpc.TestRequest\032" +
-      "\'.ru.romanow.protocols.grpc.TestResponse" +
-      "\"\000b\006proto3"
+      "s.grpc\",\n\013TestRequest\022\017\n\007message\030\001 \003(\t\022\014" +
+      "\n\004size\030\002 \001(\005\"j\n\014TestResponse\022\020\n\010duration" +
+      "\030\001 \001(\003\022\025\n\rresultMessage\030\002 \003(\t\0221\n\006status\030" +
+      "\003 \001(\0162!.ru.romanow.protocols.grpc.Status" +
+      "*5\n\006Status\022\013\n\007UNKNOWN\020\000\022\010\n\004DONE\020\001\022\010\n\004FAI" +
+      "L\020\002\022\n\n\006PAUSED\020\0032q\n\013TestService\022b\n\rSimple" +
+      "Request\022&.ru.romanow.protocols.grpc.Test" +
+      "Request\032\'.ru.romanow.protocols.grpc.Test" +
+      "Response\"\000b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1553,13 +1554,13 @@ public final class TestServiceOuterClass {
     internal_static_ru_romanow_protocols_grpc_TestRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ru_romanow_protocols_grpc_TestRequest_descriptor,
-        new java.lang.String[] { "Messages", "Size", });
+        new java.lang.String[] { "Message", "Size", });
     internal_static_ru_romanow_protocols_grpc_TestResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_ru_romanow_protocols_grpc_TestResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ru_romanow_protocols_grpc_TestResponse_descriptor,
-        new java.lang.String[] { "Result", "Values", "Status", });
+        new java.lang.String[] { "Duration", "ResultMessage", "Status", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

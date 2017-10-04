@@ -8,13 +8,13 @@ service TestService {
 }
 
 message TestRequest {
-    repeated string messages = 1;
+    repeated string message = 1;
     int32 size = 2;
 }
 
 message TestResponse {
-    int32 result = 1;
-    repeated string values = 2;
+    int64 duration = 1;
+    repeated string resultMessage = 2;
     Status status = 3;
 }
 

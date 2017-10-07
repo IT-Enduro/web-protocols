@@ -14,15 +14,20 @@ import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest.newBui
 @Service
 public class TestGrpcClient {
 
+    private ManagedChannel channel;
     private TestServiceGrpc.TestServiceBlockingStub testService;
 
     public TestGrpcClient() {
-        ManagedChannel channel = ManagedChannelBuilder
+        channel = ManagedChannelBuilder
                 .forAddress("localhost", 6565)
                 .usePlaintext(true)
                 .build();
 
         testService = TestServiceGrpc.newBlockingStub(channel);
+    }
+
+    public void shutdown() {
+        channel.shutdownNow();
     }
 
     public TestServiceOuterClass.TestResponse testClient() {

@@ -42,8 +42,6 @@ configure(subprojects) { project ->
 }
 
 project("api") {
-    apply from: '../libraries.gradle'
-
     dependencies {
         compile "com.google.guava:guava:${guavaVersion}"
         compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
@@ -52,7 +50,6 @@ project("api") {
 
 project("soap-protocol") {
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":api")
@@ -62,7 +59,6 @@ project("soap-protocol") {
 project("soap-client") {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'no.nils.wsdl2java'
-    apply from: '../libraries.gradle'
 
     wsdl2java {
         generatedWsdlDir = file("${projectDir}/src/main/generated")
@@ -89,7 +85,6 @@ project("soap-client") {
 project("soap-server") {
     apply plugin: 'war'
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":soap-protocol")
@@ -107,7 +102,6 @@ project("soap-server") {
 project("xml-rpc-server") {
     apply plugin: 'war'
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":api")
@@ -123,7 +117,6 @@ project("xml-rpc-server") {
 
 project("xml-rpc-client") {
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":api")
@@ -140,7 +133,6 @@ project("xml-rpc-client") {
 
 project("rest-server") {
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":api")
@@ -158,7 +150,6 @@ project("rest-server") {
 
 project("grpc-protocol") {
     apply plugin: 'com.google.protobuf'
-    apply from: '../libraries.gradle'
 
     protobuf {
         protoc {
@@ -221,7 +212,6 @@ project("grpc-protocol") {
 
 project("grpc-server") {
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":grpc-protocol")
@@ -235,7 +225,6 @@ project("grpc-server") {
 
 project("grpc-client") {
     apply plugin: 'org.springframework.boot'
-    apply from: '../libraries.gradle'
 
     dependencies {
         compile project(":grpc-protocol")

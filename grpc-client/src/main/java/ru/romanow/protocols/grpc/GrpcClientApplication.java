@@ -26,5 +26,6 @@ public class GrpcClientApplication
     @Override
     public void run(String... args) throws Exception {
         logger.info("{}", testGrpcClient.testClient());
+        testGrpcClient.shutdown();
     }
 }

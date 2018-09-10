@@ -20,7 +20,7 @@ public class TestGrpcClient {
     public TestGrpcClient() {
         channel = ManagedChannelBuilder
                 .forAddress("localhost", 6565)
-                .usePlaintext(true)
+                .usePlaintext()
                 .build();
 
         testService = TestServiceGrpc.newBlockingStub(channel);

@@ -40,9 +40,7 @@ configure(subprojects) { project ->
         mavenCentral()
         jcenter()
     }
-}
 
-project("api") {
     dependencies {
         compile "org.springframework.boot:spring-boot-starter"
         compile "org.springframework.boot:spring-boot-starter-logging"
@@ -52,6 +50,8 @@ project("api") {
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 }
+
+project("api") {}
 
 project("soap-protocol") {
     dependencies {
@@ -111,7 +111,7 @@ project("xml-rpc-client") {
         compile project(":api")
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
-        compile "commons-httpclient:commons-httpclient"
+        compile "org.apache.httpcomponents:httpclient"
     }
 }
 
@@ -127,6 +127,8 @@ project("rest-server") {
 }
 
 project("grpc-protocol") {
+    apply plugin: 'com.google.protobuf'
+
     protobuf {
         protoc {
             artifact = "com.google.protobuf:protoc:${protobufVersion}"

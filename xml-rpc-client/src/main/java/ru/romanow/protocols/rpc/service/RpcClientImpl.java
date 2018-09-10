@@ -30,11 +30,10 @@ public class RpcClientImpl
     private static final String endpoint = "/rpc";
 
     private XmlRpcClient client;
-    private XmlRpcClientConfigImpl config;
 
     @PostConstruct
     public void init() throws MalformedURLException {
-        config = new XmlRpcClientConfigImpl();
+        XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
         config.setServerURL(new URL(address + ":" + port + endpoint));
         config.setEnabledForExtensions(true);
         config.setContentLengthOptional(false);

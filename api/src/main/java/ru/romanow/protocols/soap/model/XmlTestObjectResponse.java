@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class XmlTestObjectResponse
         extends TestObjectResponse {
-    private static final long serialVersionUID = -202667122908268897L;
 
     @Override
     @XmlElement

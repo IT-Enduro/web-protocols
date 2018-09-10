@@ -22,6 +22,7 @@ public class DocumentLiteralWebServiceClient
     }
 
     @Override
+    @SuppressWarnings("Duplicates")
     public void makeRequest() {
         TestObjectRequest request = new TestObjectRequest();
         request.setId(RandomUtils.nextInt(0, 1000));

@@ -18,15 +18,15 @@
         </xs:schema>
     </wsdl:types>
     <wsdl:message name="processRequest">
-        <wsdl:part element="tns:TestObjectRequest" name="TestObjectRequest"></wsdl:part>
+        <wsdl:part element="tns:TestObjectRequest" name="TestObjectRequest"/>
     </wsdl:message>
     <wsdl:message name="processRequestResponse">
-        <wsdl:part element="tns:TestObjectResponse" name="TestObjectResponse"></wsdl:part>
+        <wsdl:part element="tns:TestObjectResponse" name="TestObjectResponse"/>
     </wsdl:message>
     <wsdl:portType name="WebServiceDocumentLiteral">
         <wsdl:operation name="processRequest">
-            <wsdl:input message="tns:processRequest" name="processRequest"></wsdl:input>
-            <wsdl:output message="tns:processRequestResponse" name="processRequestResponse"></wsdl:output>
+            <wsdl:input message="tns:processRequest" name="processRequest"/>
+            <wsdl:output message="tns:processRequestResponse" name="processRequestResponse"/>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="WebServiceDocumentLiteralImplServiceSoapBinding" type="tns:WebServiceDocumentLiteral">

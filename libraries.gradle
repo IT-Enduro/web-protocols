@@ -8,6 +8,6 @@ ext {
     grpcSpringVersion = "2.3.2"
 
     swaggerSpringVersion = "2.9.2"
-    swaggerVersion = "2.0.3"
+    swaggerVersion = "1.5.21"
     lombokVersion = "1.18.2"
 }

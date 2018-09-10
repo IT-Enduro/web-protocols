@@ -1,11 +1,9 @@
 package ru.romanow.protocols.rpc.web;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.server.XmlRpcServerConfigImpl;
 import org.apache.xmlrpc.webserver.XmlRpcServletServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.romanow.protocols.rpc.service.RemoteService;
@@ -22,13 +20,11 @@ import java.util.Map;
  * Created by ronin on 20.09.16
  */
 @Controller
+@RequiredArgsConstructor
 public class XmlRpcController {
-    private static final Logger logger = LoggerFactory.getLogger(XmlRpcController.class);
     private static final int MAX_THREADS = 1;
 
-    @Autowired
-    private RemoteService remoteService;
-
+    private final RemoteService remoteService;
     private XmlRpcServletServer server;
 
     @PostConstruct

@@ -18,8 +18,8 @@ import javax.xml.ws.Endpoint;
 public class WebServerConfiguration {
 
     @Bean
-    public ServletRegistrationBean dispatcherServlet() {
-        return new ServletRegistrationBean(new CXFServlet(), "/*");
+    public ServletRegistrationBean<CXFServlet> dispatcherServlet() {
+        return new ServletRegistrationBean<>(new CXFServlet(), "/*");
     }
 
     @Bean(name = Bus.DEFAULT_BUS_ID)

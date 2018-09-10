@@ -17,8 +17,6 @@ task wrapper(type: Wrapper) {
 configure(subprojects) { project ->
     apply plugin: 'java'
     apply plugin: 'idea'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
     apply from: '../libraries.gradle'
 
     group 'ru.romanow.protocols'
@@ -42,11 +40,8 @@ configure(subprojects) { project ->
     }
 
     dependencies {
-        compile "org.springframework.boot:spring-boot-starter"
-        compile "org.springframework.boot:spring-boot-starter-logging"
-
         compile "com.google.guava:guava:${guavaVersion}"
-        compile "org.apache.commons:commons-lang3"
+        compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 }
@@ -60,6 +55,8 @@ project("soap-protocol") {
 }
 
 project("soap-client") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     apply plugin: 'no.nils.wsdl2java'
 
     wsdl2java {
@@ -82,24 +79,32 @@ project("soap-client") {
 }
 
 project("soap-server") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
     dependencies {
         compile project(":soap-protocol")
 
+        compile "org.springframework.boot:spring-boot-starter"
         compile "org.springframework.boot:spring-boot-starter-web"
+        compile "org.springframework.boot:spring-boot-starter-logging"
 
         compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
         compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
         compile "org.apache.cxf:cxf-rt-transports-http-jetty:${cxfVersion}"
-
-        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("xml-rpc-server") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
     dependencies {
         compile project(":api")
 
+        compile "org.springframework.boot:spring-boot-starter"
         compile "org.springframework.boot:spring-boot-starter-web"
+        compile "org.springframework.boot:spring-boot-starter-logging"
 
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-server:${xmlrpcVersion}"
@@ -107,8 +112,15 @@ project("xml-rpc-server") {
 }
 
 project("xml-rpc-client") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
     dependencies {
         compile project(":api")
+
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-logging"
+
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
         compile "org.apache.httpcomponents:httpclient"
@@ -116,6 +128,9 @@ project("xml-rpc-client") {
 }
 
 project("rest-server") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
     dependencies {
         compile project(":api")
 
@@ -184,20 +199,32 @@ project("grpc-protocol") {
         compile "io.grpc:grpc-netty:${grpcVersion}"
         compile "io.grpc:grpc-protobuf:${grpcVersion}"
         compile "io.grpc:grpc-stub:${grpcVersion}"
-        compile "com.google.protobuf:protobuf-java"
+        compile "com.google.protobuf:protobuf-java:${protobufVersion}"
     }
 }
 
 project("grpc-server") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
     dependencies {
         compile project(":grpc-protocol")
+
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-logging"
 
         compile "org.lognet:grpc-spring-boot-starter:${grpcSpringVersion}"
     }
 }
 
 project("grpc-client") {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
     dependencies {
         compile project(":grpc-protocol")
+
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }

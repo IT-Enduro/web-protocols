@@ -11,15 +11,16 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "3.5"
+    gradleVersion = "4.10"
 }
 
 configure(subprojects) { project ->
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     apply from: '../libraries.gradle'
 
-    buildDir = "build"
     group 'ru.romanow.protocols'
 
     sourceCompatibility = 1.8
@@ -43,21 +44,22 @@ configure(subprojects) { project ->
 
 project("api") {
     dependencies {
+        compile "org.springframework.boot:spring-boot-starter"
+        compile "org.springframework.boot:spring-boot-starter-logging"
+
         compile "com.google.guava:guava:${guavaVersion}"
-        compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
+        compile "org.apache.commons:commons-lang3"
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 }
 
 project("soap-protocol") {
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":api")
     }
 }
 
 project("soap-client") {
-    apply plugin: 'org.springframework.boot'
     apply plugin: 'no.nils.wsdl2java'
 
     wsdl2java {
@@ -76,16 +78,10 @@ project("soap-client") {
 
     dependencies {
         compile project(":soap-protocol")
-
-        compile "org.springframework.boot:spring-boot-starter"
-        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("soap-server") {
-    apply plugin: 'war'
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":soap-protocol")
 
@@ -100,9 +96,6 @@ project("soap-server") {
 }
 
 project("xml-rpc-server") {
-    apply plugin: 'war'
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":api")
 
@@ -110,47 +103,30 @@ project("xml-rpc-server") {
 
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-server:${xmlrpcVersion}"
-
-        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("xml-rpc-client") {
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":api")
-
-        compile "org.springframework.boot:spring-boot-starter"
-
         compile "org.apache.xmlrpc:xmlrpc:${xmlrpcVersion}"
         compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
-        compile "commons-httpclient:commons-httpclient:${commonsHttpClientVersion}"
-
-        compile "org.springframework.boot:spring-boot-starter-logging"
+        compile "commons-httpclient:commons-httpclient"
     }
 }
 
 project("rest-server") {
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":api")
 
-        compile "javax.xml.bind:jaxb-api:${jaxbVersion}"
-
         compile "org.springframework.boot:spring-boot-starter-web"
-
+        compile "javax.xml.bind:jaxb-api"
         compile "io.swagger:swagger-annotations:${swaggerVersion}"
         compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
-
-        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("grpc-protocol") {
-    apply plugin: 'com.google.protobuf'
-
     protobuf {
         protoc {
             artifact = "com.google.protobuf:protoc:${protobufVersion}"
@@ -206,30 +182,20 @@ project("grpc-protocol") {
         compile "io.grpc:grpc-netty:${grpcVersion}"
         compile "io.grpc:grpc-protobuf:${grpcVersion}"
         compile "io.grpc:grpc-stub:${grpcVersion}"
-        compile "com.google.protobuf:protobuf-java:${protobufVersion}"
+        compile "com.google.protobuf:protobuf-java"
     }
 }
 
 project("grpc-server") {
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":grpc-protocol")
 
         compile "org.lognet:grpc-spring-boot-starter:${grpcSpringVersion}"
-
-        compile "org.springframework.boot:spring-boot-starter"
-        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }
 
 project("grpc-client") {
-    apply plugin: 'org.springframework.boot'
-
     dependencies {
         compile project(":grpc-protocol")
-
-        compile "org.springframework.boot:spring-boot-starter"
-        compile "org.springframework.boot:spring-boot-starter-logging"
     }
 }

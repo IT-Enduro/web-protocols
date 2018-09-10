@@ -15,3 +15,8 @@ include 'grpc-client'
 
 include 'rest-server'
 
+include 'graphql-server'
+
+include 'consumer'
+include 'producer'
+

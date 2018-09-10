@@ -6,12 +6,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.romanow.protocols.soap.model.TestObjectRequest;
 import ru.romanow.protocols.soap.model.TestObjectResponse;
 import ru.romanow.protocols.soap.model.XmlTestObjectResponse;
@@ -27,13 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 public class TestRestController {
 
     @ApiOperation(value = "Ping", httpMethod = "GET", response = String.class)
-    @RequestMapping(value = "/ping", method = RequestMethod.GET)
+    @GetMapping("/ping")
     public String ping() {
         return "ok";
     }
 
     @ApiOperation(value = "Set cookies", httpMethod = "GET", response = String.class)
-    @RequestMapping(value = "/cookies", method = RequestMethod.GET)
+    @GetMapping("/cookies")
     public String setCookies(HttpServletResponse response) {
         response.addCookie(createCookie("TestCookie", RandomStringUtils.randomAlphabetic(5)));
         return "ok";
@@ -41,7 +36,7 @@ public class TestRestController {
 
     @ApiOperation(value = "Operation return simple response", httpMethod = "POST")
     @ApiResponse(code = 200, message = "Success", response = TestObjectResponse.class)
-    @RequestMapping(value = "/process", method = RequestMethod.POST)
+    @PostMapping("/process")
     public XmlTestObjectResponse processRequest(
             @ApiParam(value = "Request object", required = true)
             @RequestBody TestObjectRequest request) {

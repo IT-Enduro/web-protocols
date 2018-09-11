@@ -7,6 +7,7 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "com.google.protobuf:protobuf-gradle-plugin:${protobufPluginVersion}"
         classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springVerifierVersion}"
+        classpath "org.asciidoctor:asciidoctor-gradle-plugin:${asciiDoctorVersion}"
         classpath "no.nils:wsdl2java:${wsdl2javaVersion}"
     }
 }

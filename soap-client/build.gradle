@@ -1,0 +1,23 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'no.nils.wsdl2java'
+
+wsdl2java {
+    generatedWsdlDir = file("${projectDir}/src/main/generated")
+    wsdlsToGenerate = [
+            ['-p','ru.romanow.protocols.soap.generated.literal.model',
+             "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
+            ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
+             "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
+    ]
+}
+
+wsdl2javaExt {
+    cxfVersion = "${cxfVersion}"
+}
+
+dependencies {
+    compile project(":soap-protocol")
+    compile "org.springframework.boot:spring-boot-starter"
+    compile "org.springframework.boot:spring-boot-starter-logging"
+}

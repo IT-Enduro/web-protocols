@@ -1,6 +1,21 @@
 import org.springframework.cloud.contract.spec.Contract
 
-// https://spring.io/guides/gs/contract-rest/
 Contract.make({
-
+    description('Ping method')
+    request {
+        method 'get'
+        url '/api/ping'
+        headers {
+            contentType(applicationJson())
+        }
+    }
+    response {
+        status 200
+        body(
+                response: 'ok'
+        )
+        headers {
+            contentType(applicationJson())
+        }
+    }
 })

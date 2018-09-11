@@ -6,7 +6,11 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import ru.romanow.protocols.soap.model.PingResponse;
 import ru.romanow.protocols.soap.model.TestObjectRequest;
 import ru.romanow.protocols.soap.model.TestObjectResponse;
 import ru.romanow.protocols.soap.model.XmlTestObjectResponse;
@@ -21,17 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class TestRestController {
 
-    @ApiOperation(value = "Ping", httpMethod = "GET", response = String.class)
+    @ApiOperation(value = "Ping", httpMethod = "GET", response = PingResponse.class)
     @GetMapping("/ping")
-    public String ping() {
-        return "ok";
+    public PingResponse ping() {
+        return new PingResponse("ok");
     }
 
     @ApiOperation(value = "Set cookies", httpMethod = "GET", response = String.class)
     @GetMapping("/cookies")
-    public String setCookies(HttpServletResponse response) {
+    public PingResponse setCookies(HttpServletResponse response) {
         response.addCookie(createCookie("TestCookie", RandomStringUtils.randomAlphabetic(5)));
-        return "ok";
+        return new PingResponse("ok");
     }
 
     @ApiOperation(value = "Operation return simple response", httpMethod = "POST")

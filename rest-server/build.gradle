@@ -1,0 +1,11 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    compile project(":api")
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "javax.xml.bind:jaxb-api"
+    compile "io.swagger:swagger-annotations:${swaggerVersion}"
+    compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
+}

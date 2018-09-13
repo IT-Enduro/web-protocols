@@ -5,8 +5,8 @@ import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.romanow.protocols.soap.model.TestObjectRequest;
-import ru.romanow.protocols.soap.model.TestObjectResponse;
+import ru.romanow.protocols.api.model.TestObjectRequest;
+import ru.romanow.protocols.api.model.TestObjectResponse;
 
 /**Î
  * Created by ronin on 20.09.16

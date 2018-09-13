@@ -1,12 +1,14 @@
+package operation
+
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make({
     description('Test ping fail method')
     request {
         method 'post'
-        url '/api/process'
+        url '/api/op/process'
         body(
-            id: 1,
+            id: 101,
             searchString: 'test'
         )
         headers {
@@ -17,7 +19,7 @@ Contract.make({
         status 200
         body(
             code: 100,
-            data: 'ABCDEFGH'
+            data: 'TEST'
         )
         headers {
             contentType(applicationJson())

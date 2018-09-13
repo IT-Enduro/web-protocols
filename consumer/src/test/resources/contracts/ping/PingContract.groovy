@@ -1,16 +1,21 @@
+package ping
+
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make({
-    description('Test ping fail method')
+    description('Ping method')
     request {
         method 'get'
-        url '/api/ping?fail=true'
+        url '/api/ping'
         headers {
             contentType(applicationJson())
         }
     }
     response {
-        status 422
+        status 200
+        body(
+                response: 'ok'
+        )
         headers {
             contentType(applicationJson())
         }

@@ -4,7 +4,6 @@ import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
@@ -13,15 +12,18 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureRestDocs
-public abstract class BaseRestTest {
+public abstract class BaseTest {
 
     @Autowired
-    private TestRestController controller;
+    private ExceptionController exceptionController;
 
     @Before
     public void init() {
-        StandaloneMockMvcBuilder standaloneMockMvcBuilder = standaloneSetup(controller);
+        StandaloneMockMvcBuilder standaloneMockMvcBuilder =
+                standaloneSetup(controller())
+                        .setControllerAdvice(exceptionController);
         RestAssuredMockMvc.standaloneSetup(standaloneMockMvcBuilder);
     }
+
+    protected abstract Object controller();
 }

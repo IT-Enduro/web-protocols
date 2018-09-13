@@ -1,7 +1,7 @@
 package ru.romanow.protocols.rpc.service;
 
-import ru.romanow.protocols.soap.model.TestObjectRequest;
-import ru.romanow.protocols.soap.model.TestObjectResponse;
+import ru.romanow.protocols.api.model.TestObjectRequest;
+import ru.romanow.protocols.api.model.TestObjectResponse;
 
 /**
  * Created by ronin on 20.09.16

@@ -1,4 +1,4 @@
-package ru.romanow.protocols.soap.model;
+package ru.romanow.protocols.api.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -1,18 +1,24 @@
+package operation
+
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make({
-    description('Ping method')
+    description('Test process fail method')
     request {
-        method 'get'
-        url '/api/ping'
+        method 'post'
+        url '/api/op/process'
+        body(
+            id: 1,
+            searchString: 'test'
+        )
         headers {
             contentType(applicationJson())
         }
     }
     response {
-        status 200
+        status 500
         body(
-                response: 'ok'
+            message: "Id '1' too low"
         )
         headers {
             contentType(applicationJson())

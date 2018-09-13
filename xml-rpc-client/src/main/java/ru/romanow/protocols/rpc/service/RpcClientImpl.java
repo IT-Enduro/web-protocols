@@ -10,7 +10,7 @@ import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.romanow.protocols.soap.model.TestObjectRequest;
+import ru.romanow.protocols.api.model.TestObjectRequest;
 
 import javax.annotation.PostConstruct;
 import java.net.MalformedURLException;

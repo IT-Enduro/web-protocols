@@ -1,7 +1,7 @@
 package ru.romanow.protocols.soap.web;
 
-import ru.romanow.protocols.soap.model.TestObjectRequest;
-import ru.romanow.protocols.soap.model.TestObjectResponse;
+import ru.romanow.protocols.api.model.TestObjectRequest;
+import ru.romanow.protocols.api.model.TestObjectResponse;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

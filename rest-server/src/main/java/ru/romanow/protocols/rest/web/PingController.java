@@ -26,7 +26,7 @@ public class PingController {
             response = PingResponse.class)
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PingResponse ping() {
-        logger.info("Request to '/cookies'");
+        logger.info("Request to '/ping'");
         return new PingResponse("ok");
     }
 

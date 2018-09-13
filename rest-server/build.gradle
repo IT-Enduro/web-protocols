@@ -9,5 +9,6 @@ dependencies {
     compile "io.swagger:swagger-annotations:${swaggerVersion}"
     compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
 
+    testCompile "com.google.code.gson:gson:${gsonVersion}"
     testCompile "org.springframework.boot:spring-boot-starter-test"
 }

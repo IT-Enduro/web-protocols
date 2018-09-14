@@ -11,10 +11,10 @@ dependencyManagement {
 
 contracts {
     baseClassMappings {
-        baseClassMapping '.*operation.*', 'ru.romanow.protocols.consumer.web.BaseOperationControllerTest'
-        baseClassMapping '.*ping.*', 'ru.romanow.protocols.consumer.web.BasePingControllerTest'
+        baseClassMapping '.*operation.*', 'ru.romanow.protocols.producer.web.BaseOperationControllerTest'
+        baseClassMapping '.*ping.*', 'ru.romanow.protocols.producer.web.BasePingControllerTest'
     }
-    basePackageForTests = "ru.romanow.protocols.consumer.web"
+    basePackageForTests = "ru.romanow.protocols.producer.web"
 }
 
 publishing {

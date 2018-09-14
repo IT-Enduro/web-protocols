@@ -1,4 +1,4 @@
-package ru.romanow.protocols.consumer.web;
+package ru.romanow.protocols.producer.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

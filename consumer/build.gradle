@@ -8,6 +8,8 @@ dependencyManagement {
 }
 
 dependencies {
+    compile project(":api")
+
     compile "org.springframework.boot:spring-boot-starter-web"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"

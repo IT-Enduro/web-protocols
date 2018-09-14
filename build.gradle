@@ -44,6 +44,7 @@ configure(subprojects) { project ->
     dependencies {
         compile "com.google.guava:guava:${guavaVersion}"
         compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
+        compile "com.google.code.findbugs:jsr305:${findBugsVersion}"
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
     }
 }

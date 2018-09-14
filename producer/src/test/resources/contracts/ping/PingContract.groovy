@@ -7,9 +7,6 @@ Contract.make({
     request {
         method 'GET'
         url '/api/ping'
-        headers {
-            contentType(applicationJson())
-        }
     }
     response {
         status 200

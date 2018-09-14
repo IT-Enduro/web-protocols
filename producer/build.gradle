@@ -1,4 +1,38 @@
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'spring-cloud-contract'
+apply plugin: 'maven-publish'
 
-dependencies {}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+contracts {
+    baseClassMappings {
+        baseClassMapping '.*operation.*', 'ru.romanow.protocols.consumer.web.BaseOperationControllerTest'
+        baseClassMapping '.*ping.*', 'ru.romanow.protocols.consumer.web.BasePingControllerTest'
+    }
+    basePackageForTests = "ru.romanow.protocols.consumer.web"
+}
+
+publishing {
+    publications {
+        stubs(MavenPublication) {
+            artifactId project.name
+            artifact verifierStubsJar
+        }
+    }
+}
+
+dependencies {
+    compile project(":api")
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+
+    testCompile "org.codehaus.groovy:groovy-all"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.springframework.cloud:spring-cloud-contract-spec"
+    testCompile "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+}

@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "consumer.address",
+      "type": "java.lang.String",
+      "description": "Consumer address"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make({
     description('Ping method')
     request {
-        method 'get'
+        method 'GET'
         url '/api/ping'
         headers {
             contentType(applicationJson())

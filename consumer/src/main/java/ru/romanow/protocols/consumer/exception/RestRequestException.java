@@ -1,4 +1,4 @@
-package ru.romanow.protocols.consumer;
+package ru.romanow.protocols.consumer.exception;
 
 import lombok.Getter;
 

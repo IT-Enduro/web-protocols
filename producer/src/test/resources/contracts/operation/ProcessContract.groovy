@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make({
     description('Test ping fail method')
     request {
-        method 'post'
+        method 'POST'
         url '/api/op/process'
         body(
             id: 101,

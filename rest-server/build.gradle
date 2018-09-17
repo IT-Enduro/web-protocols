@@ -1,5 +1,15 @@
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.asciidoctor.convert'
+
+asciidoctor {
+    // https://docs.spring.io/spring-restdocs/docs/2.0.3.BUILD-SNAPSHOT/reference/html5/
+    // https://asciidoctor.org/docs/asciidoctor-gradle-plugin/
+    sourceDir file('build/generated-snippets')
+//    outputDir file('build/generated-html')
+//    options doctype: 'book'
+    dependsOn test
+}
 
 dependencies {
     compile project(":api")
@@ -11,4 +21,7 @@ dependencies {
 
     testCompile "com.google.code.gson:gson:${gsonVersion}"
     testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.springframework.restdocs:spring-restdocs-mockmvc"
+
+    asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
 }

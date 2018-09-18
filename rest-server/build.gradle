@@ -2,12 +2,17 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.asciidoctor.convert'
 
+ext {
+    snippetsDir = file('build/generated-snippets')
+    htmlOutputDir = file('build/generated-html')
+}
+
 asciidoctor {
-    // https://docs.spring.io/spring-restdocs/docs/2.0.3.BUILD-SNAPSHOT/reference/html5/
-    // https://asciidoctor.org/docs/asciidoctor-gradle-plugin/
-    sourceDir file('build/generated-snippets')
-//    outputDir file('build/generated-html')
-//    options doctype: 'book'
+    inputs.dir snippetsDir
+    sourceDir 'src/main/asciidoc'
+    outputDir htmlOutputDir
+
+    attributes 'snippets': snippetsDir
     dependsOn test
 }
 

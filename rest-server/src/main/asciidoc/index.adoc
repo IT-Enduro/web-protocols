@@ -1,0 +1,81 @@
+= REST service API guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+= Resources
+
+== Ping
+
+Ping endpoint
+
+=== Request structure
+
+include::{snippets}/ping/http-request.adoc[]
+
+=== Response fields
+
+include::{snippets}/ping/response-fields.adoc[]
+
+=== CURL request
+
+include::{snippets}/ping/curl-request.adoc[]
+
+=== Example response
+
+include::{snippets}/ping/http-response.adoc[]
+
+== Cookies
+
+Set cookies endpoint
+
+=== Request structure
+
+include::{snippets}/cookies/http-request.adoc[]
+
+=== Response fields
+
+include::{snippets}/cookies/response-fields.adoc[]
+
+=== CURL request
+
+include::{snippets}/cookies/curl-request.adoc[]
+
+=== Example response
+
+include::{snippets}/cookies/http-response.adoc[]
+
+== Operation
+
+Business operation endpoint
+
+=== Request structure
+
+include::{snippets}/process/http-request.adoc[]
+
+=== Request fields
+
+include::{snippets}/process/request-fields.adoc[]
+
+=== Request body
+
+include::{snippets}/process/request-body.adoc[]
+
+=== Response fields
+
+include::{snippets}/process/response-fields.adoc[]
+
+=== Response body
+
+include::{snippets}/process/response-body.adoc[]
+
+=== CURL request
+
+include::{snippets}/process/curl-request.adoc[]
+
+=== Example response
+
+include::{snippets}/process/http-response.adoc[]

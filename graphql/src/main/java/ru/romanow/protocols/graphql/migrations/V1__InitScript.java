@@ -41,7 +41,7 @@ public class V1__InitScript
     }
 
     private int insertBook(JdbcTemplate jdbcTemplate, Book book) {
-        final String sql = "INSERT INTO book (isn, name, page_count, price, author_id) VALUES (?, ?, ?, ?, ?)";
+        final String sql = "INSERT INTO book (isn, name, page_count, price, author_id) VALUES (?, ?, ?, ?, ?) RETURNING id";
 
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -58,7 +58,7 @@ public class V1__InitScript
     }
 
     private int insertAuthor(JdbcTemplate jdbcTemplate, @Nonnull Author author) {
-        final String sql = "INSERT INTO author (age, experience, name) VALUES (?, ?, ?)";
+        final String sql = "INSERT INTO author (age, experience, name) VALUES (?, ?, ?) RETURNING id";
 
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {

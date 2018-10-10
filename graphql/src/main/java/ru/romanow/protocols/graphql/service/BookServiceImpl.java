@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -21,14 +20,16 @@ public class BookServiceImpl
         implements BookService {
     private final BookRepository bookRepository;
 
-    @Nonnull
+    @Nullable
     @Override
     @Transactional(readOnly = true)
-    public BookInfo getBookById(@Nonnull Integer id) {
-        return bookRepository
-                .findById(id)
-                .map(BuilderHelper::buildBookInfo)
-                .orElseThrow(() -> new RuntimeException(format("Entity %s for id '%s' not found", "Book", id)));
+    public BookInfo getBookById(@Nullable Integer id) {
+        if (id != null) {
+            return bookRepository.findById(id)
+                    .map(BuilderHelper::buildBookInfo)
+                    .orElse(null);
+        }
+        return null;
     }
 
     @Nonnull

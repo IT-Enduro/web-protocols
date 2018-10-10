@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -26,7 +25,7 @@ public class AuthorServiceImpl
         if (id != null) {
             return authorRepository.findById(id)
                     .map(BuilderHelper::buildAuthorInfo)
-                    .orElseThrow(() -> new RuntimeException(format("Entity %s for id '%s' not found", "Author", id)));
+                    .orElse(null);
         }
         return null;
     }

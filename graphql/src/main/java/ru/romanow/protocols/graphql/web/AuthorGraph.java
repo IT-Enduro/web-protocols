@@ -7,6 +7,8 @@ import ru.romanow.protocols.graphql.model.AuthorInfo;
 import ru.romanow.protocols.graphql.service.AuthorService;
 import ru.romanow.protocols.graphql.utils.annotations.GraphQLService;
 
+import java.util.List;
+
 @GraphQLService
 @AllArgsConstructor
 public class AuthorGraph {
@@ -15,5 +17,10 @@ public class AuthorGraph {
     @GraphQLQuery(name = "author")
     public AuthorInfo cart(@GraphQLArgument(name = "id") Integer id) {
         return authorService.getAuthorById(id);
+    }
+
+    @GraphQLQuery(name = "authors")
+    public List<AuthorInfo> cart() {
+        return authorService.getAuthors();
     }
 }

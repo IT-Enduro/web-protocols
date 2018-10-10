@@ -46,11 +46,11 @@ public class V1__InitScript
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(0, book.getIsn());
-            ps.setString(1, book.getName());
-            ps.setInt(2, book.getPageCount());
-            ps.setInt(3, book.getPrice());
-            ps.setInt(4, book.getAuthor().getId());
+            ps.setString(1, book.getIsn());
+            ps.setString(2, book.getName());
+            ps.setInt(3, book.getPageCount());
+            ps.setInt(4, book.getPrice());
+            ps.setInt(5, book.getAuthor().getId());
             return ps;
         }, key);
 
@@ -63,9 +63,9 @@ public class V1__InitScript
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(0, author.getAge());
-            ps.setInt(1, author.getExperience());
-            ps.setString(2, author.getName());
+            ps.setInt(1, author.getAge());
+            ps.setInt(2, author.getExperience());
+            ps.setString(3, author.getName());
             return ps;
         }, key);
 

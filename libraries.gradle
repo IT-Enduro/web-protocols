@@ -10,6 +10,7 @@ ext {
     grpcSpringVersion = "2.3.2"
     graphQLVersion = "0.9.8"
     graphQLSpringVersion = "0.0.2"
+    graphiQLVersion = "5.0.2"
 
     swaggerSpringVersion = "2.9.2"
     swaggerVersion = "1.5.21"

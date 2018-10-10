@@ -8,12 +8,11 @@ import graphql.execution.instrumentation.ChainedInstrumentation;
 import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import io.leangen.graphql.metadata.strategy.query.AnnotatedResolverBuilder;
-import io.leangen.graphql.metadata.strategy.query.BeanResolverBuilder;
-import io.leangen.graphql.metadata.strategy.query.PublicResolverBuilder;
 import io.leangen.graphql.metadata.strategy.value.jackson.JacksonValueMapperFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RestController;
+import ru.romanow.protocols.graphql.web.AuthorGraph;
 
 import java.util.Arrays;
 
@@ -21,19 +20,19 @@ import java.util.Arrays;
 public class GraphQLConfiguration {
 
     @Bean
-    public GraphQL graphQL() {
-        GraphQLSchema schema = new GraphQLSchemaGenerator()
-                .withResolverBuilders(
-                        new BeanResolverBuilder("org.vtsukur.graphql.demo.cart.domain"),
-                        // Resolve by annotations.
-                        new AnnotatedResolverBuilder(),
-                        // Resolve public methods inside root package.
-                        new PublicResolverBuilder("org.vtsukur.graphql.demo.cart.web.graphql.spqr"))
-                .withOperationsFromTypes(RestController.class)
+    @Autowired
+    public GraphQLSchema graphQLSchema(AuthorGraph authorGraph) {
+        return new GraphQLSchemaGenerator()
+                .withResolverBuilders(new AnnotatedResolverBuilder())
+                .withOperationsFromSingleton(authorGraph)
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
+    }
 
-        return GraphQL.newGraphQL(schema)
+    @Bean
+    @Autowired
+    public GraphQL graphQL(AuthorGraph authorGraph) {
+        return GraphQL.newGraphQL(graphQLSchema(authorGraph))
                 .queryExecutionStrategy(new AsyncExecutionStrategy())
                 .instrumentation(new ChainedInstrumentation(Arrays.asList(
                         new MaxQueryComplexityInstrumentation(200),

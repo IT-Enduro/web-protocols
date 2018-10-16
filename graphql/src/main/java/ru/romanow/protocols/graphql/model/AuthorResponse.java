@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class AuthorInfo {
+public class AuthorResponse {
 
     @GraphQLQuery(name = "id")
     private Integer id;
@@ -17,4 +17,6 @@ public class AuthorInfo {
     private Integer age;
     @GraphQLQuery(name = "experience")
     private Integer experience;
+    @GraphQLQuery(name = "booksCount")
+    private Integer booksCount;
 }

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.romanow.protocols.graphql.domain.Book;
-import ru.romanow.protocols.graphql.model.BookInfo;
+import ru.romanow.protocols.graphql.model.BookResponse;
 import ru.romanow.protocols.graphql.repository.BookRepository;
 
 import javax.annotation.Nonnull;
@@ -23,7 +23,7 @@ public class BookServiceImpl
     @Nullable
     @Override
     @Transactional(readOnly = true)
-    public BookInfo getBookById(@Nullable Integer id) {
+    public BookResponse getBookById(@Nullable Integer id) {
         if (id != null) {
             return bookRepository.findById(id)
                     .map(BuilderHelper::buildBookInfo)
@@ -35,7 +35,7 @@ public class BookServiceImpl
     @Nonnull
     @Override
     @Transactional(readOnly = true)
-    public List<BookInfo> getBooks(@Nullable String name) {
+    public List<BookResponse> getBooks(@Nullable String name) {
         return bookRepository
                 .findAll(Example.of(new Book().setName(name)))
                 .stream()
@@ -46,7 +46,7 @@ public class BookServiceImpl
     @Nonnull
     @Override
     @Transactional(readOnly = true)
-    public List<BookInfo> getBooks() {
+    public List<BookResponse> getBooks() {
         return bookRepository
                 .findAll()
                 .stream()

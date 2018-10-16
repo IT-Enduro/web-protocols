@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class BookInfo {
+public class BookResponse {
 
     @GraphQLQuery(name = "id")
     private Integer id;
@@ -19,5 +19,5 @@ public class BookInfo {
     @GraphQLQuery(name = "pageCount")
     private Integer pageCount;
     @GraphQLQuery(name = "author")
-    private AuthorInfo author;
+    private AuthorResponse author;
 }

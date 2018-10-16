@@ -1,26 +1,35 @@
 package ru.romanow.protocols.graphql.web;
 
 import io.leangen.graphql.annotations.GraphQLArgument;
+import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.spqr.spring.annotation.GraphQLApi;
 import lombok.AllArgsConstructor;
-import ru.romanow.protocols.graphql.model.AuthorInfo;
+import org.springframework.stereotype.Service;
+import ru.romanow.protocols.graphql.model.AuthorResponse;
+import ru.romanow.protocols.graphql.model.CreateAuthorRequest;
 import ru.romanow.protocols.graphql.service.AuthorService;
-import ru.romanow.protocols.graphql.utils.annotations.GraphQLService;
 
 import java.util.List;
 
-@GraphQLService
+@Service
+@GraphQLApi
 @AllArgsConstructor
 public class AuthorGraph {
     private final AuthorService authorService;
 
     @GraphQLQuery(name = "author")
-    public AuthorInfo cart(@GraphQLArgument(name = "id") Integer id) {
+    public AuthorResponse author(@GraphQLArgument(name = "id") Integer id) {
         return authorService.getAuthorById(id);
     }
 
     @GraphQLQuery(name = "authors")
-    public List<AuthorInfo> cart() {
+    public List<AuthorResponse> authors() {
         return authorService.getAuthors();
+    }
+
+    @GraphQLMutation(name = "createAuthor")
+    public AuthorResponse createAuthor(@GraphQLArgument(name = "author") CreateAuthorRequest createAuthorRequest) {
+        return authorService.createAuthor(createAuthorRequest);
     }
 }

@@ -15,4 +15,5 @@ dependencies {
 
     compile "io.leangen.graphql:spqr:${graphQLVersion}"
     compile "io.leangen.graphql:graphql-spqr-spring-boot-starter:${graphQLSpringVersion}"
+
 }

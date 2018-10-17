@@ -17,6 +17,4 @@ public class AuthorResponse {
     private Integer age;
     @GraphQLQuery(name = "experience")
     private Integer experience;
-//    @GraphQLQuery(name = "booksCount")
-//    private Integer booksCount;
 }

@@ -19,7 +19,6 @@ public class PublicationSubscription {
     @GraphQLSubscription(name = "newBooks")
     public Publisher<SubscriptionInfo> newBooks() {
         return Flux.interval(Duration.ofSeconds(1))
-                .map(pulse -> new SubscriptionInfo(randomAlphanumeric(10), nextInt(100, 1000)))
-                .publish();
+                .map(pulse -> new SubscriptionInfo(randomAlphanumeric(10), nextInt(100, 1000)));
     }
 }

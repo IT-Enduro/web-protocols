@@ -6,10 +6,13 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-websocket"
     compile "org.postgresql:postgresql"
     compile "org.flywaydb:flyway-core"
 
+    compile "io.projectreactor:reactor-core"
+    compile "io.reactivex.rxjava2:rxjava"
+
     compile "io.leangen.graphql:spqr:${graphQLVersion}"
     compile "io.leangen.graphql:graphql-spqr-spring-boot-starter:${graphQLSpringVersion}"
-    compile "com.graphql-java:graphiql-spring-boot-starter:${graphiQLVersion}"
 }

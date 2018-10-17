@@ -34,6 +34,11 @@ public class AuthorGraph {
         return authorService.getAuthorBooksCount(response.getId());
     }
 
+    @GraphQLQuery(name = "exception")
+    public Integer exception(@GraphQLContext AuthorResponse response) {
+        throw new RuntimeException("test");
+    }
+
     @GraphQLMutation(name = "createAuthor")
     public AuthorResponse createAuthor(@GraphQLArgument(name = "author") CreateAuthorRequest createAuthorRequest) {
         return authorService.createAuthor(createAuthorRequest);

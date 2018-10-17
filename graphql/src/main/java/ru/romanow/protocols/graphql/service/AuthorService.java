@@ -17,4 +17,6 @@ public interface AuthorService {
 
     @Nonnull
     AuthorResponse createAuthor(@Nonnull CreateAuthorRequest authorRequest);
+
+    int getAuthorBooksCount(@Nonnull Integer authorId);
 }

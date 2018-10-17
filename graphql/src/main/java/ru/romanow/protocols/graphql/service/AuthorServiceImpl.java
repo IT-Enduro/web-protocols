@@ -57,4 +57,10 @@ public class AuthorServiceImpl
 
         return buildAuthorInfo(author);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getAuthorBooksCount(@Nonnull Integer authorId) {
+        return authorRepository.getAuthorBooksCount(authorId);
+    }
 }

@@ -1,0 +1,4 @@
+dependencies {
+    compile "javax.xml.bind:jaxb-api:${jaxbVersion}"
+    compile "org.glassfish.jaxb:jaxb-runtime:${jaxbVersion}"
+}

@@ -1,7 +1,7 @@
 package ru.romanow.protocols.graphql.web;
 
 import io.leangen.graphql.annotations.GraphQLQuery;
-import io.leangen.graphql.spqr.spring.annotation.GraphQLApi;
+import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.romanow.protocols.graphql.model.BookResponse;

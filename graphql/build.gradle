@@ -8,7 +8,6 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-starter-websocket"
     compile "org.postgresql:postgresql"
-    compile "org.flywaydb:flyway-core"
 
     compile "io.projectreactor:reactor-core"
     compile "io.reactivex.rxjava2:rxjava"

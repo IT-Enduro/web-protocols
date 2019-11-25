@@ -1,7 +1,7 @@
 package ru.romanow.protocols.graphql.web;
 
 import io.leangen.graphql.annotations.GraphQLSubscription;
-import io.leangen.graphql.spqr.spring.annotation.GraphQLApi;
+import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

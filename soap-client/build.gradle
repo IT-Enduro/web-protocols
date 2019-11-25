@@ -33,6 +33,7 @@ dependencies {
     implementation "javax.xml.ws:jaxws-api:${jaxwsApiVersion}"
     implementation "org.apache.cxf:cxf-rt-wsdl:${cxfVersion}"
     implementation "javax.jws:javax.jws-api:${jwsApiVersion}"
+    compile "com.sun.xml.ws:rt:${xmlWsVersion}"
 }
 
 bootJar {

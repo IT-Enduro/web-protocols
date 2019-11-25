@@ -15,7 +15,7 @@ import javax.xml.ws.Endpoint;
 public class WebServerConfiguration {
 
     @Bean
-    public ServletRegistrationBean<CXFServlet> dispatcherServlet() {
+    public ServletRegistrationBean<CXFServlet> cxfDispatcherServlet() {
         return new ServletRegistrationBean<>(new CXFServlet(), "/*");
     }
 

@@ -6,6 +6,7 @@ ext {
     groovyVersion = "2.5.8"
     jwsApiVersion = "1.1"
     xmlWsVersion = "2.3.1"
+    xmlWsVersion = "2.3.1"
     cxfVersion = "3.2.7"
     jaxwsApiVersion = "2.3.1"
     jaxbApiVersion = "2.3.1"

@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by ronin on 20.09.16
- */
 @Controller
 @RequiredArgsConstructor
 public class XmlRpcController {

@@ -8,9 +8,6 @@ import ru.romanow.protocols.soap.generated.literal.model.TestObjectRequest;
 import ru.romanow.protocols.soap.generated.literal.model.TestObjectResponse;
 import ru.romanow.protocols.soap.generated.literal.model.WebServiceDocumentLiteral;
 
-/**
- * Created by ronin on 25.09.16
- */
 public class DocumentLiteralWebServiceClient
         implements WebServiceClient {
     private static final Logger logger = LoggerFactory.getLogger(WebServiceClient.class);

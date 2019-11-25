@@ -8,9 +8,6 @@ import ru.romanow.protocols.soap.web.DocumentLiteralWebServiceClient;
 import ru.romanow.protocols.soap.web.DocumentWrappedWebServiceClient;
 import ru.romanow.protocols.soap.web.WebServiceClient;
 
-/**
- * Created by ronin on 25.09.16
- */
 @Configuration
 public class WebServiceConfiguration {
 

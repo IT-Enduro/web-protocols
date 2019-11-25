@@ -6,9 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.romanow.protocols.rpc.service.RpcClient;
 
-/**
- * Created by ronin on 20.09.16
- */
 @SpringBootApplication
 public class XmlRpcClientApplication
         implements CommandLineRunner {

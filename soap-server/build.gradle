@@ -11,4 +11,11 @@ dependencies {
     compile "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
     compile "org.apache.cxf:cxf-rt-transports-http-jetty:${cxfVersion}"
+
+    compile "javax.jws:javax.jws-api:${jwsApiVersion}"
+    compile "javax.xml.ws:jaxws-api:${xmlWsVersion}"
+}
+
+bootJar {
+    archiveFileName = "soap-server.jar"
 }

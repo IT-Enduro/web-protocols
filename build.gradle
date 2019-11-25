@@ -1,19 +1,10 @@
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.google.protobuf:protobuf-gradle-plugin:${protobufPluginVersion}"
-        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springVerifierVersion}"
-        classpath "org.asciidoctor:asciidoctor-gradle-plugin:${asciiDoctorVersion}"
-        classpath "no.nils:wsdl2java:${wsdl2javaVersion}"
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.10"
+plugins {
+    id "org.springframework.boot" version "2.1.7.RELEASE" apply false
+    id "com.google.protobuf" version "0.8.10" apply false
+    id "org.springframework.cloud.contract" version "2.1.4.RELEASE" apply false
+    id "no.nils.wsdl2java" version "0.10" apply false
+    id "org.asciidoctor.convert" version "2.3.0" apply false
+    id "org.asciidoctor.gradle.asciidoctor" version "1.5.1" apply false
 }
 
 configure(subprojects) { project ->
@@ -21,10 +12,8 @@ configure(subprojects) { project ->
     apply plugin: 'idea'
     apply from: '../libraries.gradle'
 
-    group 'ru.romanow.protocols'
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
 
     idea {
         module {
@@ -44,7 +33,9 @@ configure(subprojects) { project ->
     dependencies {
         compile "com.google.guava:guava:${guavaVersion}"
         compile "org.apache.commons:commons-lang3:${commonsLangVersion}"
-        compile "com.google.code.findbugs:jsr305:${findBugsVersion}"
-        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+        compileOnly "com.google.code.findbugs:jsr305:${findBugsVersion}"
+        compile "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     }
 }

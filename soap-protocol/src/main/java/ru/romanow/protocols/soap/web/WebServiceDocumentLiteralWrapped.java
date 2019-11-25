@@ -11,9 +11,6 @@ import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
-/**
- * Created by ronin on 16.09.16
- */
 @WebService(name = "WebServiceDocumentWrapped")
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT,
         use = SOAPBinding.Use.LITERAL,

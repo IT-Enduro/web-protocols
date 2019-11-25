@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import ru.romanow.protocols.api.model.TestObjectRequest;
 import ru.romanow.protocols.api.model.TestObjectResponse;
 
-/**Î
- * Created by ronin on 20.09.16
- */
 @Service
 public class TestService
         implements RemoteService {

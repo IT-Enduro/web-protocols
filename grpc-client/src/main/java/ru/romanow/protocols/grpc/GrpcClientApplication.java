@@ -8,9 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.romanow.protocols.grpc.service.TestGrpcClient;
 
-/**
- * Created by romanow on 03.10.17.
- */
 @SpringBootApplication
 public class GrpcClientApplication
         implements CommandLineRunner {

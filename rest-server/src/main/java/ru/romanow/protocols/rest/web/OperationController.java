@@ -14,7 +14,7 @@ import ru.romanow.protocols.api.model.TestObjectRequest;
 import ru.romanow.protocols.api.model.TestObjectResponse;
 
 @RestController
-@Api(value = "/api/op", description = "Business operation controller")
+@Api(value = "/api/op")
 @RequestMapping("/api/op")
 public class OperationController {
     private static final Logger logger = LoggerFactory.getLogger(OperationController.class);

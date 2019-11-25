@@ -10,9 +10,6 @@ import java.util.stream.Stream;
 
 import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse.newBuilder;
 
-/**
- * Created by romanow on 03.10.17.
- */
 @GRpcService
 public class TestGrpcService
         extends TestServiceGrpc.TestServiceImplBase {

@@ -5,9 +5,6 @@ import org.apache.commons.lang3.RandomUtils;
 import ru.romanow.protocols.api.model.TestObjectRequest;
 import ru.romanow.protocols.api.model.TestObjectResponse;
 
-/**
- * Created by ronin on 16.09.16
- */
 public class BaseWebService {
 
     public TestObjectResponse processRequest(TestObjectRequest request) {

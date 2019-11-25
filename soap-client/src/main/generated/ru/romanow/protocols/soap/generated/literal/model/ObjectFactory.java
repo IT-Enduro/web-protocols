@@ -35,19 +35,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TestObjectRequest }
-     * 
-     */
-    public TestObjectRequest createTestObjectRequest() {
-        return new TestObjectRequest();
-    }
-
-    /**
      * Create an instance of {@link TestObjectResponse }
      * 
      */
     public TestObjectResponse createTestObjectResponse() {
         return new TestObjectResponse();
+    }
+
+    /**
+     * Create an instance of {@link TestObjectRequest }
+     * 
+     */
+    public TestObjectRequest createTestObjectRequest() {
+        return new TestObjectRequest();
     }
 
     /**

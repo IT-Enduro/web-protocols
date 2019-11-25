@@ -10,9 +10,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import static springfox.documentation.builders.PathSelectors.any;
 import static springfox.documentation.builders.RequestHandlerSelectors.withClassAnnotation;
 
-/**
- * Created by ronin on 20.09.16
- */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {

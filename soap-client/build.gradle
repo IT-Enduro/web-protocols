@@ -1,13 +1,13 @@
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'no.nils.wsdl2java'
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "no.nils.wsdl2java"
 
 wsdl2java {
     generatedWsdlDir = file("${projectDir}/src/main/generated")
     wsdlsToGenerate = [
-            ['-p','ru.romanow.protocols.soap.generated.literal.model',
+            ["-p","ru.romanow.protocols.soap.generated.literal.model",
              "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
-            ['-p','ru.romanow.protocols.soap.generated.wrapped.model',
+            ["-p","ru.romanow.protocols.soap.generated.wrapped.model",
              "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
     ]
 }
@@ -18,6 +18,23 @@ wsdl2javaExt {
 
 dependencies {
     compile project(":soap-protocol")
+    
     compile "org.springframework.boot:spring-boot-starter"
     compile "org.springframework.boot:spring-boot-starter-logging"
+
+    wsdl2java "com.sun.xml.bind:jaxb-xjc:${jaxbXjcVersion}"
+    wsdl2java "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    wsdl2java "javax.xml.ws:jaxws-api:${jaxwsApiVersion}"
+    wsdl2java "org.apache.cxf:cxf-rt-wsdl:${cxfVersion}"
+    wsdl2java "javax.jws:javax.jws-api:${jwsApiVersion}"
+
+    implementation "com.sun.xml.bind:jaxb-xjc:${jaxbXjcVersion}"
+    implementation "javax.xml.bind:jaxb-api:${jaxbApiVersion}"
+    implementation "javax.xml.ws:jaxws-api:${jaxwsApiVersion}"
+    implementation "org.apache.cxf:cxf-rt-wsdl:${cxfVersion}"
+    implementation "javax.jws:javax.jws-api:${jwsApiVersion}"
+}
+
+bootJar {
+    archiveFileName = "soap-client.jar"
 }

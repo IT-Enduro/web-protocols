@@ -15,7 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@Api(value = "/api/ping", description = "Simple ping controller")
+@Api(value = "/api/ping")
 @RequestMapping("/api/ping")
 public class PingController {
     private static final Logger logger = LoggerFactory.getLogger(PingController.class);

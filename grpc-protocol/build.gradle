@@ -52,6 +52,8 @@ task cleanGenerated {
 clean.dependsOn cleanGenerated
 
 dependencies {
+    compile "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"

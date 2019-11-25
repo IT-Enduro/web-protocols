@@ -6,9 +6,6 @@ import ru.romanow.protocols.rpc.service.RemoteService;
 
 import java.util.Map;
 
-/**
- * Created by ronin on 20.09.16
- */
 public class SpringHandlerMapping
         extends AbstractReflectiveHandlerMapping {
 

@@ -6,9 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.romanow.protocols.soap.web.WebServiceClient;
 
-/**
- * Created by ronin on 18.09.16
- */
 @AllArgsConstructor
 @SpringBootApplication
 public class SoapClientApplication

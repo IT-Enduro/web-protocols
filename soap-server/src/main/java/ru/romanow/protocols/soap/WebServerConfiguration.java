@@ -11,9 +11,6 @@ import ru.romanow.protocols.soap.web.*;
 
 import javax.xml.ws.Endpoint;
 
-/**
- * Created by ronin on 16.09.16
- */
 @Configuration
 public class WebServerConfiguration {
 

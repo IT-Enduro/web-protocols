@@ -30,3 +30,7 @@ dependencies {
 
     asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
 }
+
+bootJar {
+    archiveFileName = "rest-server.jar"
+}

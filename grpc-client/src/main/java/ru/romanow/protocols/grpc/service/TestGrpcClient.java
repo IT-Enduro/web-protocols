@@ -8,9 +8,6 @@ import ru.romanow.protocols.grpc.TestServiceOuterClass;
 
 import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest.newBuilder;
 
-/**
- * Created by romanow on 03.10.17.
- */
 @Service
 public class TestGrpcClient {
 

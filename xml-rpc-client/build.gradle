@@ -11,3 +11,7 @@ dependencies {
     compile "org.apache.xmlrpc:xmlrpc-client:${xmlrpcVersion}"
     compile "org.apache.httpcomponents:httpclient"
 }
+
+bootJar {
+    archiveFileName = "xml-rpc-client.jar"
+}

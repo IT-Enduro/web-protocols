@@ -9,9 +9,6 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-/**
- * Created by ronin on 16.09.16
- */
 @WebService(name = "WebServiceRpcEncoded")
 @SOAPBinding(style = SOAPBinding.Style.RPC,
         use = SOAPBinding.Use.ENCODED,

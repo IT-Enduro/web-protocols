@@ -12,9 +12,6 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-/**
- * Created by ronin on 20.09.16
- */
 @Configuration
 @EnableWebMvc
 public class WebConfiguration

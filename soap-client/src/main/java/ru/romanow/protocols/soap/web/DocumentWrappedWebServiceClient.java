@@ -8,9 +8,6 @@ import ru.romanow.protocols.soap.generated.wrapped.model.TestObjectRequest;
 import ru.romanow.protocols.soap.generated.wrapped.model.TestObjectResponse;
 import ru.romanow.protocols.soap.generated.wrapped.model.WebServiceDocumentWrapped;
 
-/**
- * Created by ronin on 18.09.16
- */
 public class DocumentWrappedWebServiceClient
         implements WebServiceClient {
     private static final Logger logger = LoggerFactory.getLogger(WebServiceClient.class);

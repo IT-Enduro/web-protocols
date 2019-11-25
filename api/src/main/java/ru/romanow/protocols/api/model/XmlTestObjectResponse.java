@@ -5,9 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Created by ronin on 25.09.16
- */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class XmlTestObjectResponse

@@ -35,19 +35,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProcessRequest }
-     * 
-     */
-    public ProcessRequest createProcessRequest() {
-        return new ProcessRequest();
-    }
-
-    /**
      * Create an instance of {@link ProcessRequestResponse }
      * 
      */
     public ProcessRequestResponse createProcessRequestResponse() {
         return new ProcessRequestResponse();
+    }
+
+    /**
+     * Create an instance of {@link ProcessRequest }
+     * 
+     */
+    public ProcessRequest createProcessRequest() {
+        return new ProcessRequest();
     }
 
     /**

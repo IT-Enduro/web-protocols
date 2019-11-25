@@ -17,9 +17,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 
-/**
- * Created by ronin on 20.09.16
- */
 @Service
 public class RpcClientImpl
         implements RpcClient {

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.romanow.protocols.graphql.domain.Author;
 import ru.romanow.protocols.graphql.model.AuthorResponse;
-import ru.romanow.protocols.graphql.model.CreateAuthorRequest;
 import ru.romanow.protocols.graphql.repository.AuthorRepository;
 
 import javax.annotation.Nonnull;
@@ -44,23 +43,22 @@ public class AuthorServiceImpl
                 .collect(toList());
     }
 
-    @Nonnull
-    @Override
-    @Transactional
-    public AuthorResponse createAuthor(@Nonnull CreateAuthorRequest authorRequest) {
-        Author author = new Author()
-                .setName(authorRequest.getName())
-                .setAge(authorRequest.getAge())
-                .setExperience(authorRequest.getExperience());
-
-        author = authorRepository.save(author);
-
-        return buildAuthorInfo(author);
-    }
-
     @Override
     @Transactional(readOnly = true)
     public int getAuthorBooksCount(@Nonnull Integer authorId) {
         return authorRepository.getAuthorBooksCount(authorId);
+    }
+
+    @Nonnull
+    @Override
+    public AuthorResponse createAuthor(@Nonnull String name, @Nullable Integer age, @Nullable Integer experience) {
+        Author author = new Author()
+                .setName(name)
+                .setAge(age)
+                .setExperience(experience);
+
+        author = authorRepository.save(author);
+
+        return buildAuthorInfo(author);
     }
 }

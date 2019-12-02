@@ -12,8 +12,10 @@ dependencies {
     compile "io.projectreactor:reactor-core"
     compile "io.reactivex.rxjava2:rxjava"
 
-    compile "io.leangen.graphql:spqr:${graphQLVersion}"
-    compile "io.leangen.graphql:graphql-spqr-spring-boot-starter:${graphQLSpringVersion}"
+    compile "com.graphql-java-kickstart:graphql-java-tools:${graphQLJavaVersion}"
+    compile "com.graphql-java-kickstart:graphql-spring-boot-starter:${graphQLSpringVersion}"
+//    runtime "com.graphql-java-kickstart:voyager-spring-boot-starter:${graphQLSpringVersion}"
+    runtime "com.graphql-java-kickstart:altair-spring-boot-starter:${graphQLSpringVersion}"
 }
 
 bootJar {

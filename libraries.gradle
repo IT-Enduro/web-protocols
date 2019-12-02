@@ -17,8 +17,8 @@ ext {
     protobufVersion = "3.5.1"
 
     grpcSpringVersion = "2.3.2"
-    graphQLVersion = "0.10.0"
-    graphQLSpringVersion = "0.0.4"
+    graphQLJavaVersion = "5.6.0"
+    graphQLSpringVersion = "6.0.0"
 
     swaggerSpringVersion = "2.9.2"
     swaggerVersion = "1.5.21"

@@ -1,0 +1,41 @@
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+type Query {
+    author(id: ID!): AuthorResponse
+    authors: [AuthorResponse]
+    exception: Int
+    books: [BookReponse]
+}
+
+type Mutation {
+    createAuthor(name: String!, age: Int, experience: Int): AuthorResponse
+}
+
+type Subscription {
+    newBooks: SubscriptionInfo
+}
+
+type AuthorResponse {
+    id: ID!
+    name: String!
+    age: Int
+    experience: Int
+}
+
+type BookReponse {
+    id: ID!
+    name: String!
+    isn: String
+    price: Int
+    pageCount: Int
+    author: AuthorResponse
+}
+
+type SubscriptionInfo {
+    name: String
+    price: Int
+}

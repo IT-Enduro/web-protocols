@@ -1,7 +1,6 @@
 package ru.romanow.protocols.graphql.service;
 
 import ru.romanow.protocols.graphql.model.AuthorResponse;
-import ru.romanow.protocols.graphql.model.CreateAuthorRequest;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,8 +14,8 @@ public interface AuthorService {
     @Nonnull
     List<AuthorResponse> getAuthors();
 
-    @Nonnull
-    AuthorResponse createAuthor(@Nonnull CreateAuthorRequest authorRequest);
-
     int getAuthorBooksCount(@Nonnull Integer authorId);
+
+    @Nonnull
+    AuthorResponse createAuthor(@Nonnull String name, @Nullable Integer age, @Nullable Integer experience);
 }

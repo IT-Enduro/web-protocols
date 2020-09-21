@@ -3,4 +3,5 @@ dependencies {
 
     compile "javax.jws:javax.jws-api:$jwsApiVersion"
     compile "javax.xml.ws:jaxws-api:$xmlWsVersion"
+    compile "dom4j:dom4j:$dom4jVersion"
 }

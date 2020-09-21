@@ -16,6 +16,7 @@ ext {
     guavaVersion = "20.0"
     commonsLangVersion = "3.7"
     apacheHttpClient = "3.1"
+    dom4jVersion = "1.6.1"
 
     openApiVersion = "1.4.6"
     groovyVersion = "2.5.8"

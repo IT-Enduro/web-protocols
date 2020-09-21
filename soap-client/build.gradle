@@ -8,7 +8,9 @@ wsdl2java {
             ["-p","ru.romanow.protocols.soap.generated.literal.model",
              "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
             ["-p","ru.romanow.protocols.soap.generated.wrapped.model",
-             "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"]
+             "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"],
+            ["-p","ru.romanow.protocols.soap.generated.rpc.model",
+             "$projectDir/src/main/resources/wsdl/rpc-literal.wsdl"]
     ]
 }
 

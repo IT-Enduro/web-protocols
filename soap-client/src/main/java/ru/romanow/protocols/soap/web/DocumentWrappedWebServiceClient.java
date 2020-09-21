@@ -8,6 +8,8 @@ import ru.romanow.protocols.soap.generated.wrapped.model.TestObjectRequest;
 import ru.romanow.protocols.soap.generated.wrapped.model.TestObjectResponse;
 import ru.romanow.protocols.soap.generated.wrapped.model.WebServiceDocumentWrapped;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 public class DocumentWrappedWebServiceClient
         implements WebServiceClient {
     private static final Logger logger = LoggerFactory.getLogger(WebServiceClient.class);
@@ -25,9 +27,15 @@ public class DocumentWrappedWebServiceClient
         request.setId(RandomUtils.nextInt(0, 1000));
         request.setSearchString(RandomStringUtils.randomAlphabetic(10));
 
-        logger.info("Request [{}]", request);
+        logger.info("Request [{}]", toStringHelper(request)
+                .add("id", request.getId())
+                .add("searchString", request.getSearchString())
+                .toString());
 
         TestObjectResponse response = webService.processRequest(request);
-        logger.info("Response [{}]", response);
+        logger.info("Response [{}]", toStringHelper(response)
+                .add("code", response.getCode())
+                .add("data", response.getData())
+                .toString());
     }
 }

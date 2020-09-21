@@ -12,14 +12,16 @@ public class SoapClientApplication
         implements CommandLineRunner {
     private final WebServiceClient documentEncodedWebServiceClient;
     private final WebServiceClient documentLiteralWebServiceClient;
+    private final WebServiceClient rpcLiteralWebServiceClient;
 
     public static void main(String[] args) {
         SpringApplication.run(SoapClientApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         documentEncodedWebServiceClient.makeRequest();
         documentLiteralWebServiceClient.makeRequest();
+        rpcLiteralWebServiceClient.makeRequest();
     }
 }

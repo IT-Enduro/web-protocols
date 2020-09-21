@@ -9,6 +9,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -17,8 +18,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class WebConfiguration
         extends WebMvcConfigurationSupport {
 
-    @Value("${springfox.documentation.swagger.v2.path}")
-    private String swaggerPath;
+    @Value("${springdoc.api-docs.path}")
+    private String openApiPath;
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -27,17 +28,8 @@ public class WebConfiguration
                 .mediaType("xml", MediaType.APPLICATION_XML);
     }
 
-    @Bean
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
-        bean.setOrder(0);
-        return bean;
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping(openApiPath);
     }
 }

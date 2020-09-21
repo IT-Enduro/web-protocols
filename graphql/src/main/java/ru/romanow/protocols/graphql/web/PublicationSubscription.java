@@ -1,6 +1,6 @@
 package ru.romanow.protocols.graphql.web;
 
-import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
+import graphql.kickstart.tools.GraphQLSubscriptionResolver;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

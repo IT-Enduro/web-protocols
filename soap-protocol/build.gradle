@@ -1,6 +1,6 @@
 dependencies {
     compile project(":api")
 
-    compile "javax.jws:javax.jws-api:${jwsApiVersion}"
-    compile "javax.xml.ws:jaxws-api:${xmlWsVersion}"
+    compile "javax.jws:javax.jws-api:$jwsApiVersion"
+    compile "javax.xml.ws:jaxws-api:$xmlWsVersion"
 }

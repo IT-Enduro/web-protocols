@@ -1,24 +1,24 @@
-apply plugin: 'com.google.protobuf'
+apply plugin: "com.google.protobuf"
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+        artifact = "com.google.protobuf:protoc:$protobufVersion"
     }
     plugins {
         grpc {
-            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
         }
     }
     generateProtoTasks {
-        ofSourceSet('main').each { task ->
+        ofSourceSet("main").each { task ->
             task.builtins {
                 java{
-                    outputSubDir = 'generated'
+                    outputSubDir = "generated"
                 }
             }
             task.plugins {
                 grpc {
-                    outputSubDir = 'generated'
+                    outputSubDir = "generated"
                 }
             }
         }
@@ -29,10 +29,10 @@ protobuf {
 sourceSets {
     main {
         proto {
-            srcDir 'src/main/proto'
+            srcDir "src/main/proto"
         }
         java {
-            srcDirs 'src/main/java'
+            srcDirs "src/main/java"
         }
     }
 }
@@ -45,17 +45,17 @@ idea {
 
 task cleanGenerated {
     doFirst{
-        delete("${projectDir}/src/main/generated")
+        delete("$projectDir/src/main/generated")
     }
 }
 
 clean.dependsOn cleanGenerated
 
 dependencies {
-    compile "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}"
+    compile "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
 
-    compile "io.grpc:grpc-netty:${grpcVersion}"
-    compile "io.grpc:grpc-protobuf:${grpcVersion}"
-    compile "io.grpc:grpc-stub:${grpcVersion}"
-    compile "com.google.protobuf:protobuf-java:${protobufVersion}"
+    compile "io.grpc:grpc-netty:$grpcVersion"
+    compile "io.grpc:grpc-protobuf:$grpcVersion"
+    compile "io.grpc:grpc-stub:$grpcVersion"
+    compile "com.google.protobuf:protobuf-java:$protobufVersion"
 }

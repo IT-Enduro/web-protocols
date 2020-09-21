@@ -20,6 +20,6 @@ public class SoapClientApplication
     @Override
     public void run(String... args) throws Exception {
         documentEncodedWebServiceClient.makeRequest();
-//        documentLiteralWebServiceClient.makeRequest();
+        documentLiteralWebServiceClient.makeRequest();
     }
 }

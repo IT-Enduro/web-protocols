@@ -1,22 +1,22 @@
-rootProject.name = 'web-protocols'
+rootProject.name = "web-protocols"
 
-include 'api'
+include "api"
 
-include 'soap-protocol'
-include 'soap-server'
-include 'soap-client'
+include "soap-protocol"
+include "soap-server"
+include "soap-client"
 
-include 'xml-rpc-server'
-include 'xml-rpc-client'
+include "xml-rpc-server"
+include "xml-rpc-client"
 
-include 'grpc-protocol'
-include 'grpc-server'
-include 'grpc-client'
+include "grpc-protocol"
+include "grpc-server"
+include "grpc-client"
 
-include 'rest-server'
+include "rest-server"
 
-include 'graphql'
+include "graphql"
 
-include 'consumer'
-include 'producer'
+include "consumer"
+include "producer"
 

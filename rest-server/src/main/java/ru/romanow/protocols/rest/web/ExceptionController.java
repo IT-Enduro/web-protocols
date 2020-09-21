@@ -1,5 +1,6 @@
 package ru.romanow.protocols.rest.web;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import ru.romanow.protocols.api.model.ErrorResponse;
 public class ExceptionController {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
 
+    @ApiResponse(responseCode = "418", description = "Fatal Error", ref = "teapot-error")
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
     @ExceptionHandler(TooLowArgumentException.class)
     public ErrorResponse exception(TooLowArgumentException exception) {
@@ -20,6 +22,7 @@ public class ExceptionController {
         return new ErrorResponse(exception.getMessage());
     }
 
+    @ApiResponse(responseCode = "500", description = "Server Error", ref = "server-error")
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ErrorResponse exception(Exception exception) {

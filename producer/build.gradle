@@ -1,19 +1,19 @@
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'spring-cloud-contract'
-apply plugin: 'org.asciidoctor.convert'
-apply plugin: 'maven-publish'
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "spring-cloud-contract"
+apply plugin: "org.asciidoctor.convert"
+apply plugin: "maven-publish"
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
     }
 }
 
 contracts {
     baseClassMappings {
-        baseClassMapping '.*operation.*', 'ru.romanow.protocols.producer.web.BaseOperationControllerTest'
-        baseClassMapping '.*ping.*', 'ru.romanow.protocols.producer.web.BasePingControllerTest'
+        baseClassMapping ".*operation.*", "ru.romanow.protocols.producer.web.BaseOperationControllerTest"
+        baseClassMapping ".*ping.*", "ru.romanow.protocols.producer.web.BasePingControllerTest"
     }
     basePackageForTests = "ru.romanow.protocols.producer.web"
 }
@@ -28,16 +28,16 @@ publishing {
 }
 
 ext {
-    snippetsDir = file('build/generated-snippets')
-    htmlOutputDir = file('build/generated-html')
+    snippetsDir = file("build/generated-snippets")
+    htmlOutputDir = file("build/generated-html")
 }
 
 asciidoctor {
     inputs.dir snippetsDir
-    sourceDir 'src/main/asciidoc'
+    sourceDir "src/main/asciidoc"
     outputDir htmlOutputDir
 
-    attributes 'snippets': snippetsDir
+    attributes "snippets": snippetsDir
     dependsOn test
 }
 
@@ -46,7 +46,7 @@ dependencies {
 
     compile "org.springframework.boot:spring-boot-starter-web"
 
-    testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.springframework.cloud:spring-cloud-contract-spec"
     testCompile "org.springframework.cloud:spring-cloud-starter-contract-verifier"

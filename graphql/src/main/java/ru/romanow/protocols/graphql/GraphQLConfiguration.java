@@ -1,13 +1,11 @@
 package ru.romanow.protocols.graphql;
 
-import com.coxautodev.graphql.tools.SchemaParser;
 import graphql.GraphQL;
 import graphql.analysis.MaxQueryComplexityInstrumentation;
 import graphql.analysis.MaxQueryDepthInstrumentation;
 import graphql.execution.AsyncExecutionStrategy;
 import graphql.execution.instrumentation.ChainedInstrumentation;
 import graphql.schema.GraphQLSchema;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

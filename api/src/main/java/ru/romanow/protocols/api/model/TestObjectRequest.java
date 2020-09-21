@@ -11,7 +11,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestObjectRequest {
+public class TestObjectRequest
+        implements Serializable {
     private Integer id;
     private String searchString;
 }

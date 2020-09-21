@@ -1,18 +1,18 @@
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'org.asciidoctor.convert'
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "org.asciidoctor.convert"
 
 ext {
-    snippetsDir = file('build/generated-snippets')
-    htmlOutputDir = file('build/generated-html')
+    snippetsDir = file("build/generated-snippets")
+    htmlOutputDir = file("build/generated-html")
 }
 
 asciidoctor {
     inputs.dir snippetsDir
-    sourceDir 'src/main/asciidoc'
+    sourceDir "src/main/asciidoc"
     outputDir htmlOutputDir
 
-    attributes 'snippets': snippetsDir
+    attributes "snippets": snippetsDir
     dependsOn test
 }
 
@@ -21,10 +21,9 @@ dependencies {
 
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "javax.xml.bind:jaxb-api"
-    compile "io.swagger:swagger-annotations:${swaggerVersion}"
-    compile "io.springfox:springfox-swagger2:${swaggerSpringVersion}"
+    compile "org.springdoc:springdoc-openapi-webmvc-core:$openApiVersion"
 
-    testCompile "com.google.code.gson:gson:${gsonVersion}"
+    testCompile "com.google.code.gson:gson:$gsonVersion"
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "org.springframework.restdocs:spring-restdocs-mockmvc"
 

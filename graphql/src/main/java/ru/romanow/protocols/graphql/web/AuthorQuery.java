@@ -1,7 +1,6 @@
 package ru.romanow.protocols.graphql.web;
 
-import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.coxautodev.graphql.tools.GraphQLResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.romanow.protocols.graphql.model.AuthorResponse;

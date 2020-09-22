@@ -41,9 +41,9 @@ public class OperationControllerTest {
 
         mockMvc.perform(post("/api/op/process")
                 .content(gson.toJson(request))
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.code").value(CODE))
                 .andExpect(jsonPath("$.data").value(NAME))
                 .andDo(
@@ -68,9 +68,9 @@ public class OperationControllerTest {
 
         mockMvc.perform(post("/api/op/process")
                 .content(gson.toJson(request))
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isIAmATeapot())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value("Id '1' too low"));
     }
 }

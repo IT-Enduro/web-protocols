@@ -16,25 +16,24 @@ import ru.romanow.protocols.api.model.PingResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.*;
+
 
 @RestController
 @Tag(name = "/api/ping")
-@RequestMapping("/api/ping")
+@RequestMapping("/api")
 public class PingController {
     private static final Logger logger = LoggerFactory.getLogger(PingController.class);
 
     @Operation(description = "Ping")
-    @ApiResponse(content = @Content(mediaType = APPLICATION_JSON_UTF8_VALUE, schema = @Schema(implementation = PingResponse.class)))
-    @GetMapping(produces = APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/ping", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
     public PingResponse ping() {
         logger.info("Request to '/ping'");
         return new PingResponse("ok");
     }
 
     @Operation(description = "Set cookies")
-    @ApiResponse(content = @Content(mediaType = APPLICATION_JSON_UTF8_VALUE, schema = @Schema(implementation = PingResponse.class)))
-    @GetMapping(value = "/cookies", produces = APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/cookies", produces = APPLICATION_JSON_VALUE)
     public PingResponse setCookies(HttpServletResponse response) {
         logger.info("Request to '/cookies'");
         response.addCookie(createCookie("TestCookie", RandomStringUtils.randomAlphabetic(5)));

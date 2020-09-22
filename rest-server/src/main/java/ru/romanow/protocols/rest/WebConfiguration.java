@@ -14,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Configuration
-@EnableWebMvc
 public class WebConfiguration
         extends WebMvcConfigurationSupport {
 
@@ -23,13 +22,13 @@ public class WebConfiguration
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.defaultContentType(MediaType.APPLICATION_JSON_UTF8)
-                .mediaType("json", MediaType.APPLICATION_JSON_UTF8)
+        configurer.defaultContentType(MediaType.APPLICATION_JSON)
+                .mediaType("json", MediaType.APPLICATION_JSON)
                 .mediaType("xml", MediaType.APPLICATION_XML);
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping(openApiPath);
+        registry.addMapping(openApiPath).allowedOrigins("*");
     }
 }

@@ -28,7 +28,7 @@ public class PingControllerTest {
     public void testPing() throws Exception {
         mockMvc.perform(get("/api/ping"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.response").value("ok"))
                 .andDo(document("ping",
                         responseFields(
@@ -39,9 +39,9 @@ public class PingControllerTest {
 
     @Test
     public void testSetCookie() throws Exception {
-        mockMvc.perform(get("/api/ping/cookies"))
+        mockMvc.perform(get("/api/cookies"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(cookie().exists("TestCookie"))
                 .andExpect(jsonPath("$.response").value("ok"))
                 .andDo(document("cookies",

@@ -13,7 +13,7 @@ import ru.romanow.protocols.api.model.PingResponse;
 public class PingController {
     private static final Logger logger = LoggerFactory.getLogger(PingController.class);
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PingResponse ping() {
         logger.info("Request to '/cookies'");
         return new PingResponse("ok");

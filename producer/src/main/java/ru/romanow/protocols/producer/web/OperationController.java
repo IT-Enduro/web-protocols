@@ -21,8 +21,8 @@ public class OperationController {
     private static final String NAME = "TEST";
 
     @PostMapping(value = "/process",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public TestObjectResponse processRequest(
             @RequestBody TestObjectRequest request) {
         logger.info("Request to '/api/op/process' with params: '{}'", request);

@@ -1,4 +1,4 @@
-package ru.romanow.protocols.graphql.web;
+package ru.romanow.protocols.graphql.queries;
 
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.AllArgsConstructor;

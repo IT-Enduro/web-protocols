@@ -8,6 +8,7 @@ type Query {
     author(id: ID!): AuthorResponse
     authors: [AuthorResponse]
     exception: Int
+#    booksCount: Int
     books: [BookReponse]
 }
 
@@ -24,6 +25,7 @@ type AuthorResponse {
     name: String!
     age: Int
     experience: Int
+    booksCount: Int
 }
 
 type BookReponse {

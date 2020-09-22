@@ -17,9 +17,7 @@ public class TestGrpcService
     @Override
     public void simpleRequest(TestServiceOuterClass.TestRequest request, StreamObserver<TestServiceOuterClass.TestResponse> responseObserver) {
         long start = System.currentTimeMillis();
-        String result = request.getMessageList()
-                               .stream()
-                               .collect(Collectors.joining(", "));
+        String result = String.join(", ", request.getMessageList());
 
         TestServiceOuterClass.TestResponse.Builder builder = newBuilder();
 

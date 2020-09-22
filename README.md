@@ -11,23 +11,26 @@
 1. [SOAP клиент](/soap-client) – SOAP клиент, генерирует DTO-объекты [wsdl](/soap-client/src/main/resources/wsdl). Запросы и ответы логгирует в stdout.
 
 ### GraphQL
-1. [GrahQL](/graphql) –
+[GrahQL](/graphql) – GraphQL сервер, [описание схемы](/graphql/src/main/resources/schema/authros.graphqls).
+Для запросов можно использовать _встроенный_ [GraphQL ALtair](https://altair.sirmuel.design/) по адресу `http://localhost:8080/altair`,
+для просмотра всей схемы можно использовать [Voyager](https://apis.guru/graphql-voyager/) по адресу `http://localhost:8080/voyager`.
+Т.к. эти два модуля идут как встроенные модули, они сразу отображают текущую схему.  
 
 ### gRPC
-1. [gRPC сервер](/grpc-server) –
-1. [gRPC клиент](/grpc-client) –
+1. [gRPC сервер](/grpc-server) – gRPC сервер, запускается вместо HTTP. Работает в режиме запрос-ответ.
+1. [gRPC клиент](/grpc-client) – gRPC клиент.
 
 ### REST
-1. [REST сервер](/rest-server) – REST сервер, методы:
-  * /api/ping – простой ping, возвращает OK.
-  * /api/cookie – утсанавливает Cookie.
-  * /api/op/process – на вход принимает `id`, если `id` < 100, то выкидывается 418 ошибка.
+[REST сервер](/rest-server) – REST сервер, методы:
+* /api/ping – простой ping, возвращает OK.
+* /api/cookie – утсанавливает Cookie.
+* /api/op/process – на вход принимает `id`, если `id` < 100, то выкидывается 418 ошибка.
   
 По /api-docs генериуется OpenAPI спецификация, для просмотра в браузере развернуть локально Swagger UI:
 ```shell script
 docker run -p 8010:8080 swaggerapi/swagger-ui
 ``` 
-Так же используется генерация ASCIIdoc документации по тестам, `./gradlew :rest-server:asciidoctor`. 
+Так же используется генерация ASCIIdoc документации по тестам, `./gradlew :rest-server:asciidoctor`. Результат запуска будет распологаться в папке [/rest-server/build/generated-html/html5/index.html](/rest-server/build/generated-html/html5/index.html). 
 
 ### Contract Driven Development
 1. [Consumer](/consumer) –

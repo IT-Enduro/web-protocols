@@ -15,6 +15,7 @@ dependencies {
     compile "com.graphql-java-kickstart:graphql-java-tools:$graphQLJavaVersion"
     compile "com.graphql-java-kickstart:graphql-spring-boot-starter:$graphQLSpringVersion"
     runtime "com.graphql-java-kickstart:altair-spring-boot-starter:$graphQLSpringVersion"
+    runtime "com.graphql-java-kickstart:voyager-spring-boot-starter:$graphQLSpringVersion"
 }
 
 bootJar {

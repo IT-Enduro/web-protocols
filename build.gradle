@@ -14,7 +14,7 @@ ext {
     jaxbVersion = "2.3.1"
     gsonVersion = "2.8.5"
     guavaVersion = "20.0"
-    commonsLangVersion = "3.7"
+    commonsLangVersion = "3.11"
     apacheHttpClient = "3.1"
     dom4jVersion = "1.6.1"
 

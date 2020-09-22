@@ -1,4 +1,4 @@
-package ru.romanow.protocols.graphql.web;
+package ru.romanow.protocols.graphql.queries;
 
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.AllArgsConstructor;
@@ -20,10 +20,6 @@ public class AuthorQuery
 
     public List<AuthorResponse> authors() {
         return authorService.getAuthors();
-    }
-
-    public Integer booksCount(AuthorResponse response) {
-        return authorService.getAuthorBooksCount(response.getId());
     }
 
     public Integer exception() {

@@ -8,8 +8,6 @@ import ru.romanow.protocols.graphql.model.BookResponse;
 import javax.annotation.Nonnull;
 
 public class BuilderHelper {
-
-
     public static AuthorResponse buildAuthorInfo(@Nonnull Author author) {
         return new AuthorResponse()
                 .setId(author.getId())

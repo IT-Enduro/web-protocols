@@ -17,6 +17,6 @@ include "rest-server"
 
 include "graphql"
 
-include "consumer"
 include "producer"
+include "consumer"
 

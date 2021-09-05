@@ -6,25 +6,24 @@ import org.springframework.stereotype.Service;
 import ru.romanow.protocols.grpc.TestServiceGrpc;
 import ru.romanow.protocols.grpc.TestServiceOuterClass;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest.newBuilder;
 
 @Service
 public class TestGrpcClient {
+    private TestServiceGrpc.TestServiceBlockingStub testService;
+    private ManagedChannel channel;
 
-    private final TestServiceGrpc.TestServiceBlockingStub testService;
-    private final ManagedChannel channel;
-
-    public TestGrpcClient() {
+    @PostConstruct
+    public void init() {
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 6565)
+                .forAddress("localhost", 6565).disableServiceConfigLookUp()
                 .usePlaintext()
                 .build();
 
         testService = TestServiceGrpc.newBlockingStub(channel);
-    }
-
-    public void shutdown() {
-        channel.shutdownNow();
     }
 
     public TestServiceOuterClass.TestResponse testClient() {
@@ -35,5 +34,10 @@ public class TestGrpcClient {
                 .build();
 
         return testService.simpleRequest(request);
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        channel.shutdownNow();
     }
 }

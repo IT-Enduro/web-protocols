@@ -1,27 +1,25 @@
 package ru.romanow.protocols.soap;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import ru.romanow.protocols.soap.web.WebServiceClient;
 
-@AllArgsConstructor
-@SpringBootApplication
-public class SoapClientApplication
-        implements CommandLineRunner {
-    private final WebServiceClient documentEncodedWebServiceClient;
-    private final WebServiceClient documentLiteralWebServiceClient;
-    private final WebServiceClient rpcLiteralWebServiceClient;
+import java.util.List;
 
+@AllArgsConstructor
+public class SoapClientApplication {
     public static void main(String[] args) {
         SpringApplication.run(SoapClientApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) {
-        documentEncodedWebServiceClient.makeRequest();
-        documentLiteralWebServiceClient.makeRequest();
-        rpcLiteralWebServiceClient.makeRequest();
+    @Bean
+    @Profile("!test")
+    public ApplicationRunner runner(List<WebServiceClient> clients) {
+        return (args) -> clients.forEach(WebServiceClient::makeRequest);
     }
 }

@@ -7,7 +7,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-websocket"
+
     implementation "org.postgresql:postgresql"
+    implementation "org.flywaydb:flyway-core"
 
     implementation "io.projectreactor:reactor-core"
     implementation "io.reactivex.rxjava2:rxjava"
@@ -16,6 +18,9 @@ dependencies {
     implementation "com.graphql-java-kickstart:graphql-spring-boot-starter:$graphQLJavaVersion"
     runtimeOnly "com.graphql-java-kickstart:altair-spring-boot-starter:$graphQLJavaVersion"
     runtimeOnly "com.graphql-java-kickstart:voyager-spring-boot-starter:$graphQLJavaVersion"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.testcontainers:postgresql:$postgresContainerVersion"
 }
 
 bootJar {

@@ -37,15 +37,12 @@
 
 [REST сервер](/rest-server) – REST сервер, методы:
 
-* /api/ping – простой ping, возвращает OK.
-* /api/cookie – утсанавливает Cookie.
-* /api/op/process – на вход принимает `id`, если `id` < 100, то выкидывается 418 ошибка.
+* `GET /api/ping` – простой ping, возвращает OK.
+* `GET /api/cookie` – утсанавливает Cookie.
+* `GET /api/op/process` – на вход принимает `id`, если `id` < 100, то выкидывается 418 ошибка.
 
-По /api-docs генериуется OpenAPI спецификация, для просмотра в браузере развернуть локально Swagger UI:
-
-```shell script
-docker run -p 8010:8080 swaggerapi/swagger-ui
-``` 
+По /api-docs генериуется OpenAPI спецификация, для просмотра в браузере используется Swagger
+UI `http://localhost:8080/swagger-ui.html`.
 
 Так же используется генерация ASCIIdoc документации по тестам, `./gradlew :rest-server:asciidoctor`. Результат запуска
 будет распологаться в

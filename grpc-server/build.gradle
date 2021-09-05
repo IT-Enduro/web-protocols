@@ -7,7 +7,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework.boot:spring-boot-starter-logging"
 
-    implementation "org.lognet:grpc-spring-boot-starter:$grpcSpringVersion"
+    implementation "io.github.lognet:grpc-spring-boot-starter:$grpcSpringVersion"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 bootJar {

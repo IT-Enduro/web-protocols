@@ -16,28 +16,49 @@ import ru.romanow.protocols.api.model.PingResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.springframework.http.MediaType.*;
-
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
-@Tag(name = "/api/ping")
-@RequestMapping("/api")
+@Tag(name = "Ping controller")
+@RequestMapping("/api/v1")
 public class PingController {
     private static final Logger logger = LoggerFactory.getLogger(PingController.class);
+    private static final String COOKIE_NAME = "TestCookie";
 
-    @Operation(description = "Ping")
-    @GetMapping(value = "/ping", produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
+    @Operation(
+            description = "Ping",
+            responses = @ApiResponse(
+                    description = "OK",
+                    responseCode = "200",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = PingResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = PingResponse.class))
+                    }
+            )
+    )
+    @GetMapping(value = "/ping", produces = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
     public PingResponse ping() {
-        logger.info("Request to '/ping'");
-        return new PingResponse("ok");
+        logger.info("Request to '/api/v1/ping'");
+        return new PingResponse("OK");
     }
 
-    @Operation(description = "Set cookies")
+    @Operation(
+            description = "Set cookies",
+            responses = @ApiResponse(
+                    description = "OK",
+                    responseCode = "200",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = PingResponse.class)),
+                            @Content(mediaType = "application/xml", schema = @Schema(implementation = PingResponse.class))
+                    }
+            )
+    )
     @GetMapping(value = "/cookies", produces = APPLICATION_JSON_VALUE)
     public PingResponse setCookies(HttpServletResponse response) {
         logger.info("Request to '/cookies'");
-        response.addCookie(createCookie("TestCookie", RandomStringUtils.randomAlphabetic(5)));
-        return new PingResponse("ok");
+        response.addCookie(createCookie(COOKIE_NAME, RandomStringUtils.randomAlphabetic(5)));
+        return new PingResponse("OK");
     }
 
     private Cookie createCookie(String cookieName, String cookieValue) {

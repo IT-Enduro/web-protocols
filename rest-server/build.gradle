@@ -22,6 +22,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "javax.xml.bind:jaxb-api"
     implementation "org.springdoc:springdoc-openapi-webmvc-core:$openApiVersion"
+    implementation "org.springdoc:springdoc-openapi-ui:$openApiVersion"
 
     testImplementation "com.google.code.gson:gson:$gsonVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test"

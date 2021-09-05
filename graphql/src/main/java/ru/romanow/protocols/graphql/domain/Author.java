@@ -11,14 +11,17 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "author")
+@Table(
+        name = "author",
+        indexes = @Index(name = "idx_author_name", columnList = "name")
+)
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "age")

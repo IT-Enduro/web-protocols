@@ -14,6 +14,8 @@ dependencies {
 
     implementation "javax.jws:javax.jws-api:$jwsApiVersion"
     implementation "javax.xml.ws:jaxws-api:$xmlWsVersion"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 bootJar {

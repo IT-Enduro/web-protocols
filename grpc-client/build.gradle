@@ -6,6 +6,8 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework.boot:spring-boot-starter-logging"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 bootJar {

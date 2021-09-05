@@ -49,6 +49,8 @@ dependencies {
     implementation "org.apache.cxf:cxf-rt-wsdl:$cxfVersion"
     implementation "javax.jws:javax.jws-api:$jwsApiVersion"
     implementation "com.sun.xml.ws:rt:$xmlWsVersion"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 bootJar {

@@ -1,11 +1,9 @@
 package ru.romanow.protocols.rest.web;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,22 +20,37 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
-@Tag(name = "/api/op")
-@RequestMapping("/api/op")
+@Tag(name = "Operation controller")
+@RequestMapping("/api/v1/operation")
 public class OperationController {
     private static final Logger logger = LoggerFactory.getLogger(OperationController.class);
 
     private static final Integer CODE = 100;
     private static final String NAME = "TEST";
 
-    @Operation(description = "Operation return simple response")
+    @Operation(
+            summary = "Operation return simple response",
+            responses = {
+                    @ApiResponse(
+                            description = "OK",
+                            responseCode = "200",
+                            content = {
+                                    @Content(mediaType = "application/json", schema = @Schema(implementation = TestObjectResponse.class)),
+                                    @Content(mediaType = "application/xml", schema = @Schema(implementation = TestObjectResponse.class))
+                            }
+                    ),
+                    @ApiResponse(
+                            description = "I'm a teapot",
+                            responseCode = "418",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    )
+            }
+    )
     @PostMapping(value = "/process",
-            consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE},
-            produces = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
-    public TestObjectResponse processRequest(
-            @Parameter(name = "Request object", required = true)
-            @RequestBody TestObjectRequest request) {
-        logger.info("Request to '/api/op/process' with params: '{}'", request);
+            consumes = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE },
+            produces = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
+    public TestObjectResponse processRequest(@RequestBody TestObjectRequest request) {
+        logger.info("Request to '/api/v1/operation/process' with params: '{}'", request);
         if (request.getId() < 100) {
             throw new TooLowArgumentException(String.format("Id '%d' too low", request.getId()));
         }

@@ -1,4 +1,4 @@
-package ru.romanow.protocols.soap;
+package ru.romanow.protocols.soap.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

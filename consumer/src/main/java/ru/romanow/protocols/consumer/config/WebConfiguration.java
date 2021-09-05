@@ -1,4 +1,4 @@
-package ru.romanow.protocols.consumer;
+package ru.romanow.protocols.consumer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

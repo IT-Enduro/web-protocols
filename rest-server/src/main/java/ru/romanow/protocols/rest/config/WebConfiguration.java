@@ -1,4 +1,4 @@
-package ru.romanow.protocols.rest;
+package ru.romanow.protocols.rest.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -17,18 +17,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class WebConfiguration
         extends WebMvcConfigurationSupport {
 
-    @Value("${springdoc.api-docs.path}")
-    private String openApiPath;
-
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaType("json", MediaType.APPLICATION_JSON)
                 .mediaType("xml", MediaType.APPLICATION_XML);
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping(openApiPath).allowedOrigins("*");
     }
 }

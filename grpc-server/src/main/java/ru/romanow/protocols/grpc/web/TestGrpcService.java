@@ -5,9 +5,6 @@ import org.lognet.springboot.grpc.GRpcService;
 import ru.romanow.protocols.grpc.TestServiceGrpc;
 import ru.romanow.protocols.grpc.TestServiceOuterClass;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse.newBuilder;
 
 @GRpcService

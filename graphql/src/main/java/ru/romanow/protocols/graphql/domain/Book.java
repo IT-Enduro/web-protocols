@@ -10,12 +10,13 @@ import javax.persistence.*;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "book",
-indexes = {
-        @Index(name = "idx_book_author", columnList = "author_id"),
-        @Index(name = "idx_book_name", columnList = "name"),
-        @Index(name = "idx_book_isn", columnList = "isn", unique = true),
-})
+@Table(
+        name = "book",
+        indexes = {
+                @Index(name = "idx_book_author", columnList = "author_id"),
+                @Index(name = "idx_book_name", columnList = "name"),
+                @Index(name = "idx_book_isn", columnList = "isn", unique = true),
+        })
 public class Book {
 
     @Id

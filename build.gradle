@@ -18,7 +18,7 @@ ext {
     apacheHttpClient = "3.1"
     dom4jVersion = "1.6.1"
 
-    openApiVersion = "1.4.6"
+    openApiVersion = "1.5.10"
     groovyVersion = "2.5.8"
 
     jwsApiVersion = "1.1"
@@ -35,10 +35,11 @@ ext {
     protobufVersion = "3.17.3"
     grpcSpringVersion = "4.5.6"
 
-    graphQLJavaVersion = "11.1.1"
+    graphQLJavaVersion = "11.1.0"
 
-    findBugsVersion = "3.0.2"
     lombokVersion = "1.18.2"
+
+    postgresContainerVersion = "1.16.0"
 }
 
 allprojects { ->

@@ -1,4 +1,4 @@
-package ru.romanow.protocols.soap;
+package ru.romanow.protocols.soap.config;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;

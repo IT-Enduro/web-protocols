@@ -1,4 +1,4 @@
-package ru.romanow.protocols.graphql;
+package ru.romanow.protocols.graphql.config;
 
 import graphql.GraphQL;
 import graphql.analysis.MaxQueryComplexityInstrumentation;

@@ -6,7 +6,7 @@ Contract.make({
     description('Test ping fail method')
     request {
         method 'POST'
-        url '/api/op/process'
+        url '/api/v1/operation/process'
         body(
             id: 101,
             searchString: 'test'

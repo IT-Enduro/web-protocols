@@ -6,12 +6,12 @@ Contract.make({
     description('Ping method')
     request {
         method 'GET'
-        url '/api/ping'
+        url '/api/v1/ping'
     }
     response {
         status 200
         body(
-                response: 'ok'
+                response: 'OK'
         )
         headers {
             contentType(applicationJson())

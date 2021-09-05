@@ -37,9 +37,9 @@
 
 [REST сервер](/rest-server) – REST сервер, методы:
 
-* `GET /api/ping` – простой ping, возвращает OK.
-* `GET /api/cookie` – утсанавливает Cookie.
-* `GET /api/op/process` – на вход принимает `id`, если `id` < 100, то выкидывается 418 ошибка.
+* `GET /api/v1/ping` – простой ping, возвращает OK.
+* `GET /api/v1/cookie` – утсанавливает Cookie.
+* `GET /api/v1/opertation/process` – на вход принимает `id`, если `id` < 100, то выкидывается 418 ошибка.
 
 По /api-docs генериуется OpenAPI спецификация, для просмотра в браузере используется Swagger
 UI `http://localhost:8080/swagger-ui.html`.

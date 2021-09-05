@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class PingServiceImpl
         implements PingService {
     private static final Logger logger = LoggerFactory.getLogger(PingService.class);
-    private static final String PING_PATH = "/api/ping";
+    private static final String PING_PATH = "/api/v1/ping";
 
     private final RestTemplate restTemplate;
 

@@ -16,7 +16,7 @@ import ru.romanow.protocols.consumer.exception.RestRequestException;
 public class OperationServiceImpl
         implements OperationService {
     private static final Logger logger = LoggerFactory.getLogger(OperationService.class);
-    private static final String OPERATION_PROCESS_PATH = "/api/op/process";
+    private static final String OPERATION_PROCESS_PATH = "/api/v1/operation/process";
 
     private final RestTemplate restTemplate;
 

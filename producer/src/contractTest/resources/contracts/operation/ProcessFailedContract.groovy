@@ -6,7 +6,7 @@ Contract.make({
     description('Test process fail method')
     request {
         method 'POST'
-        url '/api/op/process'
+        url '/api/v1/operation/process'
         body(
             id: 1,
             searchString: 'test'

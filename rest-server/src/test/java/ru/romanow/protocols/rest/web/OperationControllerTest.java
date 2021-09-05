@@ -35,7 +35,7 @@ public class OperationControllerTest {
         TestObjectRequest request =
                 new TestObjectRequest(id, searchString);
 
-        mockMvc.perform(post("/api/op/process")
+        mockMvc.perform(post("/api/v1/operation/process")
                 .content(gson.toJson(request))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -63,7 +63,7 @@ public class OperationControllerTest {
         TestObjectRequest request =
                 new TestObjectRequest(id, searchString);
 
-        mockMvc.perform(post("/api/op/process")
+        mockMvc.perform(post("/api/v1/operation/process")
                 .content(gson.toJson(request))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isIAmATeapot())

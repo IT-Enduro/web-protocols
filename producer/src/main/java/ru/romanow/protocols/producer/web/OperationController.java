@@ -25,7 +25,7 @@ public class OperationController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public TestObjectResponse processRequest(
             @RequestBody TestObjectRequest request) {
-        logger.info("Request to '/api/op/process' with params: '{}'", request);
+        logger.info("Request to '/api/v1/operation/process' with params: '{}'", request);
         if (request.getId() < 100) {
             throw new IllegalArgumentException(format("Id '%d' too low", request.getId()));
         }

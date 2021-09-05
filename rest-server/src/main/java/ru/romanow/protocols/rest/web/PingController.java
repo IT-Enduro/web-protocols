@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
+
 @RestController
 @Tag(name = "Ping controller")
 @RequestMapping("/api/v1")
@@ -31,10 +32,7 @@ public class PingController {
             responses = @ApiResponse(
                     description = "OK",
                     responseCode = "200",
-                    content = {
-                            @Content(mediaType = "application/json", schema = @Schema(implementation = PingResponse.class)),
-                            @Content(mediaType = "application/xml", schema = @Schema(implementation = PingResponse.class))
-                    }
+                    content = @Content(schema = @Schema(implementation = PingResponse.class))
             )
     )
     @GetMapping(value = "/ping", produces = { APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE })
@@ -48,10 +46,7 @@ public class PingController {
             responses = @ApiResponse(
                     description = "OK",
                     responseCode = "200",
-                    content = {
-                            @Content(mediaType = "application/json", schema = @Schema(implementation = PingResponse.class)),
-                            @Content(mediaType = "application/xml", schema = @Schema(implementation = PingResponse.class))
-                    }
+                    content = @Content(schema = @Schema(implementation = PingResponse.class))
             )
     )
     @GetMapping(value = "/cookies", produces = APPLICATION_JSON_VALUE)

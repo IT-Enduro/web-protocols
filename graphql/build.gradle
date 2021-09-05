@@ -14,7 +14,6 @@ dependencies {
     implementation "io.projectreactor:reactor-core"
     implementation "io.reactivex.rxjava2:rxjava"
 
-    implementation "com.graphql-java-kickstart:graphql-java-tools:$graphQLJavaVersion"
     implementation "com.graphql-java-kickstart:graphql-spring-boot-starter:$graphQLJavaVersion"
     runtimeOnly "com.graphql-java-kickstart:altair-spring-boot-starter:$graphQLJavaVersion"
     runtimeOnly "com.graphql-java-kickstart:voyager-spring-boot-starter:$graphQLJavaVersion"

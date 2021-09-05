@@ -34,16 +34,13 @@ public class OperationController {
                     @ApiResponse(
                             description = "OK",
                             responseCode = "200",
-                            content = {
-                                    @Content(mediaType = "application/json", schema = @Schema(implementation = TestObjectResponse.class)),
-                                    @Content(mediaType = "application/xml", schema = @Schema(implementation = TestObjectResponse.class))
-                            }
+                            content = @Content(schema = @Schema(implementation = TestObjectResponse.class))
                     ),
                     @ApiResponse(
                             description = "I'm a teapot",
                             responseCode = "418",
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class))
-                    )
+                    ),
             }
     )
     @PostMapping(value = "/process",

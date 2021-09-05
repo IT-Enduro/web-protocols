@@ -10,7 +10,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 @TestConfiguration
 public class DatabaseTestConfiguration {
-    private static final String POSTGRES_LOCAL_IMAGE = "postgres:11.7-alpine";
+    private static final String POSTGRES_LOCAL_IMAGE = "postgres:13";
     private static final String DATABASE_NAME = "graphql";
     private static final String USERNAME = "program";
     private static final String PASSWORD = "test";
@@ -21,8 +21,7 @@ public class DatabaseTestConfiguration {
                 new PostgreSQLContainer<>(POSTGRES_LOCAL_IMAGE)
                         .withUsername(USERNAME)
                         .withPassword(PASSWORD)
-                        .withDatabaseName(DATABASE_NAME)
-                        .withInitScript("db/setup.sql");
+                        .withDatabaseName(DATABASE_NAME);
         postgres.start();
         return postgres;
     }

@@ -5,12 +5,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import ru.romanow.protocols.graphql.config.DatabaseTestConfiguration;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(DatabaseTestConfiguration.class)
 class GraphQLApplicationTest {
 
     @Test
     void testApp() {
-
     }
 }

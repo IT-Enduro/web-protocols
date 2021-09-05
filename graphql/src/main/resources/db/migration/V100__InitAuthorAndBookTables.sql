@@ -1,7 +1,7 @@
 -- V100 init author and book tables
 CREATE TABLE author
 (
-    id         SERIAL       NOT NULL,
+    id         SERIAL       PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,
     age        INT,
     experience INT

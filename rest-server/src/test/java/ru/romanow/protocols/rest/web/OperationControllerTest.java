@@ -1,26 +1,21 @@
 package ru.romanow.protocols.rest.web;
 
 import com.google.gson.Gson;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.romanow.protocols.api.model.TestObjectRequest;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest
 @AutoConfigureRestDocs
 public class OperationControllerTest {
@@ -33,7 +28,8 @@ public class OperationControllerTest {
     private final Gson gson = new Gson();
 
     @Test
-    public void testProcessRequest() throws Exception {
+    public void testProcessRequest()
+            throws Exception {
         final Integer id = 101;
         final String searchString = randomAlphabetic(3);
         TestObjectRequest request =
@@ -60,7 +56,8 @@ public class OperationControllerTest {
     }
 
     @Test
-    public void testProcessRequestFail() throws Exception {
+    public void testProcessRequestFail()
+            throws Exception {
         final Integer id = 1;
         final String searchString = randomAlphabetic(3);
         TestObjectRequest request =

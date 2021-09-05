@@ -23,18 +23,7 @@ protobuf {
             }
         }
     }
-    generatedFilesBaseDir = "$projectDir/src/"
-}
-
-sourceSets {
-    main {
-        proto {
-            srcDir "src/main/proto"
-        }
-        java {
-            srcDirs "src/main/java"
-        }
-    }
+    generatedFilesBaseDir = "$projectDir/src"
 }
 
 idea {
@@ -43,19 +32,15 @@ idea {
     }
 }
 
-task cleanGenerated {
-    doFirst{
-        delete("$projectDir/src/main/generated")
-    }
+dependencies {
+    api "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
+
+    api "io.grpc:grpc-netty:$grpcVersion"
+    api "io.grpc:grpc-protobuf:$grpcVersion"
+    api "io.grpc:grpc-stub:$grpcVersion"
+    api "com.google.protobuf:protobuf-java:$protobufVersion"
 }
 
-clean.dependsOn cleanGenerated
-
-dependencies {
-    compile "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
-
-    compile "io.grpc:grpc-netty:$grpcVersion"
-    compile "io.grpc:grpc-protobuf:$grpcVersion"
-    compile "io.grpc:grpc-stub:$grpcVersion"
-    compile "com.google.protobuf:protobuf-java:$protobufVersion"
+jar {
+    archiveFileName = "${project.name}.jar"
 }

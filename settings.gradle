@@ -6,9 +6,6 @@ include "soap-protocol"
 include "soap-server"
 include "soap-client"
 
-include "xml-rpc-server"
-include "xml-rpc-client"
-
 include "grpc-protocol"
 include "grpc-server"
 include "grpc-client"

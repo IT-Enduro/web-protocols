@@ -11,8 +11,8 @@ import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest.newBui
 @Service
 public class TestGrpcClient {
 
-    private ManagedChannel channel;
-    private TestServiceGrpc.TestServiceBlockingStub testService;
+    private final TestServiceGrpc.TestServiceBlockingStub testService;
+    private final ManagedChannel channel;
 
     public TestGrpcClient() {
         channel = ManagedChannelBuilder

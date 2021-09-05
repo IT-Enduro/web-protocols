@@ -6,7 +6,7 @@ apply plugin: "maven-publish"
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:$springContractVersion"
     }
 }
 
@@ -42,21 +42,21 @@ asciidoctor {
 }
 
 dependencies {
-    compile project(":api")
+    implementation project(":api")
 
-    compile "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-web"
 
-    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
-    testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "org.springframework.cloud:spring-cloud-contract-spec"
-    testCompile "org.springframework.cloud:spring-cloud-starter-contract-verifier"
-    testCompile "org.springframework.restdocs:spring-restdocs-mockmvc"
+    testImplementation "org.codehaus.groovy:groovy-all:$groovyVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.cloud:spring-cloud-contract-spec"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc"
 
     asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
 }
 
 bootJar {
-    archiveFileName = "producer.jar"
+    archiveFileName = "${project.name}.jar"
 }
 
 test.dependsOn(publishToMavenLocal)

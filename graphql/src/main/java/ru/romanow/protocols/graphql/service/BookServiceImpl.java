@@ -8,8 +8,6 @@ import ru.romanow.protocols.graphql.domain.Book;
 import ru.romanow.protocols.graphql.model.BookResponse;
 import ru.romanow.protocols.graphql.repository.BookRepository;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -20,22 +18,17 @@ public class BookServiceImpl
         implements BookService {
     private final BookRepository bookRepository;
 
-    @Nullable
     @Override
     @Transactional(readOnly = true)
-    public BookResponse getBookById(@Nullable Integer id) {
-        if (id != null) {
-            return bookRepository.findById(id)
-                    .map(BuilderHelper::buildBookInfo)
-                    .orElse(null);
-        }
-        return null;
+    public BookResponse getBookById(int id) {
+        return bookRepository.findById(id)
+                .map(BuilderHelper::buildBookInfo)
+                .orElse(null);
     }
 
-    @Nonnull
     @Override
     @Transactional(readOnly = true)
-    public List<BookResponse> getBooks(@Nullable String name) {
+    public List<BookResponse> getBooks(String name) {
         return bookRepository
                 .findAll(Example.of(new Book().setName(name)))
                 .stream()
@@ -43,7 +36,6 @@ public class BookServiceImpl
                 .collect(toList());
     }
 
-    @Nonnull
     @Override
     @Transactional(readOnly = true)
     public List<BookResponse> getBooks() {

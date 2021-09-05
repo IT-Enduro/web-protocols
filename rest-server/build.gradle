@@ -17,19 +17,19 @@ asciidoctor {
 }
 
 dependencies {
-    compile project(":api")
+    implementation project(":api")
 
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "javax.xml.bind:jaxb-api"
-    compile "org.springdoc:springdoc-openapi-webmvc-core:$openApiVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "javax.xml.bind:jaxb-api"
+    implementation "org.springdoc:springdoc-openapi-webmvc-core:$openApiVersion"
 
-    testCompile "com.google.code.gson:gson:$gsonVersion"
-    testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "org.springframework.restdocs:spring-restdocs-mockmvc"
+    testImplementation "com.google.code.gson:gson:$gsonVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc"
 
     asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
 }
 
 bootJar {
-    archiveFileName = "rest-server.jar"
+    archiveFileName = "${project.name}.jar"
 }

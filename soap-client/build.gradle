@@ -1,6 +1,6 @@
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
-apply plugin: "no.nils.wsdl2java"
+apply plugin: "com.yupzip.wsdl2java"
 
 wsdl2java {
     generatedWsdlDir = file("$projectDir/src/main/generated")
@@ -12,26 +12,30 @@ wsdl2java {
             ["-p","ru.romanow.protocols.soap.generated.rpc.model",
              "$projectDir/src/main/resources/wsdl/rpc-literal.wsdl"]
     ]
-}
-
-wsdl2javaExt {
     cxfVersion = "$cxfVersion"
 }
 
+compileJava.dependsOn(wsdl2javaTask)
+
 idea {
     module {
-        downloadJavadoc = true
-        downloadSources = true
+        generatedSourceDirs += file(wsdl2java.generatedWsdlDir)
+    }
+}
 
-        generatedSourceDirs += file("$projectDir/src/main/generated")
+sourceSets {
+    main {
+        java {
+            srcDirs "src/main/java", wsdl2java.generatedWsdlDir
+        }
     }
 }
 
 dependencies {
-    compile project(":soap-protocol")
-    
-    compile "org.springframework.boot:spring-boot-starter"
-    compile "org.springframework.boot:spring-boot-starter-logging"
+    implementation project(":soap-protocol")
+
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
 
     wsdl2java "com.sun.xml.bind:jaxb-xjc:$jaxbXjcVersion"
     wsdl2java "javax.xml.bind:jaxb-api:$jaxbApiVersion"
@@ -48,5 +52,5 @@ dependencies {
 }
 
 bootJar {
-    archiveFileName = "soap-client.jar"
+    archiveFileName = "${project.name}.jar"
 }

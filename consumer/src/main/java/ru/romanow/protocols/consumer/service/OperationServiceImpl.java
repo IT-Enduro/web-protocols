@@ -11,8 +11,6 @@ import ru.romanow.protocols.api.model.TestObjectRequest;
 import ru.romanow.protocols.api.model.TestObjectResponse;
 import ru.romanow.protocols.consumer.exception.RestRequestException;
 
-import javax.annotation.Nonnull;
-
 @Service
 @RequiredArgsConstructor
 public class OperationServiceImpl
@@ -26,7 +24,7 @@ public class OperationServiceImpl
     private String consumerAddress;
 
     @Override
-    public TestObjectResponse makeOperation(@Nonnull TestObjectRequest request) {
+    public TestObjectResponse makeOperation(TestObjectRequest request) {
         logger.debug("Make request to '{}' with params '{}'", OPERATION_PROCESS_PATH, request);
 
         try {

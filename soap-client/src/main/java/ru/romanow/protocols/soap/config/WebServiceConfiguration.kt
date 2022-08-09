@@ -1,55 +1,48 @@
-package ru.romanow.protocols.soap.config;
+package ru.romanow.protocols.soap.config
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import ru.romanow.protocols.soap.generated.literal.model.WebServiceDocumentLiteral;
-import ru.romanow.protocols.soap.generated.literal.model.WebServiceDocumentLiteralImplService;
-import ru.romanow.protocols.soap.generated.rpc.model.WebServiceRpcLiteral;
-import ru.romanow.protocols.soap.generated.rpc.model.WebServiceRpcLiteralImplService;
-import ru.romanow.protocols.soap.generated.wrapped.model.WebServiceDocumentLiteralWrappedImplService;
-import ru.romanow.protocols.soap.generated.wrapped.model.WebServiceDocumentWrapped;
-import ru.romanow.protocols.soap.service.SOAPLoggingHandler;
-import ru.romanow.protocols.soap.web.DocumentLiteralWebServiceClient;
-import ru.romanow.protocols.soap.web.DocumentWrappedWebServiceClient;
-import ru.romanow.protocols.soap.web.RpcLiteralWebServiceClient;
-import ru.romanow.protocols.soap.web.WebServiceClient;
-
-import javax.xml.ws.Binding;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.Handler;
-import java.util.List;
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import ru.romanow.protocols.soap.generated.literal.model.WebServiceDocumentLiteralImplService
+import ru.romanow.protocols.soap.generated.rpc.model.WebServiceRpcLiteralImplService
+import ru.romanow.protocols.soap.generated.wrapped.model.WebServiceDocumentLiteralWrappedImplService
+import ru.romanow.protocols.soap.service.SOAPLoggingHandler
+import ru.romanow.protocols.soap.web.DocumentLiteralWebServiceClient
+import ru.romanow.protocols.soap.web.DocumentWrappedWebServiceClient
+import ru.romanow.protocols.soap.web.RpcLiteralWebServiceClient
+import ru.romanow.protocols.soap.web.WebServiceClient
+import javax.xml.ws.BindingProvider
 
 @Configuration
-public class WebServiceConfiguration {
+class WebServiceConfiguration {
 
     @Bean
-    public WebServiceClient documentEncodedWebServiceClient() {
-        final WebServiceDocumentLiteralWrappedImplService service = new WebServiceDocumentLiteralWrappedImplService();
-        final WebServiceDocumentWrapped port = service.getWebServiceDocumentLiteralWrappedImplPort();
-        configureLogging((BindingProvider) port);
-        return new DocumentWrappedWebServiceClient(port);
+    fun documentEncodedWebServiceClient(): WebServiceClient {
+        val service = WebServiceDocumentLiteralWrappedImplService()
+        val port = service.webServiceDocumentLiteralWrappedImplPort
+        configureLogging(port as BindingProvider)
+        return DocumentWrappedWebServiceClient(port)
     }
 
     @Bean
-    public WebServiceClient documentLiteralWebServiceClient() {
-        WebServiceDocumentLiteralImplService service = new WebServiceDocumentLiteralImplService();
-        final WebServiceDocumentLiteral port = service.getWebServiceDocumentLiteralImplPort();
-        configureLogging((BindingProvider) port);
-        return new DocumentLiteralWebServiceClient(port);
+    fun documentLiteralWebServiceClient(): WebServiceClient {
+        val service = WebServiceDocumentLiteralImplService()
+        val port = service.webServiceDocumentLiteralImplPort
+        configureLogging(port as BindingProvider)
+        return DocumentLiteralWebServiceClient(port)
     }
 
     @Bean
-    public WebServiceClient rpcLiteralWebServiceClient() {
-        WebServiceRpcLiteralImplService service = new WebServiceRpcLiteralImplService();
-        final WebServiceRpcLiteral port = service.getWebServiceRpcLiteralImplPort();
-        configureLogging((BindingProvider) port);
-        return new RpcLiteralWebServiceClient(port);
+    fun rpcLiteralWebServiceClient(): WebServiceClient {
+        val service = WebServiceRpcLiteralImplService()
+        val port = service.webServiceRpcLiteralImplPort
+        configureLogging(port as BindingProvider)
+        return RpcLiteralWebServiceClient(port)
     }
 
-    private void configureLogging(BindingProvider port) {
-        final Binding binding = port.getBinding();
-        final List<Handler> handlerList = binding.getHandlerChain();
-        handlerList.add(new SOAPLoggingHandler());
-        binding.setHandlerChain(handlerList);
+    private fun configureLogging(port: BindingProvider) {
+        val binding = port.binding
+        val handlerList = binding.handlerChain
+        handlerList.add(SOAPLoggingHandler())
+        binding.handlerChain = handlerList
     }
 }

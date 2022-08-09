@@ -1,12 +1,10 @@
-package ru.romanow.protocols.graphql.service;
+package ru.romanow.protocols.graphql.service
 
-import ru.romanow.protocols.graphql.model.AuthorResponse;
+import ru.romanow.protocols.graphql.model.AuthorResponse
 
-import java.util.List;
-
-public interface AuthorService {
-    AuthorResponse getAuthorById(Integer id);
-    List<AuthorResponse> getAuthors();
-    int getAuthorBooksCount(Integer authorId);
-    AuthorResponse createAuthor(String name, Integer age, Integer experience);
+interface AuthorService {
+    fun getAuthorById(id: Int): AuthorResponse
+    val authors: List<AuthorResponse>
+    fun getAuthorBooksCount(authorId: Int): Int
+    fun createAuthor(name: String, age: Int, experience: Int): AuthorResponse
 }

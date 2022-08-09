@@ -1,18 +1,13 @@
-package ru.romanow.protocols.graphql.queries;
+package ru.romanow.protocols.graphql.queries
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.romanow.protocols.graphql.model.AuthorResponse;
-import ru.romanow.protocols.graphql.service.AuthorService;
+import lombok.RequiredArgsConstructor
+import org.springframework.stereotype.Service
 
 @Service
 @RequiredArgsConstructor
-public class AuthorMutation
-        implements GraphQLMutationResolver {
-    private final AuthorService authorService;
-
-    public AuthorResponse createAuthor(String name, Integer age, Integer experience) {
-        return authorService.createAuthor(name, age, experience);
+class AuthorMutation : GraphQLMutationResolver {
+    private val authorService: AuthorService? = null
+    fun createAuthor(name: String?, age: Int?, experience: Int?): AuthorResponse {
+        return authorService.createAuthor(name, age, experience)
     }
 }

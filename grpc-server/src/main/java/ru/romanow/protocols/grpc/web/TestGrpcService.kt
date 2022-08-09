@@ -1,32 +1,26 @@
-package ru.romanow.protocols.grpc.web;
+package ru.romanow.protocols.grpc.web
 
-import io.grpc.stub.StreamObserver;
-import org.lognet.springboot.grpc.GRpcService;
-import ru.romanow.protocols.grpc.TestServiceGrpc;
-import ru.romanow.protocols.grpc.TestServiceOuterClass;
-
-import static ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse.newBuilder;
+import io.grpc.stub.StreamObserver
+import org.lognet.springboot.grpc.GRpcService
+import ru.romanow.protocols.grpc.TestServiceGrpc.TestServiceImplBase
+import ru.romanow.protocols.grpc.TestServiceOuterClass
+import ru.romanow.protocols.grpc.TestServiceOuterClass.TestRequest
+import ru.romanow.protocols.grpc.TestServiceOuterClass.TestResponse
+import java.lang.String
 
 @GRpcService
-public class TestGrpcService
-        extends TestServiceGrpc.TestServiceImplBase {
+class TestGrpcService : TestServiceImplBase() {
 
-    @Override
-    public void simpleRequest(TestServiceOuterClass.TestRequest request, StreamObserver<TestServiceOuterClass.TestResponse> responseObserver) {
-        long start = System.currentTimeMillis();
-        String result = String.join(", ", request.getMessageList());
-
-        TestServiceOuterClass.TestResponse.Builder builder = newBuilder();
-
-        for (int i = 0; i < request.getSize(); i++) {
-            builder.addResultMessage(result);
+    override fun simpleRequest(request: TestRequest, responseObserver: StreamObserver<TestResponse>) {
+        val start = System.currentTimeMillis()
+        val result = String.join(", ", request.messageList)
+        val builder = TestResponse.newBuilder()
+        for (i in 0 until request.size) {
+            builder.addResultMessage(result)
         }
-
-        long duration = System.currentTimeMillis() - start;
-        builder.setDuration(duration)
-                .setStatus(TestServiceOuterClass.Status.DONE);
-
-        responseObserver.onNext(builder.build());
-        responseObserver.onCompleted();
+        val duration = System.currentTimeMillis() - start
+        builder.setDuration(duration).status = TestServiceOuterClass.Status.DONE
+        responseObserver.onNext(builder.build())
+        responseObserver.onCompleted()
     }
 }

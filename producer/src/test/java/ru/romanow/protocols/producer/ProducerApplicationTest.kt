@@ -1,20 +1,19 @@
-package ru.romanow.protocols.producer;
+package ru.romanow.protocols.producer
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.romanow.protocols.producer.web.PingController;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.beans.factory.annotation.Autowired
+import ru.romanow.protocols.producer.web.PingController
 
 @SpringBootTest
-class ProducerApplicationTest {
+internal class ProducerApplicationTest {
 
     @Autowired
-    private PingController pingController;
+    private lateinit var pingController: PingController
 
     @Test
-    void testApp() {
-        assertThat(pingController).isNotNull();
+    fun testApp() {
+        Assertions.assertThat(pingController).isNotNull
     }
 }

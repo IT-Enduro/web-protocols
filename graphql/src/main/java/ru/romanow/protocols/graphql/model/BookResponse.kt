@@ -1,15 +1,10 @@
-package ru.romanow.protocols.graphql.model;
+package ru.romanow.protocols.graphql.model
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-@Data
-@Accessors(chain = true)
-public class BookResponse {
-    private Integer id;
-    private String name;
-    private String isn;
-    private Integer price;
-    private Integer pageCount;
-    private AuthorResponse author;
-}
+data class BookResponse(
+    var id: Int? = null,
+    var name: String? = null,
+    var isn: String? = null,
+    var price: Int? = null,
+    var pageCount: Int? = null,
+    var author: AuthorResponse? = null,
+)

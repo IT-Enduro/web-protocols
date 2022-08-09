@@ -1,11 +1,11 @@
-package ru.romanow.protocols.grpc;
+package ru.romanow.protocols.grpc
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-public class GrpcServerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(GrpcServerApplication.class, args);
-    }
+class GrpcServerApplication
+
+fun main(args: Array<String>) {
+    SpringApplication.run(GrpcServerApplication::class.java, *args)
 }

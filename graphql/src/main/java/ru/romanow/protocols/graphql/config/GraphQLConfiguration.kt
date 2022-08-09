@@ -1,29 +1,31 @@
-package ru.romanow.protocols.graphql.config;
+package ru.romanow.protocols.graphql.config
 
-import graphql.GraphQL;
-import graphql.analysis.MaxQueryComplexityInstrumentation;
-import graphql.analysis.MaxQueryDepthInstrumentation;
-import graphql.execution.AsyncExecutionStrategy;
-import graphql.execution.instrumentation.ChainedInstrumentation;
-import graphql.schema.GraphQLSchema;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
+import graphql.GraphQL
+import graphql.analysis.MaxQueryComplexityInstrumentation
+import graphql.analysis.MaxQueryDepthInstrumentation
+import graphql.execution.AsyncExecutionStrategy
+import graphql.execution.instrumentation.ChainedInstrumentation
+import graphql.schema.GraphQLSchema
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
 @Configuration
-public class GraphQLConfiguration {
+class GraphQLConfiguration {
 
     @Bean
     @Autowired
-    public GraphQL graphQL(GraphQLSchema graphQLSchema) {
+    fun graphQL(graphQLSchema: GraphQLSchema?): GraphQL {
         return GraphQL.newGraphQL(graphQLSchema)
-                .queryExecutionStrategy(new AsyncExecutionStrategy())
-                .instrumentation(new ChainedInstrumentation(Arrays.asList(
-                        new MaxQueryComplexityInstrumentation(200),
-                        new MaxQueryDepthInstrumentation(20)
-                )))
-                .build();
+            .queryExecutionStrategy(AsyncExecutionStrategy())
+            .instrumentation(
+                ChainedInstrumentation(
+                    listOf(
+                        MaxQueryComplexityInstrumentation(200),
+                        MaxQueryDepthInstrumentation(20)
+                    )
+                )
+            )
+            .build()
     }
 }

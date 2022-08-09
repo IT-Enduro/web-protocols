@@ -1,5 +1,5 @@
-package ru.romanow.protocols.soap.web;
+package ru.romanow.protocols.soap.web
 
-public interface WebServiceClient {
-    void makeRequest();
+interface WebServiceClient {
+    fun makeRequest()
 }

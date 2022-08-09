@@ -1,11 +1,9 @@
-package ru.romanow.protocols.graphql.service;
+package ru.romanow.protocols.graphql.service
 
-import ru.romanow.protocols.graphql.model.BookResponse;
+import ru.romanow.protocols.graphql.model.BookResponse
 
-import java.util.List;
-
-public interface BookService {
-    BookResponse getBookById(int id);
-    List<BookResponse> getBooks(String name);
-    List<BookResponse> getBooks();
+interface BookService {
+    fun getBookById(id: Int): BookResponse
+    fun getBooks(name: String): List<BookResponse>
+    val books: List<BookResponse>
 }

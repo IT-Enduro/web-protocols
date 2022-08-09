@@ -1,14 +1,12 @@
-package ru.romanow.protocols.consumer.config;
+package ru.romanow.protocols.consumer.config
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.web.client.RestTemplate
 
 @Configuration
-public class WebConfiguration {
+class WebConfiguration {
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+    fun restTemplate() = RestTemplate()
 }

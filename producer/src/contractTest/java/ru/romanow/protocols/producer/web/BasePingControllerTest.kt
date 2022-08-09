@@ -1,15 +1,11 @@
-package ru.romanow.protocols.producer.web;
+package ru.romanow.protocols.producer.web
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired
 
-public abstract class BasePingControllerTest
-        extends BaseTest {
+abstract class BasePingControllerTest : BaseTest() {
 
     @Autowired
-    private PingController pingController;
+    private lateinit var pingController: PingController
 
-    @Override
-    protected Object controller() {
-        return pingController;
-    }
+    override fun controller() = pingController
 }

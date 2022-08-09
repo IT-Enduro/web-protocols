@@ -1,5 +1,5 @@
-package ru.romanow.protocols.consumer.service;
+package ru.romanow.protocols.consumer.service
 
-public interface PingService {
-    boolean ping();
+interface PingService {
+    fun ping(): Boolean
 }

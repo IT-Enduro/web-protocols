@@ -1,41 +1,44 @@
-package ru.romanow.protocols.producer.web;
+package ru.romanow.protocols.producer.web
 
-import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TestName;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
+import io.restassured.module.mockmvc.RestAssuredMockMvc
+import org.junit.Rule
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.rules.TestName
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.restdocs.RestDocumentationContextProvider
+import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
+import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
-
+@ExtendWith(RestDocumentationExtension::class)
 @SpringBootTest
-public abstract class BaseTest {
-    private static final String OUTPUT_DIR = "build/generated-snippets";
+abstract class BaseTest {
 
     @Autowired
-    private ExceptionController exceptionController;
+    private lateinit var exceptionController: ExceptionController
 
     @Rule
-    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(OUTPUT_DIR);
+    var testName = TestName()
 
-    @Rule
-    public TestName testName = new TestName();
-
-    @Before
-    public void init() {
-        StandaloneMockMvcBuilder standaloneMockMvcBuilder =
-                standaloneSetup(controller())
-                        .setControllerAdvice(exceptionController)
-                        .apply(documentationConfiguration(restDocumentation))
-                        .alwaysDo(document(getClass().getSimpleName() + "_" + testName.getMethodName()));
-
-        RestAssuredMockMvc.standaloneSetup(standaloneMockMvcBuilder);
+    @BeforeEach
+    fun init(provider: RestDocumentationContextProvider) {
+        RestAssuredMockMvc.mockMvc(
+            standaloneSetup(controller())
+                .setControllerAdvice(exceptionController)
+                .apply<StandaloneMockMvcBuilder>(documentationConfiguration(provider))
+                .alwaysDo<StandaloneMockMvcBuilder>(document(javaClass.simpleName + "_" + testName.methodName))
+                .build()
+        )
     }
 
-    protected abstract Object controller();
+    protected abstract fun controller(): Any
+
+    companion object {
+        private const val OUTPUT_DIR = "build/generated-snippets"
+    }
 }

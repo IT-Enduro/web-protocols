@@ -1,41 +1,38 @@
-package ru.romanow.protocols.consumer;
+package ru.romanow.protocols.consumer
 
-import org.slf4j.Logger;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
-import ru.romanow.protocols.api.model.TestObjectRequest;
-import ru.romanow.protocols.api.model.TestObjectResponse;
-import ru.romanow.protocols.consumer.service.OperationService;
-import ru.romanow.protocols.consumer.service.PingService;
+import org.apache.commons.lang3.RandomStringUtils
+import org.slf4j.LoggerFactory
+import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Profile
+import ru.romanow.protocols.api.model.TestObjectRequest
+import ru.romanow.protocols.consumer.service.OperationService
+import ru.romanow.protocols.consumer.service.PingService
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.slf4j.LoggerFactory.getLogger;
 
 @SpringBootApplication
-public class ConsumerApplication {
-    private static final Logger logger = getLogger(ConsumerApplication.class);
-
-    public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
-    }
+class ConsumerApplication {
+    private val logger = LoggerFactory.getLogger(ConsumerApplication::class.java)
 
     @Bean
     @Profile("!test")
-    public ApplicationRunner runner(PingService pingService, OperationService operationService) {
-        return args -> {
+    fun runner(pingService: PingService, operationService: OperationService): ApplicationRunner {
+        return ApplicationRunner {
             if (pingService.ping()) {
-                final int id = 100;
-                final String searchString = randomAlphabetic(3);
-                TestObjectRequest request = new TestObjectRequest(id, searchString);
-                TestObjectResponse response = operationService.makeOperation(request);
-
-                logger.info("{}", response);
+                val id = 100
+                val searchString = RandomStringUtils.randomAlphabetic(3)
+                val request = TestObjectRequest(id, searchString)
+                val response = operationService.makeOperation(request)
+                logger.info("{}", response)
             } else {
-                logger.warn("Service unavailable");
+                logger.warn("Service unavailable")
             }
-        };
+        }
     }
+}
+
+fun main(args: Array<String>) {
+    SpringApplication.run(ConsumerApplication::class.java, *args)
 }

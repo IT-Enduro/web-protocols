@@ -1,22 +1,21 @@
-package ru.romanow.protocols.grpc;
+package ru.romanow.protocols.grpc
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import ru.romanow.protocols.grpc.service.TestGrpcClient;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import ru.romanow.protocols.grpc.service.TestGrpcClient
 
 @SpringBootTest
 @ActiveProfiles("test")
-class GrpcClientApplicationTest {
+internal class GrpcClientApplicationTest {
 
     @Autowired
-    private TestGrpcClient testGrpcClient;
+    private lateinit var testGrpcClient: TestGrpcClient
 
     @Test
-    void testApp() {
-        assertThat(testGrpcClient).isNotNull();
+    fun testApp() {
+        Assertions.assertThat(testGrpcClient).isNotNull
     }
 }

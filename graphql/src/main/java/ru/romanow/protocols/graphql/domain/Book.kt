@@ -1,63 +1,61 @@
-package ru.romanow.protocols.graphql.domain;
+package ru.romanow.protocols.graphql.domain
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import javax.persistence.*
 
-import javax.persistence.*;
-
-@Data
-@Accessors(chain = true)
 @Entity
 @Table(
-        name = "book",
-        indexes = {
-                @Index(name = "idx_book_author", columnList = "author_id"),
-                @Index(name = "idx_book_name", columnList = "name"),
-                @Index(name = "idx_book_isn", columnList = "isn", unique = true),
-        })
-public class Book {
-
+    name = "book",
+    indexes = [Index(name = "idx_book_author", columnList = "author_id"), Index(
+        name = "idx_book_name",
+        columnList = "name"
+    ), Index(name = "idx_book_isn", columnList = "isn", unique = true)]
+)
+data class Book(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    var id: Int? = null,
 
     @Column(name = "name", nullable = false)
-    private String name;
+    var name: String? = null,
 
     @Column(name = "isn", nullable = false, unique = true)
-    private String isn;
+    var isn: String? = null,
 
     @Column(name = "price")
-    private Integer price;
+    var price: Int? = null,
 
     @Column(name = "page_count")
-    private Integer pageCount;
+    var pageCount: Int? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "fk_book_author"))
-    private Author author;
+    @JoinColumn(name = "author_id", foreignKey = ForeignKey(name = "fk_book_author"))
+    var author: Author? = null,
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equal(name, book.name) &&
-                Objects.equal(isn, book.isn);
+        other as Book
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (isn != other.isn) return false
+        if (price != other.price) return false
+        if (pageCount != other.pageCount) return false
+
+        return true
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name, isn);
+    override fun hashCode(): Int {
+        var result = id ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (isn?.hashCode() ?: 0)
+        result = 31 * result + (price ?: 0)
+        result = 31 * result + (pageCount ?: 0)
+        return result
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("name", name)
-                .add("isn", isn)
-                .toString();
+    override fun toString(): String {
+        return "Book(id=$id, name=$name, isn=$isn, price=$price, pageCount=$pageCount)"
     }
 }

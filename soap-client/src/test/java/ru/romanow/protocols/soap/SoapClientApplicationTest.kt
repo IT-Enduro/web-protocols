@@ -1,24 +1,21 @@
-package ru.romanow.protocols.soap;
+package ru.romanow.protocols.soap
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import ru.romanow.protocols.soap.web.WebServiceClient;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import ru.romanow.protocols.soap.web.WebServiceClient
 
 @SpringBootTest
 @ActiveProfiles("test")
-class SoapClientApplicationTest {
+internal class SoapClientApplicationTest {
 
     @Autowired
-    private List<WebServiceClient> clients;
+    private lateinit var clients: List<WebServiceClient>
 
     @Test
-    void testApp() {
-        assertThat(clients).isNotEmpty();
+    fun testApp() {
+        Assertions.assertThat(clients).isNotEmpty
     }
 }

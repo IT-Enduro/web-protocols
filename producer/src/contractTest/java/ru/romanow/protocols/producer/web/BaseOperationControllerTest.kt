@@ -1,15 +1,11 @@
-package ru.romanow.protocols.producer.web;
+package ru.romanow.protocols.producer.web
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired
 
-public abstract class BaseOperationControllerTest
-        extends BaseTest {
+abstract class BaseOperationControllerTest : BaseTest() {
 
     @Autowired
-    private OperationController operationController;
+    private lateinit var operationController: OperationController
 
-    @Override
-    protected Object controller() {
-        return operationController;
-    }
+    override fun controller() = operationController
 }

@@ -1,5 +1,3 @@
-package ru.romanow.protocols.soap.web;
+package ru.romanow.protocols.soap.web
 
-public class WebServiceDocumentLiteralImpl
-        extends BaseWebService
-        implements WebServiceDocumentLiteral {}
+class WebServiceDocumentLiteralImpl : BaseWebService(), WebServiceDocumentLiteral

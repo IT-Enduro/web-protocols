@@ -1,21 +1,21 @@
-package ru.romanow.protocols.producer.web;
+package ru.romanow.protocols.producer.web
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.romanow.protocols.api.model.ErrorResponse;
+import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
+import ru.romanow.protocols.api.model.ErrorResponse
+import java.lang.RuntimeException
 
 @RestControllerAdvice
-public class ExceptionController {
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
+class ExceptionController {
+    private val logger = LoggerFactory.getLogger(ExceptionController::class.java)
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public ErrorResponse exception(Exception exception) {
-        logger.error("", exception);
-        return new ErrorResponse(exception.getMessage());
+    @ExceptionHandler(RuntimeException::class)
+    fun exception(exception: Exception): ErrorResponse {
+        logger.error("", exception)
+        return ErrorResponse(exception.message!!)
     }
 }

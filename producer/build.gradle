@@ -1,7 +1,8 @@
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
+apply plugin: "org.jetbrains.kotlin.plugin.spring"
 apply plugin: "spring-cloud-contract"
-apply plugin: "org.asciidoctor.convert"
+apply plugin: "org.asciidoctor.jvm.convert"
 apply plugin: "maven-publish"
 
 dependencyManagement {
@@ -32,6 +33,10 @@ ext {
     htmlOutputDir = file("build/generated-html")
 }
 
+configurations {
+    asciidoctorExt
+}
+
 asciidoctor {
     inputs.dir snippetsDir
     sourceDir "src/main/asciidoc"
@@ -49,10 +54,16 @@ dependencies {
     testImplementation "org.codehaus.groovy:groovy-all:$groovyVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.cloud:spring-cloud-contract-spec"
+    testImplementation "org.springframework.cloud:spring-cloud-contract-spec-kotlin"
+    testImplementation "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:$kotlinVersion"
     testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc"
 
-    asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor"
+    asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor"
+}
+
+contractTest {
+    useJUnitPlatform()
 }
 
 bootJar {

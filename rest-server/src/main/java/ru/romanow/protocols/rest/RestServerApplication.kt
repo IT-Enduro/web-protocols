@@ -1,11 +1,11 @@
-package ru.romanow.protocols.rest;
+package ru.romanow.protocols.rest
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-public class RestServerApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(RestServerApplication.class, args);
-    }
+class RestServerApplication
+
+fun main(args: Array<String>) {
+    SpringApplication.run(RestServerApplication::class.java, *args)
 }

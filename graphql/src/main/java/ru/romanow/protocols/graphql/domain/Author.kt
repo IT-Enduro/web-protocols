@@ -1,58 +1,50 @@
-package ru.romanow.protocols.graphql.domain;
+package ru.romanow.protocols.graphql.domain
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import javax.persistence.*
 
-import javax.persistence.*;
-import java.util.List;
-
-@Data
-@Accessors(chain = true)
 @Entity
-@Table(
-        name = "author",
-        indexes = @Index(name = "idx_author_name", columnList = "name")
-)
-public class Author {
-
+@Table(name = "author", indexes = [Index(name = "idx_author_name", columnList = "name")])
+class Author(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    var id: Int? = null,
 
     @Column(name = "name", nullable = false)
-    private String name;
+    var name: String? = null,
 
     @Column(name = "age")
-    private Integer age;
+    var age: Int? = null,
 
     @Column(name = "experience")
-    private Integer experience;
+    var experience: Int? = null,
 
     @OneToMany(mappedBy = "author")
-    private List<Book> books;
+    var books: List<Book>? = null,
+) {
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return Objects.equal(name, author.name) &&
-                Objects.equal(age, author.age);
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Author
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (age != other.age) return false
+        if (experience != other.experience) return false
+
+        return true
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(name, age);
+    override fun hashCode(): Int {
+        var result = id ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (age ?: 0)
+        result = 31 * result + (experience ?: 0)
+        return result
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("name", name)
-                .add("age", age)
-                .add("experience", experience)
-                .toString();
+    override fun toString(): String {
+        return "Author(id=$id, name=$name, age=$age, experience=$experience)"
     }
 }

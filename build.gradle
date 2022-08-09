@@ -1,15 +1,19 @@
 plugins {
+    id "idea"
+    id "org.jetbrains.kotlin.jvm" version "1.7.10"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.7.10"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
-    id "org.springframework.boot" version "2.5.0" apply false
-    id "com.google.protobuf" version "0.8.17" apply false
-    id "org.springframework.cloud.contract" version "3.0.3" apply false
+    id "org.springframework.boot" version "2.7.0" apply false
+    id "com.google.protobuf" version "0.8.19" apply false
+    id "org.springframework.cloud.contract" version "3.1.3" apply false
     id "com.yupzip.wsdl2java" version "2.2.0" apply false
-    id "org.asciidoctor.convert" version "1.5.9.2" apply false
+    id "org.asciidoctor.jvm.convert" version "3.3.2" apply false
 }
 
 ext {
-    springBootVersion = "2.5.0"
-    springContractVersion = "3.0.3"
+    springBootVersion = "2.7.0"
+    springContractVersion = "3.1.3"
+    kotlinVersion = "1.7.10"
 
     jaxbVersion = "2.3.1"
     gsonVersion = "2.8.5"
@@ -18,7 +22,7 @@ ext {
     apacheHttpClient = "3.1"
     dom4jVersion = "1.6.1"
 
-    openApiVersion = "1.5.10"
+    openApiVersion = "1.6.9"
     groovyVersion = "2.5.8"
 
     jwsApiVersion = "1.1"
@@ -44,7 +48,8 @@ ext {
 
 allprojects { ->
     apply plugin: "idea"
-    apply plugin: "java-library"
+    apply plugin: "kotlin"
+    apply plugin: "io.spring.dependency-management"
 
     sourceCompatibility = 1.11
     targetCompatibility = 1.11
@@ -69,9 +74,6 @@ allprojects { ->
     dependencies {
         implementation "com.google.guava:guava:$guavaVersion"
         implementation "org.apache.commons:commons-lang3:$commonsLangVersion"
-
-        compileOnly "org.projectlombok:lombok:$lombokVersion"
-        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     }
 
     test {

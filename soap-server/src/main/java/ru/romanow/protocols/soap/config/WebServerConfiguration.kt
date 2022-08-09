@@ -1,68 +1,67 @@
-package ru.romanow.protocols.soap.config;
+package ru.romanow.protocols.soap.config
 
-import org.apache.cxf.Bus;
-import org.apache.cxf.bus.spring.SpringBus;
-import org.apache.cxf.jaxws.EndpointImpl;
-import org.apache.cxf.transport.servlet.CXFServlet;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import ru.romanow.protocols.soap.web.*;
-
-import javax.xml.ws.Endpoint;
+import org.apache.cxf.Bus
+import org.apache.cxf.bus.spring.SpringBus
+import org.apache.cxf.jaxws.EndpointImpl
+import org.apache.cxf.transport.servlet.CXFServlet
+import org.springframework.boot.web.servlet.ServletRegistrationBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import ru.romanow.protocols.soap.web.*
+import javax.xml.ws.Endpoint
 
 @Configuration
-public class WebServerConfiguration {
+class WebServerConfiguration {
 
     @Bean
-    public ServletRegistrationBean<CXFServlet> cxfDispatcherServlet() {
-        return new ServletRegistrationBean<>(new CXFServlet(), "/*");
+    fun cxfDispatcherServlet(): ServletRegistrationBean<CXFServlet> {
+        return ServletRegistrationBean(CXFServlet(), "/*")
     }
 
-    @Bean(name = Bus.DEFAULT_BUS_ID)
-    public SpringBus springBus() {
-        return new SpringBus();
+    @Bean(name = [Bus.DEFAULT_BUS_ID])
+    fun springBus(): SpringBus {
+        return SpringBus()
     }
 
     // region Document Literal
     @Bean
-    public WebServiceDocumentLiteral documentLiteralWebService() {
-        return new WebServiceDocumentLiteralImpl();
+    fun documentLiteralWebService(): WebServiceDocumentLiteral {
+        return WebServiceDocumentLiteralImpl()
     }
 
     @Bean
-    public Endpoint documentLiteralWebServiceEndpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), documentLiteralWebService());
-        endpoint.publish("/document-literal");
-        return endpoint;
+    fun documentLiteralWebServiceEndpoint(): Endpoint {
+        val endpoint = EndpointImpl(springBus(), documentLiteralWebService())
+        endpoint.publish("/document-literal")
+        return endpoint
     }
     // endregion
 
     // region Document Literal Wrapped
     @Bean
-    public WebServiceDocumentLiteralWrapped documentLiteralWrappedWebService() {
-        return new WebServiceDocumentLiteralWrappedImpl();
+    fun documentLiteralWrappedWebService(): WebServiceDocumentLiteralWrapped {
+        return WebServiceDocumentLiteralWrappedImpl()
     }
 
     @Bean
-    public Endpoint documentLiteralWrappedWebServiceEndpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), documentLiteralWrappedWebService());
-        endpoint.publish("/document-literal-wrapped");
-        return endpoint;
+    fun documentLiteralWrappedWebServiceEndpoint(): Endpoint {
+        val endpoint = EndpointImpl(springBus(), documentLiteralWrappedWebService())
+        endpoint.publish("/document-literal-wrapped")
+        return endpoint
     }
     // endregion
 
     // region RPC Literal
     @Bean
-    public WebServiceRpcLiteral rpcLiteralWebService() {
-        return new WebServiceRpcLiteralImpl();
+    fun rpcLiteralWebService(): WebServiceRpcLiteral {
+        return WebServiceRpcLiteralImpl()
     }
 
     @Bean
-    public Endpoint rpcLiteralWebServiceEndpoint() {
-        EndpointImpl endpoint = new EndpointImpl(springBus(), rpcLiteralWebService());
-        endpoint.publish("/rpc-literal");
-        return endpoint;
+    fun rpcLiteralWebServiceEndpoint(): Endpoint {
+        val endpoint = EndpointImpl(springBus(), rpcLiteralWebService())
+        endpoint.publish("/rpc-literal")
+        return endpoint
     }
     // endregion
 }

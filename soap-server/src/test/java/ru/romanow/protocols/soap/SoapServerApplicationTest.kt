@@ -1,30 +1,29 @@
-package ru.romanow.protocols.soap;
+package ru.romanow.protocols.soap
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.romanow.protocols.soap.web.WebServiceDocumentLiteral;
-import ru.romanow.protocols.soap.web.WebServiceDocumentLiteralWrapped;
-import ru.romanow.protocols.soap.web.WebServiceRpcLiteral;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import ru.romanow.protocols.soap.web.WebServiceDocumentLiteral
+import ru.romanow.protocols.soap.web.WebServiceDocumentLiteralWrapped
+import ru.romanow.protocols.soap.web.WebServiceRpcLiteral
 
 @SpringBootTest
-class SoapServerApplicationTest {
+internal class SoapServerApplicationTest {
 
     @Autowired
-    private WebServiceRpcLiteral webServiceRpcLiteral;
+    private lateinit var webServiceRpcLiteral: WebServiceRpcLiteral
 
     @Autowired
-    private WebServiceDocumentLiteral webServiceDocumentLiteral;
+    private lateinit var webServiceDocumentLiteral: WebServiceDocumentLiteral
 
     @Autowired
-    private WebServiceDocumentLiteralWrapped webServiceDocumentLiteralWrapped;
+    private lateinit var webServiceDocumentLiteralWrapped: WebServiceDocumentLiteralWrapped
 
     @Test
-    void testApp() {
-        assertThat(webServiceRpcLiteral).isNotNull();
-        assertThat(webServiceDocumentLiteral).isNotNull();
-        assertThat(webServiceDocumentLiteralWrapped).isNotNull();
+    fun testApp() {
+        Assertions.assertThat(webServiceRpcLiteral).isNotNull
+        Assertions.assertThat(webServiceDocumentLiteral).isNotNull
+        Assertions.assertThat(webServiceDocumentLiteralWrapped).isNotNull
     }
 }

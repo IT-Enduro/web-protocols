@@ -1,59 +1,43 @@
-package ru.romanow.protocols.graphql.service;
+package ru.romanow.protocols.graphql.service
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.romanow.protocols.graphql.domain.Author;
-import ru.romanow.protocols.graphql.model.AuthorResponse;
-import ru.romanow.protocols.graphql.repository.AuthorRepository;
-
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-import static ru.romanow.protocols.graphql.service.BuilderHelper.buildAuthorInfo;
+import lombok.AllArgsConstructor
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import ru.romanow.protocols.graphql.model.AuthorResponse
+import java.util.function.Function
 
 @Service
 @AllArgsConstructor
-public class AuthorServiceImpl
-        implements AuthorService {
-    private final AuthorRepository authorRepository;
-
-    @Override
+class AuthorServiceImpl : AuthorService {
+    private val authorRepository: AuthorRepository? = null
     @Transactional(readOnly = true)
-    public AuthorResponse getAuthorById(Integer id) {
-        if (id != null) {
-            return authorRepository.findById(id)
-                    .map(BuilderHelper::buildAuthorInfo)
-                    .orElse(null);
-        }
-        return null;
+    override fun getAuthorById(id: Int?): AuthorResponse? {
+        return if (id != null) {
+            authorRepository.findById(id)
+                .map(Function<Author, AuthorResponse?> { obj: Author? -> BuilderHelper.buildAuthorInfo() })
+                .orElse(null)
+        } else null
     }
 
-    @Override
+    @get:Transactional(readOnly = true)
+    override val authors: List<AuthorResponse?>
+        get() = authorRepository
+            .findAll()
+            .stream()
+            .map(Function<Author, AuthorResponse?> { obj: Author? -> BuilderHelper.buildAuthorInfo() })
+            .collect(Collectors.toList())
+
     @Transactional(readOnly = true)
-    public List<AuthorResponse> getAuthors() {
-        return authorRepository
-                .findAll()
-                .stream()
-                .map(BuilderHelper::buildAuthorInfo)
-                .collect(toList());
+    override fun getAuthorBooksCount(authorId: Int?): Int {
+        return authorRepository.getAuthorBooksCount(authorId)
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public int getAuthorBooksCount(Integer authorId) {
-        return authorRepository.getAuthorBooksCount(authorId);
-    }
-
-    @Override
-    public AuthorResponse createAuthor(String name, Integer age, Integer experience) {
-        Author author = new Author()
-                .setName(name)
-                .setAge(age)
-                .setExperience(experience);
-
-        author = authorRepository.save(author);
-
-        return buildAuthorInfo(author);
+    override fun createAuthor(name: String?, age: Int?, experience: Int?): AuthorResponse? {
+        var author: Author = Author()
+            .setName(name)
+            .setAge(age)
+            .setExperience(experience)
+        author = authorRepository.save<Author>(author)
+        return BuilderHelper.buildAuthorInfo(author)
     }
 }

@@ -1,29 +1,27 @@
-package ru.romanow.protocols.consumer.service;
+package ru.romanow.protocols.consumer.service
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
-import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
-import org.springframework.test.context.ActiveProfiles;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
+import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
+import org.springframework.test.context.ActiveProfiles
 
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureStubRunner(
-        ids = "ru.romanow.protocols:producer:+:stubs:8080",
-        stubsMode = StubRunnerProperties.StubsMode.LOCAL
+    ids = ["ru.romanow.protocols:producer:+:stubs:8080"],
+    stubsMode = StubRunnerProperties.StubsMode.LOCAL
 )
-public class PingServiceTest {
+class PingServiceTest {
 
     @Autowired
-    private PingService pingService;
+    private lateinit var pingService: PingService
 
     @Test
-    public void testMakeOperation() {
-        boolean available = pingService.ping();
-        assertThat(available).isTrue();
+    fun testMakeOperation() {
+        val available = pingService.ping()
+        Assertions.assertThat(available).isTrue
     }
 }

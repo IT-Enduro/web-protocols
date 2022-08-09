@@ -1,11 +1,6 @@
-package ru.romanow.protocols.graphql.model;
+package ru.romanow.protocols.graphql.model
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
-public class SubscriptionInfo {
-    private String name;
-    private Integer price;
-}
+data class SubscriptionInfo(
+    var name: String? = null,
+    var price: Int? = null,
+)

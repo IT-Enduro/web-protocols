@@ -1,41 +1,33 @@
-package ru.romanow.protocols.soap.web;
+package ru.romanow.protocols.soap.web
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.romanow.protocols.soap.generated.rpc.model.TestObjectRequest;
-import ru.romanow.protocols.soap.generated.rpc.model.TestObjectResponse;
-import ru.romanow.protocols.soap.generated.rpc.model.WebServiceRpcLiteral;
+import com.google.common.base.MoreObjects
+import org.apache.commons.lang3.RandomStringUtils
+import org.apache.commons.lang3.RandomUtils
+import org.slf4j.LoggerFactory
+import ru.romanow.protocols.soap.generated.rpc.model.TestObjectRequest
+import ru.romanow.protocols.soap.generated.rpc.model.WebServiceRpcLiteral
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+class RpcLiteralWebServiceClient(
+    private val webService: WebServiceRpcLiteral
+) : WebServiceClient {
+    private val logger = LoggerFactory.getLogger(WebServiceClient::class.java)
 
-public class RpcLiteralWebServiceClient
-        implements WebServiceClient {
-    private static final Logger logger = LoggerFactory.getLogger(WebServiceClient.class);
-
-    private final WebServiceRpcLiteral webService;
-
-    public RpcLiteralWebServiceClient(WebServiceRpcLiteral webService) {
-        this.webService = webService;
-    }
-
-    @Override
-    @SuppressWarnings("Duplicates")
-    public void makeRequest() {
-        TestObjectRequest request = new TestObjectRequest();
-        request.setId(RandomUtils.nextInt(0, 1000));
-        request.setSearchString(RandomStringUtils.randomAlphabetic(10));
-
-        logger.info("Request [{}]", toStringHelper(request)
-                .add("id", request.getId())
-                .add("searchString", request.getSearchString())
-                .toString());
-
-        TestObjectResponse response = webService.processRequest(request);
-        logger.info("Response [{}]", toStringHelper(response)
-                .add("code", response.getCode())
-                .add("data", response.getData())
-                .toString());
+    override fun makeRequest() {
+        val request = TestObjectRequest()
+        request.id = RandomUtils.nextInt(0, 1000)
+        request.searchString = RandomStringUtils.randomAlphabetic(10)
+        logger.info(
+            "Request [{}]", MoreObjects.toStringHelper(request)
+                .add("id", request.id)
+                .add("searchString", request.searchString)
+                .toString()
+        )
+        val response = webService.processRequest(request)
+        logger.info(
+            "Response [{}]", MoreObjects.toStringHelper(response)
+                .add("code", response.code)
+                .add("data", response.data)
+                .toString()
+        )
     }
 }

@@ -1,52 +1,56 @@
-package ru.romanow.protocols.rest.web;
+package ru.romanow.protocols.rest.web
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.http.MediaType
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest
 @AutoConfigureRestDocs
-public class PingControllerTest {
+class PingControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private lateinit var mockMvc: MockMvc
 
     @Test
-    public void testPing()
-            throws Exception {
-        mockMvc.perform(get("/api/v1/ping"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.response").value("OK"))
-                .andDo(document("ping",
-                        responseFields(
-                                fieldWithPath("response").description("Available status").type(JsonFieldType.STRING)
-                        ))
-                );
+    fun testPing() {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/ping"))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.response").value("OK"))
+            .andDo(
+                MockMvcRestDocumentation.document(
+                    "ping",
+                    PayloadDocumentation.responseFields(
+                        PayloadDocumentation.fieldWithPath("response").description("Available status")
+                            .type(JsonFieldType.STRING)
+                    )
+                )
+            )
     }
 
     @Test
-    public void testSetCookie()
-            throws Exception {
-        mockMvc.perform(get("/api/v1/cookies"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(cookie().exists("TestCookie"))
-                .andExpect(jsonPath("$.response").value("OK"))
-                .andDo(document("cookies",
-                        responseFields(
-                                fieldWithPath("response").description("Available status").type(JsonFieldType.STRING)
-                        ))
-                );
+    fun testSetCookie() {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/cookies"))
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.cookie().exists("TestCookie"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.response").value("OK"))
+            .andDo(
+                MockMvcRestDocumentation.document(
+                    "cookies",
+                    PayloadDocumentation.responseFields(
+                        PayloadDocumentation.fieldWithPath("response").description("Available status")
+                            .type(JsonFieldType.STRING)
+                    )
+                )
+            )
     }
 }

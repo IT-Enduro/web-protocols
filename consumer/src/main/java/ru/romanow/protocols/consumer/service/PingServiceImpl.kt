@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.client.RestTemplate
+import ru.romanow.protocols.api.model.PingResponse
 
 @Service
 class PingServiceImpl(
@@ -16,7 +17,8 @@ class PingServiceImpl(
 
     override fun ping(): Boolean {
         return try {
-            return restTemplate.getForObject(consumerAddress + PING_PATH, Boolean::class.java)!!
+            val response = restTemplate.getForObject(consumerAddress + PING_PATH, PingResponse::class.java)
+            return response?.response.equals("OK")
         } catch (exception: RestClientResponseException) {
             logger.warn(
                 "Request to '{}' finish with error {}:{}", PING_PATH,

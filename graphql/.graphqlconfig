@@ -1,0 +1,11 @@
+{
+  "name": "Example schema",
+  "schemaPath": "src/main/resources/graphql/authors.graphqls",
+  "extensions": {
+    "endpoints": {
+      "Local Server": {
+        "url": "http://localhost:8080/graphql"
+      }
+    }
+  }
+}

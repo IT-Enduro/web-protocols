@@ -4,5 +4,5 @@ import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
 data class PingResponse(
-    var response: String
+    var response: String? = null
 )

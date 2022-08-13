@@ -1,9 +1,7 @@
 syntax = "proto3";
-
 package ru.romanow.protocols.grpc;
 
 service TestService {
-
     rpc SimpleRequest(TestRequest) returns (TestResponse) {};
 }
 

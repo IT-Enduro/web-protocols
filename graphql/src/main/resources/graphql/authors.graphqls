@@ -7,9 +7,7 @@ schema {
 type Query {
     author(id: ID!): AuthorResponse
     authors: [AuthorResponse]
-    exception: Int
-#    booksCount: Int
-    books: [BookReponse]
+    books(authorId: ID): [BookResponse]
 }
 
 type Mutation {
@@ -17,7 +15,7 @@ type Mutation {
 }
 
 type Subscription {
-    newBooks: SubscriptionInfo
+    newBooks: NewBookResponse
 }
 
 type AuthorResponse {
@@ -28,7 +26,7 @@ type AuthorResponse {
     booksCount: Int
 }
 
-type BookReponse {
+type BookResponse {
     id: ID!
     name: String!
     isn: String
@@ -37,7 +35,7 @@ type BookReponse {
     author: AuthorResponse
 }
 
-type SubscriptionInfo {
+type NewBookResponse {
     name: String
     price: Int
 }

@@ -18,15 +18,10 @@
 
 ### GraphQL
 
-[GrahQL](/graphql) – GraphQL сервер, [описание схемы](/graphql/src/main/resources/schema/authros.graphqls).
+[GraphQL](/graphql) – GraphQL сервер, [описание схемы](/graphql/src/main/resources/graphql/authors.graphqls).
 
-Для запросов можно использовать _встроенный_ [GraphQL ALtair](https://altair.sirmuel.design/) по
-адресу `http://localhost:8080/altair`.
-
-Для просмотра всей схемы можно использовать [Voyager](https://apis.guru/graphql-voyager/) по
-адресу `http://localhost:8080/voyager`.
-
-Т.к. эти два модуля идут как встроенные модули, они сразу отображают текущую схему.
+GraphQL Explorer [GraphiQL](http://localhost:8080/graphiql). Subscription url `/graphql`, т.к. graphiql не умеет
+задавать другой url.
 
 ### gRPC
 

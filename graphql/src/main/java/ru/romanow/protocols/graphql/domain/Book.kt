@@ -27,6 +27,9 @@ data class Book(
     @Column(name = "page_count")
     var pageCount: Int? = null,
 
+    @Column(name = "author_id", updatable = false, insertable = false, nullable = false)
+    var authorId: Int? = null,
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", foreignKey = ForeignKey(name = "fk_book_author"))
     var author: Author? = null,
@@ -42,6 +45,7 @@ data class Book(
         if (isn != other.isn) return false
         if (price != other.price) return false
         if (pageCount != other.pageCount) return false
+        if (authorId != other.authorId) return false
 
         return true
     }
@@ -52,10 +56,11 @@ data class Book(
         result = 31 * result + (isn?.hashCode() ?: 0)
         result = 31 * result + (price ?: 0)
         result = 31 * result + (pageCount ?: 0)
+        result = 31 * result + (authorId ?: 0)
         return result
     }
 
     override fun toString(): String {
-        return "Book(id=$id, name=$name, isn=$isn, price=$price, pageCount=$pageCount)"
+        return "Book(id=$id, name=$name, isn=$isn, price=$price, pageCount=$pageCount, authorId=$authorId)"
     }
 }

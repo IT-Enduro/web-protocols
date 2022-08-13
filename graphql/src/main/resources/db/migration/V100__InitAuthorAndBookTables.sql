@@ -1,7 +1,7 @@
 -- V100 init author and book tables
 CREATE TABLE author
 (
-    id         SERIAL       PRIMARY KEY,
+    id         serial PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,
     age        INT,
     experience INT
@@ -11,12 +11,12 @@ CREATE INDEX idx_author_name ON author (name);
 
 CREATE TABLE book
 (
-    id         SERIAL PRIMARY KEY,
+    id         serial PRIMARY KEY,
     name       VARCHAR(255) NOT NULL,
     isn        VARCHAR(255) NOT NULL,
     price      INT,
     page_count INT,
-    author_id  INT
+    author_id  INT          NOT NULL
         CONSTRAINT fk_book_author REFERENCES author (id)
 );
 

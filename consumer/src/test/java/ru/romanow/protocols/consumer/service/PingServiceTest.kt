@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles
     ids = ["ru.romanow.protocols:producer:+:stubs:8080"],
     stubsMode = StubRunnerProperties.StubsMode.LOCAL
 )
-class PingServiceTest {
+internal class PingServiceTest {
 
     @Autowired
     private lateinit var pingService: PingService

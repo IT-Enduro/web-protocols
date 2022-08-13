@@ -24,7 +24,7 @@ internal class OperationServiceTest {
 
     @Test
     fun testMakeOperation() {
-        val request = TestObjectRequest(ID, SEARCH_STRING)
+        val request = TestObjectRequest(CORRECT_ID, SEARCH_STRING)
         val response = operationService.makeOperation(request)
         assertThat(response.code).isEqualTo(CODE)
         assertThat(response.data).isEqualTo(DATA)
@@ -32,14 +32,15 @@ internal class OperationServiceTest {
 
     @Test
     fun testMakeOperationFail() {
-        val request = TestObjectRequest(ID, SEARCH_STRING)
+        val request = TestObjectRequest(WRONG_ID, SEARCH_STRING)
         assertThatThrownBy {
             operationService.makeOperation(request)
         }.isInstanceOf(RestRequestException::class.java)
     }
 
     companion object {
-        private const val ID = 1
+        private const val CORRECT_ID = 101
+        private const val WRONG_ID = 1
         private const val SEARCH_STRING = "test"
         private const val CODE = 100
         private const val DATA = "TEST"

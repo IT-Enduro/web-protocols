@@ -137,7 +137,14 @@ class StateRestControllerTest {
                         .withRequestBody(match("$.country", regex("\\S+")))
                 )
             )
-            .andDo(document("Full update State", requestFieldsSnippet(), responseFieldsSnippet()))
+            .andDo(
+                document(
+                    "Full update State",
+                    pathParameters(parameterWithName("id").description("State ID")),
+                    requestFieldsSnippet(),
+                    responseFieldsSnippet()
+                )
+            )
     }
 
     @Test
@@ -164,7 +171,14 @@ class StateRestControllerTest {
                         .withRequestBody(match("$.country", or(regex("\\S+"), absent())))
                 )
             )
-            .andDo(document("Partial update State", requestFieldsSnippet(), responseFieldsSnippet()))
+            .andDo(
+                document(
+                    "Partial update State",
+                    pathParameters(parameterWithName("id").description("State ID")),
+                    requestFieldsSnippet(),
+                    responseFieldsSnippet()
+                )
+            )
     }
 
     @Test

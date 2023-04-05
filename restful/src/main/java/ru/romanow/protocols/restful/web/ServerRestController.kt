@@ -1,0 +1,83 @@
+package ru.romanow.protocols.restful.web
+
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest
+import ru.romanow.protocols.api.model.CreateServerRequest
+import ru.romanow.protocols.api.model.ServersResponse
+import ru.romanow.protocols.common.service.ServerService
+
+@Tag(name = "Server API")
+@RestController
+@RequestMapping("/api/v1/servers")
+class ServerRestController(
+    private val serverService: ServerService
+) {
+
+    @Operation(summary = "Get server by Id")
+    @GetMapping(value = ["/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
+    fun getById(@PathVariable id: Int) = serverService.getById(id)
+
+    @Operation(summary = "Get server state")
+    @GetMapping(value = ["/{id}/state"], produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
+    fun state(@PathVariable id: Int) = serverService.serverState(id)
+
+    @Operation(summary = "Find all servers")
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
+    fun all() = ServersResponse(serverService.all())
+
+    @Operation(summary = "Find servers by address")
+    @GetMapping(
+        params = ["address"],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+    )
+    fun findByAddress(@RequestParam address: String) = ServersResponse(serverService.findByAddress(address))
+
+    @Operation(summary = "Save new server")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+    )
+    fun create(@Valid @RequestBody request: CreateServerRequest): ResponseEntity<Void> {
+        val id = serverService.create(request)
+        return ResponseEntity
+            .created(
+                fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(id)
+                    .toUri()
+            )
+            .build()
+    }
+
+    @Operation(summary = "Full update server by Id")
+    @PutMapping(
+        value = ["/{id}"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+    )
+    fun fullUpdate(@PathVariable id: Int, @Valid @RequestBody request: CreateServerRequest) =
+        serverService.update(id, request, true)
+
+    @Operation(summary = "Edit server by Id")
+    @PatchMapping(
+        value = ["/{id}"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
+    )
+    fun partialUpdate(@PathVariable id: Int, @RequestBody request: CreateServerRequest) =
+        serverService.update(id, request)
+
+    @Operation(summary = "Delete server by Id")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Int) {
+        serverService.delete(id)
+    }
+}

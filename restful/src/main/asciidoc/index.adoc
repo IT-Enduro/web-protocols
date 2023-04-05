@@ -1,0 +1,255 @@
+= REST service API guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== Server Resource
+
+=== Get Server by ID
+
+Request example:
+
+include::{snippets}/Get Server by ID/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Get Server by ID/path-parameters.adoc[]
+
+Response fields:
+
+include::{snippets}/Get Server by ID/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Get Server by ID/response-body.adoc[]
+
+=== Get all Servers
+
+Request example:
+
+include::{snippets}/Get all Servers/curl-request.adoc[]
+
+Response fields:
+
+include::{snippets}/Get all Servers/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Get all Servers/response-body.adoc[]
+
+=== Get Server State by ID
+
+Request example:
+
+include::{snippets}/Get Server State by ID/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Get Server State by ID/path-parameters.adoc[]
+
+Response fields:
+
+include::{snippets}/Get Server State by ID/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Get Server State by ID/http-response.adoc[]
+
+=== Find Server by address
+
+Request example:
+
+include::{snippets}/Find Server by address/curl-request.adoc[]
+
+Query params:
+
+include::{snippets}/Find Server by address/query-parameters.adoc[]
+
+Response fields:
+
+include::{snippets}/Find Server by address/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Find Server by address/http-response.adoc[]
+
+=== Create new Server
+
+Request example:
+
+include::{snippets}/Create new Server/curl-request.adoc[]
+
+Request body:
+
+include::{snippets}/Create new Server/request-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Create new Server/http-response.adoc[]
+
+=== Full update
+
+Request example:
+
+include::{snippets}/Full update Server/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Full update Server/path-parameters.adoc[]
+
+Request body:
+
+include::{snippets}/Full update Server/request-fields.adoc[]
+
+Response fields:
+
+include::{snippets}/Full update Server/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Full update Server/http-response.adoc[]
+
+=== Partial update
+
+Request example:
+
+include::{snippets}/Partial update Server/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Partial update Server/path-parameters.adoc[]
+
+Request body:
+
+include::{snippets}/Partial update Server/request-fields.adoc[]
+
+Response fields:
+
+include::{snippets}/Partial update Server/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Partial update Server/http-response.adoc[]
+
+=== Remove Server by ID
+
+Request example:
+
+include::{snippets}/Remove Server by ID/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Remove Server by ID/path-parameters.adoc[]
+
+Response example:
+
+include::{snippets}/Remove Server by ID/http-response.adoc[]
+
+== States Resource
+
+=== Get State by ID
+
+Request example:
+
+include::{snippets}/Get State by ID/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Get State by ID/path-parameters.adoc[]
+
+Response fields:
+
+include::{snippets}/Get State by ID/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Get State by ID/response-body.adoc[]
+
+=== Get all States
+
+Request example:
+
+include::{snippets}/Get all States/curl-request.adoc[]
+
+Response fields:
+
+include::{snippets}/Get all States/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Get all States/response-body.adoc[]
+
+=== Create new State
+
+Request example:
+
+include::{snippets}/Create new State/curl-request.adoc[]
+
+Request body:
+
+include::{snippets}/Create new State/request-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Create new State/http-response.adoc[]
+
+=== Full update
+
+Request example:
+
+include::{snippets}/Full update State/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Full update State/path-parameters.adoc[]
+
+Request body:
+
+include::{snippets}/Full update State/request-fields.adoc[]
+
+Response fields:
+
+include::{snippets}/Full update State/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Full update State/http-response.adoc[]
+
+=== Partial update
+
+Request example:
+
+include::{snippets}/Partial update State/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Partial update State/path-parameters.adoc[]
+
+Request body:
+
+include::{snippets}/Partial update State/request-fields.adoc[]
+
+Response fields:
+
+include::{snippets}/Partial update State/response-fields.adoc[]
+
+Response example:
+
+include::{snippets}/Partial update State/http-response.adoc[]
+
+=== Remove State by ID
+
+Request example:
+
+include::{snippets}/Remove State by ID/curl-request.adoc[]
+
+Request params:
+
+include::{snippets}/Remove State by ID/path-parameters.adoc[]
+
+Response example:
+
+include::{snippets}/Remove State by ID/http-response.adoc[]

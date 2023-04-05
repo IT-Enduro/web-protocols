@@ -1,5 +1,8 @@
 package ru.romanow.protocols.api.model
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+
+@JacksonXmlRootElement(localName = "error")
 data class ErrorResponse(
-    var message: String? = null
+    val message: String? = null
 )

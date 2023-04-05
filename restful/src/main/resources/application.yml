@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  profiles.active: local,common
+  application.name: restful
+  main.banner-mode: off
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false
+
+management:
+  endpoint:
+    health.probes.enabled: true
+  endpoints:
+    web:
+      base-path: /manage
+      exposure.include: info,health,loggers
+  health.diskspace.enabled: false
+  endpoint.health.show-details: always
+  info.git.mode: simple
+
+springdoc:
+  api-docs.path: /api-docs
+  paths-to-match: /api/**
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

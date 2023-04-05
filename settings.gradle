@@ -1,19 +1,20 @@
 rootProject.name = "web-protocols"
 
 include "api"
+include "common"
 
-include "soap-protocol"
-include "soap-server"
-include "soap-client"
+include "restful"
 
-include "grpc-protocol"
-include "grpc-server"
-include "grpc-client"
+//include "soap-protocol"
+//include "soap-server"
+//include "soap-client"
 
-include "rest-server"
+//include "grpc-protocol"
+//include "grpc-server"
+//include "grpc-client"
 
-include "graphql"
-
-include "producer"
-include "consumer"
+//include "graphql"
+//
+//include "producer"
+//include "consumer"
 

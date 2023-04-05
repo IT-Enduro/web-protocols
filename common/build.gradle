@@ -1,0 +1,16 @@
+plugins {
+    id "org.jetbrains.kotlin.plugin.spring"
+    id "org.jetbrains.kotlin.plugin.jpa"
+}
+
+dependencies {
+    api project(":api")
+
+    api "org.springframework.boot:spring-boot-starter-data-jpa"
+    api "org.springframework.boot:spring-boot-starter-logging"
+
+    api "org.postgresql:postgresql"
+    api "org.flywaydb:flyway-core"
+
+    api "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
+}

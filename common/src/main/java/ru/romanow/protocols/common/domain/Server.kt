@@ -13,9 +13,6 @@ data class Server(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
 
-    @Column(name = "address")
-    var address: String? = null,
-
     @Column(name = "purpose", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     var purpose: Purpose? = null,
@@ -25,9 +22,6 @@ data class Server(
 
     @Column(name = "bandwidth", nullable = false)
     var bandwidth: Int? = null,
-
-    @Column(name = "state_id", insertable = false, updatable = false)
-    var stateId: Int? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "state_id", foreignKey = ForeignKey(name = "fk_servers_state"))
@@ -40,7 +34,6 @@ data class Server(
         other as Server
 
         if (id != other.id) return false
-        if (address != other.address) return false
         if (purpose != other.purpose) return false
         if (latency != other.latency) return false
         if (bandwidth != other.bandwidth) return false
@@ -50,7 +43,6 @@ data class Server(
 
     override fun hashCode(): Int {
         var result = id ?: 0
-        result = 31 * result + (address?.hashCode() ?: 0)
         result = 31 * result + (purpose?.hashCode() ?: 0)
         result = 31 * result + (latency ?: 0)
         result = 31 * result + (bandwidth ?: 0)
@@ -58,6 +50,6 @@ data class Server(
     }
 
     override fun toString(): String {
-        return "Server(id=$id, address=$address, purpose=$purpose, latency=$latency, bandwidth=$bandwidth)"
+        return "Server(id=$id, purpose=$purpose, latency=$latency, bandwidth=$bandwidth)"
     }
 }

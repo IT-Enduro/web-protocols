@@ -7,6 +7,6 @@ import ru.romanow.protocols.common.domain.Server
 
 interface ServerRepository : JpaRepository<Server, Int> {
 
-    @Query("select s from Server s where s.address = :address")
-    fun findServersByAddress(@Param("address") address: String): List<Server>
+    @Query("select s from Server s where s.state.city = :city")
+    fun findInCity(@Param("city") city: String): List<Server>
 }

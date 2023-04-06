@@ -15,7 +15,7 @@ import ru.romanow.protocols.common.service.ServerService
 @Tag(name = "Server API")
 @RestController
 @RequestMapping("/api/v1/servers")
-class ServerRestController(
+class ServerController(
     private val serverService: ServerService
 ) {
 
@@ -23,20 +23,16 @@ class ServerRestController(
     @GetMapping(value = ["/{id}"], produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun getById(@PathVariable id: Int) = serverService.getById(id)
 
-    @Operation(summary = "Get server state")
-    @GetMapping(value = ["/{id}/state"], produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
-    fun state(@PathVariable id: Int) = serverService.serverState(id)
-
     @Operation(summary = "Find all servers")
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE])
     fun all() = ServersResponse(serverService.all())
 
-    @Operation(summary = "Find servers by address")
+    @Operation(summary = "Find servers in city")
     @GetMapping(
-        params = ["address"],
+        params = ["city"],
         produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
     )
-    fun findByAddress(@RequestParam address: String) = ServersResponse(serverService.findByAddress(address))
+    fun findByAddress(@RequestParam city: String) = ServersResponse(serverService.findInCity(city))
 
     @Operation(summary = "Save new server")
     @ResponseStatus(HttpStatus.CREATED)
@@ -63,7 +59,7 @@ class ServerRestController(
         produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
     )
     fun fullUpdate(@PathVariable id: Int, @Valid @RequestBody request: CreateServerRequest) =
-        serverService.update(id, request, true)
+        serverService.update(id, request)
 
     @Operation(summary = "Edit server by Id")
     @PatchMapping(

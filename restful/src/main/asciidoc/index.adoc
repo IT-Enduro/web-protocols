@@ -40,41 +40,23 @@ Response example:
 
 include::{snippets}/Get all Servers/response-body.adoc[]
 
-=== Get Server State by ID
+=== Find Servers in city
 
 Request example:
 
-include::{snippets}/Get Server State by ID/curl-request.adoc[]
-
-Request params:
-
-include::{snippets}/Get Server State by ID/path-parameters.adoc[]
-
-Response fields:
-
-include::{snippets}/Get Server State by ID/response-fields.adoc[]
-
-Response example:
-
-include::{snippets}/Get Server State by ID/http-response.adoc[]
-
-=== Find Server by address
-
-Request example:
-
-include::{snippets}/Find Server by address/curl-request.adoc[]
+include::{snippets}/Find Servers in city/curl-request.adoc[]
 
 Query params:
 
-include::{snippets}/Find Server by address/query-parameters.adoc[]
+include::{snippets}/Find Servers in city/query-parameters.adoc[]
 
 Response fields:
 
-include::{snippets}/Find Server by address/response-fields.adoc[]
+include::{snippets}/Find Servers in city/response-fields.adoc[]
 
 Response example:
 
-include::{snippets}/Find Server by address/http-response.adoc[]
+include::{snippets}/Find Servers in city/http-response.adoc[]
 
 === Create new Server
 
@@ -147,109 +129,3 @@ include::{snippets}/Remove Server by ID/path-parameters.adoc[]
 Response example:
 
 include::{snippets}/Remove Server by ID/http-response.adoc[]
-
-== States Resource
-
-=== Get State by ID
-
-Request example:
-
-include::{snippets}/Get State by ID/curl-request.adoc[]
-
-Request params:
-
-include::{snippets}/Get State by ID/path-parameters.adoc[]
-
-Response fields:
-
-include::{snippets}/Get State by ID/response-fields.adoc[]
-
-Response example:
-
-include::{snippets}/Get State by ID/response-body.adoc[]
-
-=== Get all States
-
-Request example:
-
-include::{snippets}/Get all States/curl-request.adoc[]
-
-Response fields:
-
-include::{snippets}/Get all States/response-fields.adoc[]
-
-Response example:
-
-include::{snippets}/Get all States/response-body.adoc[]
-
-=== Create new State
-
-Request example:
-
-include::{snippets}/Create new State/curl-request.adoc[]
-
-Request body:
-
-include::{snippets}/Create new State/request-fields.adoc[]
-
-Response example:
-
-include::{snippets}/Create new State/http-response.adoc[]
-
-=== Full update
-
-Request example:
-
-include::{snippets}/Full update State/curl-request.adoc[]
-
-Request params:
-
-include::{snippets}/Full update State/path-parameters.adoc[]
-
-Request body:
-
-include::{snippets}/Full update State/request-fields.adoc[]
-
-Response fields:
-
-include::{snippets}/Full update State/response-fields.adoc[]
-
-Response example:
-
-include::{snippets}/Full update State/http-response.adoc[]
-
-=== Partial update
-
-Request example:
-
-include::{snippets}/Partial update State/curl-request.adoc[]
-
-Request params:
-
-include::{snippets}/Partial update State/path-parameters.adoc[]
-
-Request body:
-
-include::{snippets}/Partial update State/request-fields.adoc[]
-
-Response fields:
-
-include::{snippets}/Partial update State/response-fields.adoc[]
-
-Response example:
-
-include::{snippets}/Partial update State/http-response.adoc[]
-
-=== Remove State by ID
-
-Request example:
-
-include::{snippets}/Remove State by ID/curl-request.adoc[]
-
-Request params:
-
-include::{snippets}/Remove State by ID/path-parameters.adoc[]
-
-Response example:
-
-include::{snippets}/Remove State by ID/http-response.adoc[]

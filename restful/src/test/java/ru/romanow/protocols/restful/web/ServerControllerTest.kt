@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.absent
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.or
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import jakarta.transaction.Transactional
@@ -20,7 +21,8 @@ import org.springframework.http.HttpHeaders.LOCATION
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
-import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.JsonFieldType.NUMBER
+import org.springframework.restdocs.payload.JsonFieldType.STRING
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
@@ -30,10 +32,10 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.Purpose
+import ru.romanow.protocols.api.model.StateInfo
 import ru.romanow.protocols.common.domain.Server
 import ru.romanow.protocols.common.domain.State
 import ru.romanow.protocols.common.repository.ServerRepository
-import ru.romanow.protocols.common.repository.StateRepository
 import ru.romanow.protocols.restful.config.DatabaseTestConfiguration
 import kotlin.random.Random.Default.nextInt
 import com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath as match
@@ -46,7 +48,7 @@ import com.github.tomakehurst.wiremock.matching.RegexPattern as regex
 @AutoConfigureRestDocs
 @AutoConfigureTestEntityManager
 @Import(DatabaseTestConfiguration::class)
-class ServerRestControllerTest {
+class ServerControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -55,16 +57,12 @@ class ServerRestControllerTest {
         .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
     @Autowired
-    private lateinit var stateRepository: StateRepository
-
-    @Autowired
     private lateinit var serverRepository: ServerRepository
 
     @Test
     fun testGetById() {
         val state = State(city = CITY, country = COUNTRY)
         var server = Server(
-            address = "Yerevan",
             purpose = Purpose.DATABASE,
             latency = nextInt(1000),
             bandwidth = nextInt(1000),
@@ -79,11 +77,12 @@ class ServerRestControllerTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(server.id))
-            .andExpect(jsonPath("$.address").value(server.address))
             .andExpect(jsonPath("$.purpose").value(server.purpose?.name))
             .andExpect(jsonPath("$.latency").value(server.latency))
             .andExpect(jsonPath("$.bandwidth").value(server.bandwidth))
-            .andExpect(jsonPath("$.stateId").value(server.state?.id))
+            .andExpect(jsonPath("$.state.id").value(server.state?.id))
+            .andExpect(jsonPath("$.state.city").value(server.state?.city))
+            .andExpect(jsonPath("$.state.country").value(server.state?.country))
             .andDo(verify())
             .andDo(
                 document(
@@ -95,45 +94,9 @@ class ServerRestControllerTest {
     }
 
     @Test
-    fun testState() {
-        val state = State(city = CITY, country = COUNTRY)
-        var server = Server(
-            address = "Yerevan",
-            purpose = Purpose.DATABASE,
-            latency = nextInt(1000),
-            bandwidth = nextInt(1000),
-            state = state
-        )
-        server = serverRepository.saveAndFlush(server)
-
-        mockMvc.perform(
-            get("/api/v1/servers/{id}/state", server.id)
-                .accept(MediaType.APPLICATION_JSON)
-        )
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(state.id))
-            .andExpect(jsonPath("$.city").value(state.city))
-            .andExpect(jsonPath("$.country").value(state.country))
-            .andDo(verify())
-            .andDo(
-                document(
-                    "Get Server State by ID",
-                    pathParameters(parameterWithName("id").description("Server ID")),
-                    responseFields(
-                        fieldWithPath("id").description("ID"),
-                        fieldWithPath("city").description("City"),
-                        fieldWithPath("country").description("Country")
-                    )
-                )
-            )
-    }
-
-    @Test
     fun testAll() {
         val state = State(city = CITY, country = COUNTRY)
         var server = Server(
-            address = "Yerevan",
             purpose = Purpose.DATABASE,
             latency = nextInt(1000),
             bandwidth = nextInt(1000),
@@ -150,20 +113,20 @@ class ServerRestControllerTest {
             .andExpect(jsonPath("$.servers").isArray)
             .andExpect(jsonPath("$.servers.length()").value(5))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].id").value(server.id))
-            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].address").value(server.address))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].purpose").value(server.purpose?.name))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].latency").value(server.latency))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].bandwidth").value(server.bandwidth))
-            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].stateId").value(server.state?.id))
+            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].state.id").value(server.state?.id))
+            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].state.city").value(server.state?.city))
+            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].state.country").value(server.state?.country))
             .andDo(verify())
             .andDo(document("Get all Servers", responseFieldsSnippet("servers[].")))
     }
 
     @Test
-    fun testFindByAddress() {
+    fun testFindInCity() {
         val state = State(city = CITY, country = COUNTRY)
         var server = Server(
-            address = "Yerevan",
             purpose = Purpose.DATABASE,
             latency = nextInt(1000),
             bandwidth = nextInt(1000),
@@ -173,7 +136,7 @@ class ServerRestControllerTest {
 
         mockMvc.perform(
             get("/api/v1/servers")
-                .queryParam("address", server.address)
+                .queryParam("city", CITY)
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
@@ -181,16 +144,17 @@ class ServerRestControllerTest {
             .andExpect(jsonPath("$.servers").isArray)
             .andExpect(jsonPath("$.servers.length()").value(1))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].id").value(server.id))
-            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].address").value(server.address))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].purpose").value(server.purpose?.name))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].latency").value(server.latency))
             .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].bandwidth").value(server.bandwidth))
-            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].stateId").value(server.state?.id))
+            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].state.id").value(server.state?.id))
+            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].state.city").value(server.state?.city))
+            .andExpect(jsonPath("$.servers[?(@.id == ${server.id})].state.country").value(server.state?.country))
             .andDo(verify())
             .andDo(
                 document(
-                    "Find Server by address",
-                    queryParameters(parameterWithName("address").description("Datacenter address")),
+                    "Find Servers in city",
+                    queryParameters(parameterWithName("city").description("City")),
                     responseFieldsSnippet("servers[].")
                 )
             )
@@ -198,13 +162,11 @@ class ServerRestControllerTest {
 
     @Test
     fun testCreate() {
-        val state = stateRepository.saveAndFlush(State(city = CITY, country = COUNTRY))
         val request = CreateServerRequest(
-            address = CITY,
             purpose = Purpose.BACKEND.name,
             latency = nextInt(100),
             bandwidth = nextInt(1000),
-            stateId = state.id
+            state = StateInfo(city = CITY, country = COUNTRY)
         )
 
         mockMvc.perform(
@@ -217,11 +179,11 @@ class ServerRestControllerTest {
             .andDo(
                 verify().wiremock(
                     WireMock.post(urlEqualTo("/api/v1/servers"))
-                        .withRequestBody(match("$.address", regex("\\S+")))
                         .withRequestBody(match("$.purpose", regex("(BACKEND|FRONTEND|DATABASE)")))
                         .withRequestBody(match("$.latency", regex("\\d{1,3}")))
                         .withRequestBody(match("$.bandwidth", regex("\\d{1,8}")))
-                        .withRequestBody(match("$.stateId", regex("\\d+")))
+                        .withRequestBody(match("$.state.city", equalTo(CITY)))
+                        .withRequestBody(match("$.state.country", equalTo(COUNTRY)))
                 )
             )
             .andDo(document("Create new Server", requestFieldsSnippet()))
@@ -230,23 +192,19 @@ class ServerRestControllerTest {
 
     @Test
     fun testFullUpdate() {
-        var state = stateRepository.saveAndFlush(State(city = "Moscow", country = "Russia"))
         var server = Server(
-            address = "Moscow",
             purpose = Purpose.DATABASE,
             latency = nextInt(1000),
             bandwidth = nextInt(1000),
-            state = state
+            state = State(city = "Moscow", country = "Russia")
         )
         server = serverRepository.saveAndFlush(server)
 
-        state = stateRepository.saveAndFlush(State(city = CITY, country = COUNTRY))
         val request = CreateServerRequest(
-            address = CITY,
             purpose = Purpose.BACKEND.name,
             latency = nextInt(100),
             bandwidth = nextInt(1000),
-            stateId = state.id
+            state = StateInfo(city = CITY, country = COUNTRY)
         )
 
         mockMvc.perform(
@@ -258,19 +216,20 @@ class ServerRestControllerTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(server.id))
-            .andExpect(jsonPath("$.address").value(request.address))
             .andExpect(jsonPath("$.purpose").value(request.purpose))
             .andExpect(jsonPath("$.latency").value(request.latency))
             .andExpect(jsonPath("$.bandwidth").value(request.bandwidth))
-            .andExpect(jsonPath("$.stateId").value(request.stateId))
+            .andExpect(jsonPath("$.state.id").value(server.state?.id))
+            .andExpect(jsonPath("$.state.city").value(server.state?.city))
+            .andExpect(jsonPath("$.state.country").value(server.state?.country))
             .andDo(
                 verify().wiremock(
                     WireMock.put(urlEqualTo("/api/v1/servers/${server.id}"))
-                        .withRequestBody(match("$.address", regex("\\S+")))
-                        .withRequestBody(match("$.purpose", regex("(BACKEND|FRONTEND|DATABASE)")))
-                        .withRequestBody(match("$.latency", regex("\\d{1,3}")))
-                        .withRequestBody(match("$.bandwidth", regex("\\d{1,8}")))
-                        .withRequestBody(match("$.stateId", regex("\\d+")))
+                        .withRequestBody(match("$.purpose", or(regex("(BACKEND|FRONTEND|DATABASE)"), absent())))
+                        .withRequestBody(match("$.latency", or(regex("\\d{1,3}"), absent())))
+                        .withRequestBody(match("$.bandwidth", or(regex("\\d{1,8}"), absent())))
+                        .withRequestBody(match("$.state.city", equalTo(CITY)))
+                        .withRequestBody(match("$.state.country", equalTo(COUNTRY)))
                 )
             )
             .andDo(
@@ -285,22 +244,19 @@ class ServerRestControllerTest {
 
     @Test
     fun testPartialUpdate() {
-        val state = stateRepository.saveAndFlush(State(city = CITY, country = COUNTRY))
         var server = Server(
-            address = CITY,
             purpose = Purpose.DATABASE,
             latency = nextInt(1000),
             bandwidth = nextInt(1000),
-            state = state
+            state = State(city = CITY, country = COUNTRY)
         )
         server = serverRepository.saveAndFlush(server)
 
         val request = CreateServerRequest(
-            address = CITY,
             purpose = Purpose.BACKEND.name,
             latency = nextInt(100),
             bandwidth = nextInt(1000),
-            stateId = state.id
+            state = StateInfo(city = CITY, country = COUNTRY)
         )
 
         mockMvc.perform(
@@ -312,19 +268,20 @@ class ServerRestControllerTest {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(server.id))
-            .andExpect(jsonPath("$.address").value(request.address))
             .andExpect(jsonPath("$.purpose").value(request.purpose))
             .andExpect(jsonPath("$.latency").value(request.latency))
             .andExpect(jsonPath("$.bandwidth").value(request.bandwidth))
-            .andExpect(jsonPath("$.stateId").value(request.stateId))
+            .andExpect(jsonPath("$.state.id").value(server.state?.id))
+            .andExpect(jsonPath("$.state.city").value(server.state?.city))
+            .andExpect(jsonPath("$.state.country").value(server.state?.country))
             .andDo(
                 verify().wiremock(
                     WireMock.patch(urlEqualTo("/api/v1/servers/${server.id}"))
-                        .withRequestBody(match("$.address", or(regex("\\S+"), absent())))
                         .withRequestBody(match("$.purpose", or(regex("(BACKEND|FRONTEND|DATABASE)"), absent())))
                         .withRequestBody(match("$.latency", or(regex("\\d{1,3}"), absent())))
                         .withRequestBody(match("$.bandwidth", or(regex("\\d{1,8}"), absent())))
-                        .withRequestBody(match("$.stateId", or(regex("\\d+"), absent())))
+                        .withRequestBody(match("$.state.city", equalTo(CITY)))
+                        .withRequestBody(match("$.state.country", equalTo(COUNTRY)))
                 )
             )
             .andDo(
@@ -339,13 +296,11 @@ class ServerRestControllerTest {
 
     @Test
     fun testDelete() {
-        val state = State(city = CITY, country = COUNTRY)
         var server = Server(
-            address = "Yerevan",
             purpose = Purpose.DATABASE,
             latency = nextInt(1000),
             bandwidth = nextInt(1000),
-            state = state
+            state = State(city = CITY, country = COUNTRY)
         )
         server = serverRepository.saveAndFlush(server)
 
@@ -356,20 +311,21 @@ class ServerRestControllerTest {
     }
 
     private fun requestFieldsSnippet() = requestFields(
-        fieldWithPath("address").description("Datacenter address").type(JsonFieldType.STRING).optional(),
-        fieldWithPath("purpose").description("Server purpose").type(JsonFieldType.STRING).optional(),
-        fieldWithPath("latency").description("Server latency").optional().type(JsonFieldType.NUMBER),
-        fieldWithPath("bandwidth").description("Server bandwidth").optional().type(JsonFieldType.NUMBER),
-        fieldWithPath("stateId").description("State ID").optional().type(JsonFieldType.NUMBER),
+        fieldWithPath("purpose").description("Server purpose").type(STRING).optional(),
+        fieldWithPath("latency").description("Server latency").optional().type(NUMBER),
+        fieldWithPath("bandwidth").description("Server bandwidth").optional().type(NUMBER),
+        fieldWithPath("state.city").description("City").optional().type(STRING),
+        fieldWithPath("state.country").description("Country").optional().type(STRING),
     )
 
     private fun responseFieldsSnippet(prefix: String = "") = responseFields(
-        fieldWithPath("${prefix}id").description("ID").type(JsonFieldType.NUMBER),
-        fieldWithPath("${prefix}address").description("Datacenter address").type(JsonFieldType.STRING),
-        fieldWithPath("${prefix}purpose").description("Server purpose").type(JsonFieldType.STRING),
-        fieldWithPath("${prefix}latency").description("Server latency").type(JsonFieldType.NUMBER),
-        fieldWithPath("${prefix}bandwidth").description("Server bandwidth").type(JsonFieldType.NUMBER),
-        fieldWithPath("${prefix}stateId").description("State ID").type(JsonFieldType.NUMBER),
+        fieldWithPath("${prefix}id").description("ID").type(NUMBER),
+        fieldWithPath("${prefix}purpose").description("Server purpose").type(STRING),
+        fieldWithPath("${prefix}latency").description("Server latency").type(NUMBER),
+        fieldWithPath("${prefix}bandwidth").description("Server bandwidth").type(NUMBER),
+        fieldWithPath("${prefix}state.id").description("State ID").type(NUMBER),
+        fieldWithPath("${prefix}state.city").description("City").type(STRING),
+        fieldWithPath("${prefix}state.country").description("Country").type(STRING),
     )
 
     companion object {

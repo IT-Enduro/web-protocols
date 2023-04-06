@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 
 data class CreateServerRequest(
-    val address: String? = null,
-
     @field:NotEmpty(message = "{field.not.empty}")
     val purpose: String? = null,
 
@@ -22,5 +20,5 @@ data class CreateServerRequest(
     val bandwidth: Int? = null,
 
     @field:NotNull(message = "{field.not.null}")
-    val stateId: Int? = null
+    val state: StateInfo? = null
 )

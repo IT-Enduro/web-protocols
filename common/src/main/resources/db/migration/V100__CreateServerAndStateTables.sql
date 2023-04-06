@@ -9,7 +9,6 @@ CREATE TABLE states
 CREATE TABLE servers
 (
     id        SERIAL PRIMARY KEY,
-    address   VARCHAR(255),
     purpose   VARCHAR(20) NOT NULL,
     latency   INT         NOT NULL,
     bandwidth INT         NOT NULL,

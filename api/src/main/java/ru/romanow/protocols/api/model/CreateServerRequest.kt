@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 
+@NoArgConstructor
 data class CreateServerRequest(
     @field:NotEmpty(message = "{field.not.empty}")
     val purpose: String? = null,

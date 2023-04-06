@@ -7,7 +7,7 @@ interface ServerService {
     fun getById(id: Int): ServerResponse
     fun all(): List<ServerResponse>
     fun findInCity(city: String): List<ServerResponse>
-    fun create(request: CreateServerRequest): Int
+    fun create(request: CreateServerRequest): ServerResponse
     fun delete(id: Int)
     fun update(id: Int, request: CreateServerRequest): ServerResponse
 }

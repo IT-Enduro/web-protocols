@@ -35,7 +35,7 @@ class ServerServiceImpl(
             .map { buildServerResponse(it) }
 
     @Transactional
-    override fun create(request: CreateServerRequest): Int {
+    override fun create(request: CreateServerRequest): ServerResponse {
         var server = Server(
             latency = request.latency!!,
             bandwidth = request.bandwidth!!,
@@ -43,7 +43,7 @@ class ServerServiceImpl(
             state = State(city = request.state?.city, country = request.state?.country)
         )
         server = serverRepository.save(server)
-        return server.id!!
+        return buildServerResponse(server)
     }
 
     @Transactional

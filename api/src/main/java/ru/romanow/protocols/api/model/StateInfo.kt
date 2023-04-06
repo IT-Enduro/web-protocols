@@ -3,6 +3,7 @@ package ru.romanow.protocols.api.model
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import jakarta.validation.constraints.NotEmpty
 
+@NoArgConstructor
 @JacksonXmlRootElement(localName = "state")
 data class StateInfo(
     val id: Int? = null,

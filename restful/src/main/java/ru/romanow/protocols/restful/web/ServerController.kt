@@ -41,7 +41,7 @@ class ServerController(
         produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
     )
     fun create(@Valid @RequestBody request: CreateServerRequest): ResponseEntity<Void> {
-        val id = serverService.create(request)
+        val id = serverService.create(request).id
         return ResponseEntity
             .created(
                 fromCurrentRequest()

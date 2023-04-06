@@ -1,5 +1,13 @@
+plugins {
+    id "org.jetbrains.kotlin.plugin.noarg"
+}
+
 dependencies {
     api "jakarta.validation:jakarta.validation-api"
     api "com.fasterxml.jackson.core:jackson-annotations"
     api "com.fasterxml.jackson.dataformat:jackson-dataformat-xml"
+}
+
+noArg {
+    annotation "ru.romanow.protocols.api.model.NoArgConstructor"
 }

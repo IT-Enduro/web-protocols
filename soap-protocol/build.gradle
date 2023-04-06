@@ -1,7 +1,0 @@
-dependencies {
-    api project(":api")
-
-    api "javax.jws:javax.jws-api:$jwsApiVersion"
-    api "javax.xml.ws:jaxws-api:$xmlWsVersion"
-    api "dom4j:dom4j:$dom4jVersion"
-}

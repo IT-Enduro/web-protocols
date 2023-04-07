@@ -16,6 +16,7 @@ ext {
     // Common
     springBootVersion = "3.0.4"
     springContractVersion = "4.0.2"
+    springShellVersion = "3.0.1"
     kotlinVersion = "1.7.10"
     jetbrainsAnnotationsVersion = "22.0.0"
 
@@ -71,6 +72,9 @@ allprojects { ->
 
     test {
         useJUnitPlatform()
+        testLogging {
+            showStandardStreams = true
+        }
     }
 
     tasks.withType(Jar).all {

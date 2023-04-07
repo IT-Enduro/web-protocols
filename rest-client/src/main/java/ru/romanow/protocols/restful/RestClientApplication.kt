@@ -1,79 +1,42 @@
 package ru.romanow.protocols.restful
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.slf4j.LoggerFactory
-import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
-import org.springframework.http.MediaType
-import org.springframework.web.reactive.function.BodyInserters
+import org.springframework.http.HttpStatus.BAD_REQUEST
+import org.springframework.http.HttpStatus.NOT_FOUND
+import org.springframework.web.reactive.function.client.ClientResponse
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction.ofResponseProcessor
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.toEntity
-import ru.romanow.protocols.api.model.CreateServerRequest
-import ru.romanow.protocols.api.model.Purpose
-import ru.romanow.protocols.api.model.ServerResponse
-import ru.romanow.protocols.api.model.ServersResponse
-import ru.romanow.protocols.api.model.StateInfo
+import reactor.core.publisher.Mono
+import ru.romanow.protocols.api.model.ErrorResponse
+import ru.romanow.protocols.api.model.ValidationErrorResponse
+import ru.romanow.protocols.restful.properties.ServiceUrlProperties
+import ru.romanow.protocols.restful.utils.prettyPrint
 
 @SpringBootApplication
+@EnableConfigurationProperties(ServiceUrlProperties::class)
 class RestClientApplication {
-    private val logger = LoggerFactory.getLogger(RestClientApplication::class.java)
 
     @Bean
-    fun webClient(): WebClient = WebClient.create("http://localhost:8080")
+    fun webClient(properties: ServiceUrlProperties): WebClient =
+        WebClient
+            .builder()
+            .baseUrl(properties.restfulUrl)
+            .filter(ofResponseProcessor { exchangeFilterResponseProcessor(it) })
+            .build()
 
-    @Bean
-    fun runner(webClient: WebClient, objectMapper: ObjectMapper): ApplicationRunner {
-        return ApplicationRunner {
-            val servers = webClient.get()
-                .uri("/api/v1/servers")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(ServersResponse::class.java)
-                .block()!!
+    private fun exchangeFilterResponseProcessor(response: ClientResponse) =
+        when (response.statusCode()) {
+            NOT_FOUND -> response.bodyToMono(String::class.java)
+                .flatMap { Mono.error(RuntimeException(prettyPrint(it, ErrorResponse::class.java))) }
 
-            logger.info("Get {} servers", servers.servers.size)
+            BAD_REQUEST -> response.bodyToMono(String::class.java)
+                .flatMap { Mono.error(RuntimeException(prettyPrint(it, ValidationErrorResponse::class.java))) }
 
-            var request = CreateServerRequest(
-                purpose = Purpose.BACKEND.name,
-                latency = 10,
-                bandwidth = 10000,
-                state = StateInfo(city = "Yerevan", country = "Armenia")
-            )
-            val location = webClient.post()
-                .uri("/api/v1/servers")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(request))
-                .retrieve()
-                .toEntity<Void>()
-                .map { it.headers.location }
-                .block()!!
-
-            val serverId = location.path.split("/").last()
-
-            var server = webClient.get()
-                .uri("/api/v1/servers/{id}", serverId)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(ServerResponse::class.java)
-                .block()!!
-            logger.info("Create new server '{}'", server)
-
-            request = CreateServerRequest(purpose = Purpose.DATABASE.name)
-            server = webClient.patch()
-                .uri("/api/v1/servers/{id}", serverId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(request))
-                .retrieve()
-                .bodyToMono(ServerResponse::class.java)
-                .block()!!
-
-            logger.info("Update Server with id {}: '{}'", serverId, server)
+            else -> Mono.just(response)
         }
-    }
 }
 
 fun main(args: Array<String>) {

@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureStubRunner(
-    ids = ["ru.romanow.protocols:restful:+:stubs:8080"],
+    ids = ["ru.romanow.protocols:restful:+:stubs"],
     stubsMode = StubRunnerProperties.StubsMode.LOCAL
 )
 class RestClientApplicationTest {

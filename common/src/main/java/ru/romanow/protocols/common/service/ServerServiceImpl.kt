@@ -59,8 +59,8 @@ class ServerServiceImpl(
         request.bandwidth?.let { server.bandwidth = it }
         request.latency?.let { server.latency = it }
         request.purpose?.let { server.purpose = findPurpose(it) }
-        request.state?.city.let { server.state?.city = it }
-        request.state?.country.let { server.state?.country = it }
+        request.state?.city?.let { server.state?.city = it }
+        request.state?.country?.let { server.state?.country = it }
         return buildServerResponse(server)
     }
 

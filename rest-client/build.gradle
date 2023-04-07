@@ -7,6 +7,7 @@ plugins {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:$springContractVersion"
+        mavenBom "org.springframework.shell:spring-shell-dependencies:$springShellVersion"
     }
 }
 
@@ -14,6 +15,7 @@ dependencies {
     implementation project(":api")
 
     implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.shell:spring-shell-starter"
     implementation "org.springframework:spring-webflux"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

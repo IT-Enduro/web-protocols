@@ -1,0 +1,10 @@
+spring:
+  main:
+    banner-mode: off
+    web-application-type: none
+  shell:
+    history.enabled: false
+
+application:
+  services:
+    restful-url: http://localhost:8080

@@ -7,6 +7,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.absent
 import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.or
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
+import com.github.tomakehurst.wiremock.client.WireMock.urlMatching
 import org.hamcrest.Matchers.matchesRegex
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -83,7 +84,9 @@ class ServerControllerTest {
             .andExpect(jsonPath("$.state.id").value(server.state?.id))
             .andExpect(jsonPath("$.state.city").value(server.state?.city))
             .andExpect(jsonPath("$.state.country").value(server.state?.country))
-            .andDo(verify())
+            .andDo(verify().wiremock(
+                WireMock.get(urlMatching("/api/v1/servers/\\d+"))
+            ))
             .andDo(
                 document(
                     "Get Server by ID",

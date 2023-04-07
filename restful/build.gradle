@@ -1,5 +1,6 @@
 plugins {
     id "idea"
+    id "maven-publish"
     id "org.jetbrains.kotlin.jvm"
     id "org.jetbrains.kotlin.plugin.spring"
     id "org.jetbrains.kotlin.plugin.jpa"
@@ -51,6 +52,35 @@ dependencies {
     testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
     testImplementation "org.testcontainers:postgresql:$postgresContainerVersion"
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor"
+}
+
+task stubsJar(type: Jar) {
+    archiveClassifier = "stubs"
+    into("META-INF/${project.group}/${project.name}/${project.version}/mappings") {
+        include("**/*.*")
+        from("${project.buildDir}/generated-snippets/stubs")
+    }
+    into("META-INF/${project.group}/${project.name}/${project.version}/contracts") {
+        include("**/*.groovy")
+        from("${project.buildDir}/generated-snippets/contracts")
+    }
+}
+
+stubsJar.dependsOn(test)
+build.dependsOn(stubsJar)
+build.dependsOn(publishToMavenLocal)
+
+artifacts {
+    archives stubsJar
+}
+
+publishing {
+    publications {
+        stubs(MavenPublication) {
+            artifact stubsJar
+            artifactId "restful"
+        }
+    }
 }
 
 bootJar {

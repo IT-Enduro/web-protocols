@@ -7,7 +7,6 @@ import com.github.tomakehurst.wiremock.client.WireMock.absent
 import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.or
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
-import jakarta.transaction.Transactional
 import org.hamcrest.Matchers.matchesRegex
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,6 +29,7 @@ import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.transaction.annotation.Transactional
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.Purpose
 import ru.romanow.protocols.api.model.StateInfo

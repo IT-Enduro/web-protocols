@@ -1,0 +1,32 @@
+plugins {
+    id "idea"
+    id "org.jetbrains.kotlin.plugin.spring"
+    id "org.springframework.boot"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:$springContractVersion"
+    }
+}
+
+dependencies {
+    implementation project(":api")
+
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework:spring-webflux"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+}
+
+test.dependsOn ":restful:test"
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+}
+

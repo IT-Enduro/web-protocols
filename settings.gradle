@@ -4,6 +4,7 @@ include "api"
 include "common"
 
 include "restful"
+include "rest-client"
 
 include "soap-server"
 //include "soap-client"

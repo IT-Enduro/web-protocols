@@ -227,7 +227,7 @@ class ServerControllerTest {
             .andExpect(jsonPath("$.state.country").value(server.state?.country))
             .andDo(
                 verify().wiremock(
-                    WireMock.put(urlEqualTo("/api/v1/servers/${server.id}"))
+                    WireMock.put(urlMatching("/api/v1/servers/\\d+"))
                         .withRequestBody(match("$.purpose", or(regex("(BACKEND|FRONTEND|DATABASE)"), absent())))
                         .withRequestBody(match("$.latency", or(regex("\\d{1,3}"), absent())))
                         .withRequestBody(match("$.bandwidth", or(regex("\\d{1,8}"), absent())))
@@ -279,7 +279,7 @@ class ServerControllerTest {
             .andExpect(jsonPath("$.state.country").value(server.state?.country))
             .andDo(
                 verify().wiremock(
-                    WireMock.patch(urlEqualTo("/api/v1/servers/${server.id}"))
+                    WireMock.patch(urlMatching("/api/v1/servers/\\d+"))
                         .withRequestBody(match("$.purpose", or(regex("(BACKEND|FRONTEND|DATABASE)"), absent())))
                         .withRequestBody(match("$.latency", or(regex("\\d{1,3}"), absent())))
                         .withRequestBody(match("$.bandwidth", or(regex("\\d{1,8}"), absent())))
@@ -309,7 +309,9 @@ class ServerControllerTest {
 
         mockMvc.perform(delete("/api/v1/servers/{id}", server.id))
             .andExpect(status().isNoContent)
-            .andDo(verify())
+            .andDo(verify().wiremock(
+                WireMock.delete(urlMatching("/api/v1/servers/\\d+"))
+            ))
             .andDo(document("Remove Server by ID", pathParameters(parameterWithName("id").description("Server ID"))))
     }
 

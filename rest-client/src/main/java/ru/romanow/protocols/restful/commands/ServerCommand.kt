@@ -1,6 +1,5 @@
 package ru.romanow.protocols.restful.commands
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.shell.CompletionContext
@@ -22,11 +21,10 @@ import ru.romanow.protocols.restful.utils.prettyPrint
 
 
 @ShellComponent
-class CreateServerCommand(
-    private val webClient: WebClient,
-    private val objectMapper: ObjectMapper,
+class ServerCommand(
+    private val webClient: WebClient
 ) {
-    private val logger = LoggerFactory.getLogger(CreateServerCommand::class.java)
+    private val logger = LoggerFactory.getLogger(ServerCommand::class.java)
 
     @ShellMethod(key = ["create"], value = "Create server", prefix = "-")
     fun create(@ShellOption(valueProvider = ServerTypeProvider::class) purpose: String) {
@@ -81,7 +79,7 @@ class CreateServerCommand(
     }
 
     @ShellMethod(key = ["find-in-city"], value = "Get servers in city")
-    fun getById(@ShellOption city: String) {
+    fun findInCity(@ShellOption city: String) {
         val response = webClient
             .get()
             .uri { it.path("/api/v1/servers").queryParam("city", city).build() }
@@ -106,7 +104,8 @@ class CreateServerCommand(
     ) {
         val state = StateInfo(
             city = if (!city.equals("empty")) city else null,
-            country = if (!country.equals("empty")) country else null)
+            country = if (!country.equals("empty")) country else null
+        )
         val request = CreateServerRequest(
             purpose = if (!purpose.equals("empty")) purpose else null,
             latency = latency,

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServerResponse
 import ru.romanow.protocols.api.model.ServersResponse
-import ru.romanow.protocols.common.service.ServerService
+import ru.romanow.protocols.common.server.service.ServerService
 
 @Controller
 @WebService
@@ -34,8 +34,8 @@ class ServerWebService(
     }
 
     @WebResult(name = "ServersResponse")
-    @WebMethod(operationName = "findByAddress")
-    fun findByAddress(@WebParam(name = "city") city: String) = ServersResponse(serverService.findInCity(city))
+    @WebMethod(operationName = "findInCity")
+    fun findInCity(@WebParam(name = "city") city: String) = ServersResponse(serverService.findInCity(city))
 
     @WebResult(name = "ServerResponse")
     @WebMethod(operationName = "create")

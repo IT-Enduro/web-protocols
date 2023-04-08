@@ -6,10 +6,10 @@ plugins {
     id "org.jetbrains.kotlin.plugin.noarg" version "1.7.10"
     id "io.spring.dependency-management" version "1.1.0"
     id "org.springframework.boot" version "3.0.4" apply false
-    id "com.google.protobuf" version "0.9.2" apply false
     id "org.springframework.cloud.contract" version "4.0.2" apply false
-    id "com.yupzip.wsdl2java" version "3.0.0" apply false
     id "org.asciidoctor.jvm.convert" version "3.3.2" apply false
+    id "io.mateo.cxf-codegen" version "1.2.0" apply false
+    id "com.google.protobuf" version "0.9.2" apply false
 }
 
 ext {
@@ -26,6 +26,7 @@ ext {
 
     // SOAP
     cxfVersion = "4.0.0"
+    jakartaVersion = "4.0.0"
 
     // gRPC
     grpcVersion = "1.40.1"
@@ -60,6 +61,8 @@ allprojects { ->
     dependencyManagement {
         imports {
             mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+            mavenBom "org.springframework.shell:spring-shell-dependencies:$springShellVersion"
+            mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:$springCloudContractVersion"
         }
     }
 

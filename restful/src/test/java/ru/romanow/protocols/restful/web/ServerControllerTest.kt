@@ -34,9 +34,9 @@ import org.springframework.transaction.annotation.Transactional
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.Purpose
 import ru.romanow.protocols.api.model.StateInfo
-import ru.romanow.protocols.common.domain.Server
-import ru.romanow.protocols.common.domain.State
-import ru.romanow.protocols.common.repository.ServerRepository
+import ru.romanow.protocols.common.server.domain.Server
+import ru.romanow.protocols.common.server.domain.State
+import ru.romanow.protocols.common.server.repository.ServerRepository
 import ru.romanow.protocols.restful.config.DatabaseTestConfiguration
 import kotlin.random.Random.Default.nextInt
 import com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath as match

@@ -1,0 +1,273 @@
+<wsdl:definitions name="ServerWebServiceService"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://web.soap.protocols.romanow.ru/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://web.soap.protocols.romanow.ru/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://web.soap.protocols.romanow.ru/"
+                   elementFormDefault="unqualified" targetNamespace="http://web.soap.protocols.romanow.ru/"
+                   version="1.0">
+            <xs:element name="all" type="tns:all"/>
+            <xs:element name="allResponse" type="tns:allResponse"/>
+            <xs:element name="create" type="tns:create"/>
+            <xs:element name="createResponse" type="tns:createResponse"/>
+            <xs:element name="delete" type="tns:delete"/>
+            <xs:element name="deleteResponse" type="tns:deleteResponse"/>
+            <xs:element name="findInCity" type="tns:findInCity"/>
+            <xs:element name="findInCityResponse" type="tns:findInCityResponse"/>
+            <xs:element name="fullUpdate" type="tns:fullUpdate"/>
+            <xs:element name="fullUpdateResponse" type="tns:fullUpdateResponse"/>
+            <xs:element name="getById" type="tns:getById"/>
+            <xs:element name="getByIdResponse" type="tns:getByIdResponse"/>
+            <xs:element name="partialUpdate" type="tns:partialUpdate"/>
+            <xs:element name="partialUpdateResponse" type="tns:partialUpdateResponse"/>
+            <xs:complexType name="fullUpdate">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="request" type="tns:createServerRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType final="extension restriction" name="createServerRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="purpose" type="xs:string"/>
+                    <xs:element minOccurs="0" name="latency" type="xs:int"/>
+                    <xs:element minOccurs="0" name="bandwidth" type="xs:int"/>
+                    <xs:element minOccurs="0" name="state" type="tns:stateInfo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType final="extension restriction" name="stateInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="city" type="xs:string"/>
+                    <xs:element minOccurs="0" name="country" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="fullUpdateResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServerResponse" type="tns:serverResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType final="extension restriction" name="serverResponse">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="purpose" type="tns:purpose"/>
+                    <xs:element name="latency" type="xs:int"/>
+                    <xs:element name="bandwidth" type="xs:int"/>
+                    <xs:element minOccurs="0" name="state" type="tns:stateInfo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getById">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getByIdResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServersResponse" type="tns:serverResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="partialUpdate">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int"/>
+                    <xs:element minOccurs="0" name="request" type="tns:createServerRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="partialUpdateResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServerResponse" type="tns:serverResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="all">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="allResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServersResponse" type="tns:serversResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType final="extension restriction" name="serversResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="servers" type="tns:serverResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findInCity">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="city" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findInCityResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServersResponse" type="tns:serversResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="delete">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="deleteResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="create">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="request" type="tns:createServerRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ServerResponse" type="tns:serverResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="purpose">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="FRONTEND"/>
+                    <xs:enumeration value="BACKEND"/>
+                    <xs:enumeration value="DATABASE"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="fullUpdate">
+        <wsdl:part element="tns:fullUpdate" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getById">
+        <wsdl:part element="tns:getById" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deleteResponse">
+        <wsdl:part element="tns:deleteResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="allResponse">
+        <wsdl:part element="tns:allResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="partialUpdateResponse">
+        <wsdl:part element="tns:partialUpdateResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findInCityResponse">
+        <wsdl:part element="tns:findInCityResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="create">
+        <wsdl:part element="tns:create" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getByIdResponse">
+        <wsdl:part element="tns:getByIdResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="fullUpdateResponse">
+        <wsdl:part element="tns:fullUpdateResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="partialUpdate">
+        <wsdl:part element="tns:partialUpdate" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="all">
+        <wsdl:part element="tns:all" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findInCity">
+        <wsdl:part element="tns:findInCity" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="delete">
+        <wsdl:part element="tns:delete" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createResponse">
+        <wsdl:part element="tns:createResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ServerWebService">
+        <wsdl:operation name="fullUpdate">
+            <wsdl:input message="tns:fullUpdate" name="fullUpdate"></wsdl:input>
+            <wsdl:output message="tns:fullUpdateResponse" name="fullUpdateResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getById">
+            <wsdl:input message="tns:getById" name="getById"></wsdl:input>
+            <wsdl:output message="tns:getByIdResponse" name="getByIdResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="partialUpdate">
+            <wsdl:input message="tns:partialUpdate" name="partialUpdate"></wsdl:input>
+            <wsdl:output message="tns:partialUpdateResponse" name="partialUpdateResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="all">
+            <wsdl:input message="tns:all" name="all"></wsdl:input>
+            <wsdl:output message="tns:allResponse" name="allResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="findInCity">
+            <wsdl:input message="tns:findInCity" name="findInCity"></wsdl:input>
+            <wsdl:output message="tns:findInCityResponse" name="findInCityResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <wsdl:input message="tns:delete" name="delete"></wsdl:input>
+            <wsdl:output message="tns:deleteResponse" name="deleteResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="create">
+            <wsdl:input message="tns:create" name="create"></wsdl:input>
+            <wsdl:output message="tns:createResponse" name="createResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServerWebServiceServiceSoapBinding" type="tns:ServerWebService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="fullUpdate">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="fullUpdate">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="fullUpdateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getById">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getById">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getByIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="partialUpdate">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="partialUpdate">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="partialUpdateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="all">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="all">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="allResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="findInCity">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findInCity">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findInCityResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="delete">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deleteResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="create">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="create">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ServerWebServiceService">
+        <wsdl:port binding="tns:ServerWebServiceServiceSoapBinding" name="ServerWebServicePort">
+            <soap:address location="http://localhost:8080/ws/servers"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

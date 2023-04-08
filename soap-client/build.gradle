@@ -1,57 +1,52 @@
-apply plugin: "org.springframework.boot"
-apply plugin: "io.spring.dependency-management"
-apply plugin: "org.jetbrains.kotlin.plugin.spring"
-apply plugin: "com.yupzip.wsdl2java"
+import io.mateo.cxf.codegen.wsdl2java.Wsdl2Java
 
-wsdl2java {
-    generatedWsdlDir = file("$projectDir/src/main/generated")
-    wsdlsToGenerate = [
-            ["-p","ru.romanow.protocols.soap.generated.literal.model",
-             "$projectDir/src/main/resources/wsdl/document-literal.wsdl"],
-            ["-p","ru.romanow.protocols.soap.generated.wrapped.model",
-             "$projectDir/src/main/resources/wsdl/document-literal-wrapped.wsdl"],
-            ["-p","ru.romanow.protocols.soap.generated.rpc.model",
-             "$projectDir/src/main/resources/wsdl/rpc-literal.wsdl"]
-    ]
-    cxfVersion = "$cxfVersion"
+plugins {
+    id "java"
+    id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.plugin.spring"
+    id "org.jetbrains.kotlin.plugin.jpa"
+    id "org.springframework.boot"
+    id "io.mateo.cxf-codegen"
 }
 
-compileJava.dependsOn(wsdl2javaTask)
-
-idea {
-    module {
-        generatedSourceDirs += file(wsdl2java.generatedWsdlDir)
-    }
+cxfCodegen {
+    cxfVersion = "4.0.0"
 }
 
-sourceSets {
-    main {
-        java {
-            srcDirs "src/main/java", wsdl2java.generatedWsdlDir
-        }
+tasks.register("generateStubs", Wsdl2Java) {
+    toolOptions {
+        wsdl.set(file("$projectDir/src/main/resources/wsdl/servers.wsdl"))
+        outputDir.set(file("$projectDir/src/main/generated"))
+        markGenerated.set(true)
+        packageNames.set(["ru.romanow.protocols.soap.client"])
+        xjcArgs.add("-Xts")
     }
 }
 
 dependencies {
-    implementation project(":soap-protocol")
+    implementation project(":common-client")
 
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-web-services"
+    implementation "org.springframework.ws:spring-ws-support"
 
-    wsdl2java "com.sun.xml.bind:jaxb-xjc:$jaxbXjcVersion"
-    wsdl2java "javax.xml.bind:jaxb-api:$jaxbApiVersion"
-    wsdl2java "javax.xml.ws:jaxws-api:$jaxwsApiVersion"
-    wsdl2java "org.apache.cxf:cxf-rt-wsdl:$cxfVersion"
-    wsdl2java "javax.jws:javax.jws-api:$jwsApiVersion"
+    cxfCodegen "jakarta.xml.ws:jakarta.xml.ws-api"
+    cxfCodegen "jakarta.annotation:jakarta.annotation-api"
+    cxfCodegen "org.apache.cxf.xjcplugins:cxf-xjc-ts:$jakartaVersion"
 
-    implementation "com.sun.xml.bind:jaxb-xjc:$jaxbXjcVersion"
-    implementation "javax.xml.bind:jaxb-api:$jaxbApiVersion"
-    implementation "javax.xml.ws:jaxws-api:$jaxwsApiVersion"
-    implementation "org.apache.cxf:cxf-rt-wsdl:$cxfVersion"
-    implementation "javax.jws:javax.jws-api:$jwsApiVersion"
-    implementation "com.sun.xml.ws:rt:$xmlWsVersion"
+    runtimeOnly "com.sun.xml.ws:jaxws-rt:$jakartaVersion"
+
+    implementation "org.glassfish.jaxb:jaxb-runtime"
+    implementation "jakarta.xml.ws:jakarta.xml.ws-api"
+    implementation "org.apache.cxf.xjc-utils:cxf-xjc-runtime:$jakartaVersion"
+    implementation(files(generateStubs.wsdl2JavaOptions.outputDir).builtBy(generateStubs))
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+idea {
+    module {
+        generatedSourceDirs += file("$projectDir/src/main/generated")
+    }
 }
 
 bootJar {

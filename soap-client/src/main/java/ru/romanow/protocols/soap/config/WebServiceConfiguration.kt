@@ -1,42 +1,21 @@
 package ru.romanow.protocols.soap.config
 
+import jakarta.xml.ws.BindingProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ru.romanow.protocols.soap.generated.literal.model.WebServiceDocumentLiteralImplService
-import ru.romanow.protocols.soap.generated.rpc.model.WebServiceRpcLiteralImplService
-import ru.romanow.protocols.soap.generated.wrapped.model.WebServiceDocumentLiteralWrappedImplService
-import ru.romanow.protocols.soap.service.SOAPLoggingHandler
-import ru.romanow.protocols.soap.web.DocumentLiteralWebServiceClient
-import ru.romanow.protocols.soap.web.DocumentWrappedWebServiceClient
-import ru.romanow.protocols.soap.web.RpcLiteralWebServiceClient
-import ru.romanow.protocols.soap.web.WebServiceClient
-import javax.xml.ws.BindingProvider
+import ru.romanow.protocols.soap.client.ServerWebService
+import ru.romanow.protocols.soap.client.ServerWebServiceService
+import ru.romanow.protocols.soap.utils.SOAPLoggingHandler
 
 @Configuration
 class WebServiceConfiguration {
 
     @Bean
-    fun documentEncodedWebServiceClient(): WebServiceClient {
-        val service = WebServiceDocumentLiteralWrappedImplService()
-        val port = service.webServiceDocumentLiteralWrappedImplPort
+    fun serverWebService(): ServerWebService {
+        val service = ServerWebServiceService()
+        val port = service.serverWebServicePort
         configureLogging(port as BindingProvider)
-        return DocumentWrappedWebServiceClient(port)
-    }
-
-    @Bean
-    fun documentLiteralWebServiceClient(): WebServiceClient {
-        val service = WebServiceDocumentLiteralImplService()
-        val port = service.webServiceDocumentLiteralImplPort
-        configureLogging(port as BindingProvider)
-        return DocumentLiteralWebServiceClient(port)
-    }
-
-    @Bean
-    fun rpcLiteralWebServiceClient(): WebServiceClient {
-        val service = WebServiceRpcLiteralImplService()
-        val port = service.webServiceRpcLiteralImplPort
-        configureLogging(port as BindingProvider)
-        return RpcLiteralWebServiceClient(port)
+        return port
     }
 
     private fun configureLogging(port: BindingProvider) {

@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    api "jakarta.xml.bind:jakarta.xml.bind-api"
     api "jakarta.validation:jakarta.validation-api"
     api "com.fasterxml.jackson.core:jackson-annotations"
     api "com.fasterxml.jackson.dataformat:jackson-dataformat-xml"

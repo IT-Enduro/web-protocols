@@ -27,7 +27,7 @@ class WebServerConfiguration {
     @Bean
     fun documentLiteralWebServiceEndpoint(service: ServerWebService): Endpoint {
         val endpoint = EndpointImpl(springBus(), service)
-        endpoint.publish("/document-literal")
+        endpoint.publish("/servers")
         return endpoint
     }
 

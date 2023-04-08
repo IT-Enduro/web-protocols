@@ -1,0 +1,14 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.plugin.spring"
+}
+
+dependencies {
+    api project(":api")
+
+    api "org.springframework.boot:spring-boot-starter"
+    api "org.springframework.boot:spring-boot-starter-logging"
+    api "org.springframework.shell:spring-shell-starter"
+
+    api "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
+}

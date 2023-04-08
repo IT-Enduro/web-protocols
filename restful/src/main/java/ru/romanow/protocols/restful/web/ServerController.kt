@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServersResponse
-import ru.romanow.protocols.common.service.ServerService
+import ru.romanow.protocols.common.server.service.ServerService
 
 @Tag(name = "Server API")
 @RestController
@@ -32,7 +32,7 @@ class ServerController(
         params = ["city"],
         produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
     )
-    fun findByAddress(@RequestParam city: String) = ServersResponse(serverService.findInCity(city))
+    fun findInCity(@RequestParam city: String) = ServersResponse(serverService.findInCity(city))
 
     @Operation(summary = "Save new server")
     @ResponseStatus(HttpStatus.CREATED)

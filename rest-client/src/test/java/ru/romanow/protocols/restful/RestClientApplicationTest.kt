@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties
 import org.springframework.test.context.ActiveProfiles
-import ru.romanow.protocols.restful.commands.ServerCommand
+import ru.romanow.protocols.common.client.service.ServerClient
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -17,31 +17,31 @@ import ru.romanow.protocols.restful.commands.ServerCommand
 class RestClientApplicationTest {
 
     @Autowired
-    private lateinit var command: ServerCommand
+    private lateinit var serverClient: ServerClient
 
     @Test
     fun testCreate() {
-        command.create("DATABASE")
+        serverClient.create("DATABASE")
     }
 
     @Test
     fun testFindAll() {
-        command.findAll()
+        serverClient.findAll()
     }
 
     @Test
     fun testGetById() {
-        command.getById(1)
+        serverClient.getById(1)
     }
 
     @Test
     fun testFindInCity() {
-        command.findInCity("Moscow")
+        serverClient.findInCity("Moscow")
     }
 
     @Test
     fun testUpdate() {
-        command.update(
+        serverClient.update(
             id = 1,
             purpose = "DATABASE",
             latency = 10,

@@ -17,12 +17,6 @@ configurations {
     asciidoctorExt
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:$springCloudContractVersion"
-    }
-}
-
 asciidoctor {
     inputs.dir snippetsDir
     sourceDir "src/main/asciidoc"
@@ -33,8 +27,7 @@ asciidoctor {
 }
 
 dependencies {
-    implementation project(":api")
-    implementation project(":common")
+    implementation project(":common-server")
 
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"

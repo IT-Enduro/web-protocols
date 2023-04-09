@@ -1,0 +1,10 @@
+grpc:
+  port: 8080
+
+spring:
+  profiles.active: local,common
+  application.name: gRPC
+  main.banner-mode: off
+  jpa:
+    hibernate.ddl-auto: validate
+    open-in-view: false

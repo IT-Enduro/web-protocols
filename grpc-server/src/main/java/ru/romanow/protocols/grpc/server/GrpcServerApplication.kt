@@ -1,4 +1,4 @@
-package ru.romanow.protocols.grpc
+package ru.romanow.protocols.grpc.server
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

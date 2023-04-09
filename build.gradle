@@ -29,9 +29,10 @@ ext {
     jakartaVersion = "4.0.0"
 
     // gRPC
-    grpcVersion = "1.40.1"
-    protobufVersion = "3.17.3"
-    grpcSpringVersion = "4.5.6"
+    grpcVersion = "1.54.0"
+    protobufVersion = "3.22.2"
+    grpcSpringVersion = "5.0.0"
+    javaxAnnotationVersion = "1.3.2"
 
     // GraphQL
     graphQLJavaVersion = "11.1.0"

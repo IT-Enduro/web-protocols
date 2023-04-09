@@ -1,0 +1,16 @@
+{
+  "groups": [
+    {
+      "name": "services",
+      "type": "ru.romanow.protocols.common.client.properties.ServiceUrlProperties",
+      "sourceType": "ru.romanow.protocols.common.client.properties.ServiceUrlProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "application.services.server-url",
+      "type": "java.lang.String",
+      "description": "Server url."
+    }
+  ]
+}

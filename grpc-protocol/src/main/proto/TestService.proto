@@ -1,24 +1,52 @@
 syntax = "proto3";
+
 package ru.romanow.protocols.grpc;
 
-service TestService {
-    rpc SimpleRequest(TestRequest) returns (TestResponse) {};
+service ServerService {
+  rpc getById(ID) returns (ServerResponse) {};
+  rpc findAll(Empty) returns (ServersResponse) {};
+  rpc findInCity(City) returns (ServersResponse) {};
+  rpc create(CreateServerRequest) returns (ServerResponse) {};
+  rpc update(CreateServerRequest) returns (ServerResponse) {};
 }
 
-message TestRequest {
-    repeated string message = 1;
-    int32 size = 2;
+message ID {
+  int32 id = 1;
 }
 
-message TestResponse {
-    int64 duration = 1;
-    repeated string resultMessage = 2;
-    Status status = 3;
+message City {
+  string city = 1;
 }
 
-enum Status {
-    UNKNOWN = 0;
-    DONE = 1;
-    FAIL = 2;
-    PAUSED = 3;
+message Empty {}
+
+message CreateServerRequest {
+  optional int32 id = 1;
+  optional Purpose purpose = 2;
+  optional int32 latency = 3;
+  optional int32 bandwidth = 4;
+  optional StateInfo state = 5;
+}
+
+message ServerResponse {
+  int32 id = 1;
+  Purpose purpose = 2;
+  int32 latency = 3;
+  int32 bandwidth = 4;
+  StateInfo state = 5;
+}
+
+message ServersResponse {
+  repeated ServerResponse servers = 1;
+}
+
+message StateInfo {
+  optional string city = 1;
+  optional string country = 2;
+}
+
+enum Purpose {
+  FRONTEND = 0;
+  BACKEND = 1;
+  DATABASE = 2;
 }

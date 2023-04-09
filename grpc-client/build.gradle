@@ -4,9 +4,7 @@ apply plugin: "org.jetbrains.kotlin.plugin.spring"
 
 dependencies {
     implementation project(":grpc-protocol")
-
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation project(":common-client")
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }

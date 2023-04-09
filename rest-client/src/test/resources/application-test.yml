@@ -1,3 +1,3 @@
 application:
   services:
-    restful-url: http://localhost:${stubrunner.runningstubs.restful.port}
+    server-url: http://localhost:${stubrunner.runningstubs.restful.port}

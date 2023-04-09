@@ -11,6 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromC
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServersResponse
 import ru.romanow.protocols.common.server.service.ServerService
+import java.net.URI
+import java.nio.charset.Charset
 
 @Tag(name = "Server API")
 @RestController

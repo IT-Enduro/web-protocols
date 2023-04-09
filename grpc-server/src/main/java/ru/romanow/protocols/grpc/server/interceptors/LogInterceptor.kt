@@ -12,7 +12,7 @@ class LogInterceptor : ServerInterceptor {
     override fun <REQ : Any, RESP : Any> interceptCall(
         call: ServerCall<REQ, RESP>, headers: Metadata, next: ServerCallHandler<REQ, RESP>
     ): ServerCall.Listener<REQ> {
-        logger.info("Call method '{}:{}'", call.methodDescriptor.serviceName, call.methodDescriptor.bareMethodName)
+        logger.info("Call method '{}::{}'", call.methodDescriptor.serviceName, call.methodDescriptor.bareMethodName)
         return next.startCall(call, headers);
     }
 }

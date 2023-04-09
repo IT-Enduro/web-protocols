@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package ru.romanow.protocols.grpc;
 
+option java_outer_classname = "ServerServiceModels";
+option java_package = "ru.romanow.protocols.grpc";
+
 service ServerService {
   rpc getById(ID) returns (ServerResponse) {};
   rpc findAll(Empty) returns (ServersResponse) {};
@@ -37,7 +40,7 @@ message ServerResponse {
 }
 
 message ServersResponse {
-  repeated ServerResponse servers = 1;
+  repeated ServerResponse server = 1;
 }
 
 message StateInfo {

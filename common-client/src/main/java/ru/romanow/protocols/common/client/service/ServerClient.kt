@@ -6,4 +6,5 @@ interface ServerClient {
     fun getById(id: Int): String
     fun findInCity(city: String): String
     fun update(id: Int, purpose: String?, latency: Int?, bandwidth: Int?, city: String?, country: String?): String
+    fun delete(id: Int)
 }

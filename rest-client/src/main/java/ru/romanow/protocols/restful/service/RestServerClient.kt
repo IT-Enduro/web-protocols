@@ -90,4 +90,13 @@ class RestServerClient(
             .onErrorResume { Mono.just(it.message!!) }
             .block()!!
     }
+
+    override fun delete(id: Int) {
+        webClient
+            .delete()
+            .uri("/api/v1/servers/{id}", id)
+            .retrieve()
+            .bodyToMono(Void::class.java)
+            .block()
+    }
 }

@@ -34,9 +34,6 @@ ext {
     grpcSpringVersion = "5.0.0"
     javaxAnnotationVersion = "1.3.2"
 
-    // GraphQL
-    graphQLJavaVersion = "11.1.0"
-
     // Test
     postgresContainerVersion = "1.17.6"
 }

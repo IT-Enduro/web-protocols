@@ -52,4 +52,8 @@ class GrpcServerClient(
         request.setState(state)
         return serverService.create(request.build()).toString()
     }
+
+    override fun delete(id: Int) {
+        serverService.delete(ID.newBuilder().setId(id).build())
+    }
 }

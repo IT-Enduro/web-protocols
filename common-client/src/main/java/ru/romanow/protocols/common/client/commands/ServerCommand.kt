@@ -59,6 +59,13 @@ class ServerCommand(
         )
         logger.info("Updated server:\n{}", response)
     }
+
+
+    @ShellMethod(key = ["delete"], value = "Delete server by Id")
+    fun delete(@ShellOption id: Int) {
+        serverClient.delete(id)
+        logger.info("Removed server: {}", id)
+    }
 }
 
 @Component

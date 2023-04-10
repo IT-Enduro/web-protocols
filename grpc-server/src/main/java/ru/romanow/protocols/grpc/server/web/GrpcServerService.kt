@@ -69,6 +69,12 @@ class GrpcServerService(
         responseObserver.onCompleted()
     }
 
+    override fun delete(request: ID, responseObserver: StreamObserver<Empty>) {
+        serverService.delete(request.id)
+        responseObserver.onNext(Empty.newBuilder().build())
+        responseObserver.onCompleted()
+    }
+
     private fun buildServerResponse(server: ServerResponse): ServerServiceModels.ServerResponse {
         val state = ServerServiceModels.StateInfo
             .newBuilder()

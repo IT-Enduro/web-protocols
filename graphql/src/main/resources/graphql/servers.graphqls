@@ -1,0 +1,54 @@
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+type Query {
+    getById(id: ID!): ServerResponse
+    findAll: [ServerResponse]
+    findInCity(city: String): [ServerResponse]
+}
+
+type Mutation {
+    create(request: CreateServerRequest!): ServerResponse
+    update(id: ID!, request: CreateServerRequest!): ServerResponse
+    delete(id:ID!): Void
+}
+
+scalar Void
+
+type Subscription {
+    cities: String
+}
+
+input CreateServerRequest {
+    purpose: Purpose
+    latency: Int
+    bandwidth: Int
+    state: StateRequest
+}
+
+enum Purpose {
+    FRONTEND, BACKEND, DATABASE
+}
+
+input StateRequest {
+    city: String
+    country: String
+}
+
+type ServerResponse {
+    id: ID
+    purpose: Purpose
+    latency: Int
+    bandwidth: Int
+    state: StateInfo
+    serversInCity: Int
+}
+
+type StateInfo {
+    id: ID
+    city: String
+    country: String
+}

@@ -43,6 +43,10 @@ class SoapServerClient(
                 st.city = city
             }
         }
-        return serverWebService.partialUpdate(id, request).toString()
+        return serverWebService.update(id, request).toString()
+    }
+
+    override fun delete(id: Int) {
+        serverWebService.delete(id)
     }
 }

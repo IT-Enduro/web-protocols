@@ -44,14 +44,8 @@ class ServerWebService(
     }
 
     @WebResult(name = "ServerResponse")
-    @WebMethod(operationName = "fullUpdate")
-    fun fullUpdate(@WebParam(name = "id") id: Int, @WebParam(name = "request") request: CreateServerRequest): ServerResponse {
-        return serverService.update(id, request)
-    }
-
-    @WebResult(name = "ServerResponse")
-    @WebMethod(operationName = "partialUpdate")
-    fun partialUpdate(@WebParam(name = "id") id: Int, @WebParam(name = "request") request: CreateServerRequest): ServerResponse {
+    @WebMethod(operationName = "update")
+    fun update(@WebParam(name = "id") id: Int, @WebParam(name = "request") request: CreateServerRequest): ServerResponse {
         return serverService.update(id, request)
     }
 

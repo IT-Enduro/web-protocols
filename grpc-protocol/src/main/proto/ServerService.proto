@@ -11,6 +11,7 @@ service ServerService {
   rpc findInCity(City) returns (ServersResponse) {};
   rpc create(CreateServerRequest) returns (ServerResponse) {};
   rpc update(CreateServerRequest) returns (ServerResponse) {};
+  rpc delete(ID) returns (Empty) {};
 }
 
 message ID {

@@ -50,4 +50,9 @@ class RestClientApplicationTest {
             country = "Armenia"
         )
     }
+
+    @Test
+    fun testDelete() {
+        serverClient.delete(1)
+    }
 }

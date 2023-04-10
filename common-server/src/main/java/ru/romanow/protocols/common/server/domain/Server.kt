@@ -1,6 +1,9 @@
 package ru.romanow.protocols.common.server.domain
 
 import jakarta.persistence.*
+import jakarta.persistence.CascadeType.MERGE
+import jakarta.persistence.CascadeType.PERSIST
+import jakarta.persistence.CascadeType.REFRESH
 import ru.romanow.protocols.api.model.Purpose
 
 @Entity
@@ -23,7 +26,7 @@ data class Server(
     @Column(name = "bandwidth", nullable = false)
     var bandwidth: Int? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [MERGE, PERSIST, REFRESH])
     @JoinColumn(name = "state_id", foreignKey = ForeignKey(name = "fk_servers_state"))
     var state: State? = null
 ) {

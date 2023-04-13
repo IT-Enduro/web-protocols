@@ -16,20 +16,11 @@ type Mutation {
     delete(id:ID!): Void
 }
 
+scalar Void
+
 type Subscription {
     cities: String
 }
-
-type ServerResponse {
-    id: ID
-    purpose: Purpose
-    latency: Int
-    bandwidth: Int
-    state: StateInfo
-    serversInCity: Int
-}
-
-scalar Void
 
 input CreateServerRequest {
     purpose: Purpose

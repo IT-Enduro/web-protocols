@@ -1,5 +1,7 @@
 server:
   port: 8080
+  http2.enabled: false
+  https.enabled: false
 
 spring:
   profiles.active: local,common
@@ -25,3 +27,19 @@ springdoc:
   paths-to-match: /api/**
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
+
+logbook:
+  include:
+    - /api/**
+  exclude:
+    - /manage/**
+  filter.enabled: true
+  format.style: http
+  minimum-status: 200
+  obfuscate:
+    headers:
+      - Authorization
+
+logging:
+  level:
+    org.zalando.logbook: TRACE

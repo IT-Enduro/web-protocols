@@ -1,0 +1,48 @@
+{
+  "groups": [
+    {
+      "name": "server.https",
+      "type": "ru.romanow.protocols.restful.config.HttpsProperties",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "server.https.port",
+      "type": "java.lang.String",
+      "description": "HTTPS server port.",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties"
+    },
+    {
+      "name": "server.https.enabled",
+      "type": "java.lang.String",
+      "description": "Enable HTTPS support.",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "server.https.key-store",
+      "type": "java.lang.String",
+      "description": "Key Store path.",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties"
+    },
+    {
+      "name": "server.https.key-store-password",
+      "type": "java.lang.String",
+      "description": "Key Store password.",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties"
+    },
+    {
+      "name": "server.https.key-password",
+      "type": "java.lang.String",
+      "description": "Password for encryption key.",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties"
+    },
+    {
+      "name": "server.https.ciphers",
+      "type": "java.lang.String",
+      "description": "Ciphers.",
+      "sourceType": "ru.romanow.protocols.restful.config.HttpsProperties"
+    }
+  ]
+}

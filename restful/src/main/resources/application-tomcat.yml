@@ -1,0 +1,13 @@
+server:
+  http2.enabled: true
+  https:
+    enabled: true
+    key-password: tomcat
+    key-store-password: tomcat
+    port: '8443'
+    key-store: classpath:cert/certificate.p12
+    ciphers: TLS_RSA_WITH_AES_256_CBC_SHA
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: "%t %a '%r' %s (%D ms)"

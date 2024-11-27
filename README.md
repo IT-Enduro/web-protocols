@@ -37,18 +37,9 @@ Server Command
        find-all: Get all servers
 ```
 
-### Common modules
-
-* [API models](/api)
-* [Server Common](/common-server)
-* [Client Common](/common-client)
-
 ### RESTful
 
-* [RESTful Server](/restful)
-* [Rest Client](/rest-client)
-
-##### Запуск сервера
+Сервер:
 
 ```shell
 $ ./gradlew restful:bootRun
@@ -56,7 +47,7 @@ $ ./gradlew restful:bootRun
 
 Для просмотра API доступен [Swagger UI](http://localhost:8080/swagger-ui/index.html)
 
-##### Запуск клиента
+Клиент:
 
 ```shell
 $ java -jar rest-client/build/libs/rest-client.jar
@@ -64,9 +55,9 @@ $ java -jar rest-client/build/libs/rest-client.jar
 
 ### GraphQL
 
-* [GraphQL Server](/graphql)
+Протокол [servers.graphqls](graphql/src/main/resources/graphql/servers.graphqls).
 
-##### Запуск сервера
+Сервер:
 
 ```shell
 $ ./gradlew graphql:bootRun
@@ -76,17 +67,15 @@ $ ./gradlew graphql:bootRun
 
 ### gRPC
 
-* [gRPC Protocol](/grpc-protocol)
-* [gRPC Server](/grpc-server)
-* [gRPC Client](/grpc-client)
+Протокол [ServerService.proto](grpc-protocol/src/main/proto/ServerService.proto).
 
-##### Запуск сервера
+Сервер:
 
 ```shell
 $ ./gradlew grpc-server:bootRun
 ```
 
-##### Запуск клиента
+Клиент:
 
 ```shell
 $ java -jar grpc-client/build/libs/grpc-client.jar
@@ -94,16 +83,13 @@ $ java -jar grpc-client/build/libs/grpc-client.jar
 
 ### SOAP
 
-* [SOAP Server](/soap-server)
-* [SOAP Client](/soap-client)
-
-##### Запуск сервера
+Сервер:
 
 ```shell
 $ ./gradlew soap-server:bootRun
 ```
 
-##### Запуск клиента
+Клиент:
 
 ```shell
 $ java -jar soap-client/build/libs/soap-client.jar

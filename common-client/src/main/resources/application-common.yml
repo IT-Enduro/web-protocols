@@ -1,3 +1,10 @@
+spring:
+  shell:
+    interactive:
+      enabled: true
+    script:
+      enabled: true
+
 application:
   services:
     server-url: http://localhost:8080

@@ -12,10 +12,10 @@ import ru.romanow.protocols.grpc.ServerServiceModels.Purpose
 import ru.romanow.protocols.grpc.ServerServiceModels.StateInfo
 
 @Service
-class GrpcServerClient(
-    @GrpcClient("local-grpc-server")
-    private val serverService: ServerServiceBlockingStub
-) : ServerClient {
+class GrpcServerClient : ServerClient {
+
+    @GrpcClient("default")
+    private lateinit var serverService: ServerServiceBlockingStub
 
     override fun create(purpose: String): String {
         val request = CreateServerRequest.newBuilder()

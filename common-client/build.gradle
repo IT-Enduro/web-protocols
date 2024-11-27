@@ -8,7 +8,7 @@ dependencies {
 
     api "org.springframework.boot:spring-boot-starter"
     api "org.springframework.boot:spring-boot-starter-logging"
-    api "org.springframework.shell:spring-shell-starter"
+    api "org.springframework.shell:spring-shell-starter-jna"
 
     api "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
 }

@@ -1,9 +1,8 @@
 spring:
   shell:
-    interactive:
-      enabled: true
-    script:
-      enabled: true
+    history.enabled: false
+    interactive.enabled: true
+    script.enabled: true
 
 application:
   services:

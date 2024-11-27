@@ -5,5 +5,3 @@ spring:
   main:
     banner-mode: off
     web-application-type: none
-  shell:
-    history.enabled: false

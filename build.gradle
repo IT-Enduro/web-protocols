@@ -27,7 +27,7 @@ ext {
 
     // SOAP
     cxfVersion = "4.0.0"
-    jakartaVersion = "4.0.0"
+    jakartaVersion = "4.0.2"
 
     // gRPC
     grpcVersion = "1.68.1"

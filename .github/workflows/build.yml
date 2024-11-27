@@ -5,22 +5,16 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v3
+      - uses: actions/setup-java@v4
         with:
           distribution: "corretto"
-          java-version: "17"
+          java-version: "21"
           cache: "gradle"
 
-      - name: Build project
-        uses: eskatos/gradle-command-action@v1
-        with:
-          dependencies-cache-enabled: true
-          arguments: clean build
+      - name: Validate
+        uses: pre-commit/action@v3.0.0
 
-      - name: Test Report
-        uses: mikepenz/action-junit-report@v2
-        if: always()
-        with:
-          report_paths: "**/build/test-results/test/TEST-*.xml"
+      - name: Build project
+        run: ./gradlew clean build

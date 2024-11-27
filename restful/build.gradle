@@ -46,7 +46,7 @@ dependencies {
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor"
 }
 
-task stubsJar(type: Jar) {
+tasks.register("stubsJar", Jar) {
     archiveClassifier = "stubs"
     into("META-INF/${project.group}/${project.name}/${project.version}/mappings") {
         include("**/*.*")

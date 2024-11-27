@@ -21,4 +21,3 @@ test.dependsOn ":restful:build"
 bootJar {
     archiveFileName = "${project.name}.jar"
 }
-

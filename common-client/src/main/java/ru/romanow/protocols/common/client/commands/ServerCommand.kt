@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component
 import ru.romanow.protocols.common.client.service.ServerClient
 
 @ShellComponent
-class ServerCommand(
-    private val serverClient: ServerClient
-) {
+class ServerCommand(private val serverClient: ServerClient) {
     private val logger = LoggerFactory.getLogger(ServerCommand::class.java)
 
     @ShellMethod(key = ["create"], value = "Create server", prefix = "-")

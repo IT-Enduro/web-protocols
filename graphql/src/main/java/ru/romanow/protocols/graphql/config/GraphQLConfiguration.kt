@@ -20,16 +20,7 @@ class GraphQLConfiguration {
         return GraphQLScalarType.newScalar()
             .name("Void")
             .description("Empty result")
-            .coercing(object : Coercing<Unit, Unit> {
-                override fun serialize(result: Any) {
-                }
-
-                override fun parseValue(input: Any) {
-                }
-
-                override fun parseLiteral(input: Any) {
-                }
-            })
+            .coercing(object : Coercing<Unit, Unit> {})
             .build()
     }
 }

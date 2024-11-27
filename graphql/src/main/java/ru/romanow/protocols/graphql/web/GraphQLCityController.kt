@@ -9,7 +9,7 @@ import java.time.Duration
 @Controller
 class GraphQLCityController {
 
-    private val cities: List<String>
+    private final val cities: List<String>
     private var index = 0L
 
     init {

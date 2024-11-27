@@ -6,6 +6,8 @@ dependencies {
     implementation project(":grpc-protocol")
     implementation project(":common-client")
 
+    implementation "net.devh:grpc-client-spring-boot-starter:$grpcSpringVersion"
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 

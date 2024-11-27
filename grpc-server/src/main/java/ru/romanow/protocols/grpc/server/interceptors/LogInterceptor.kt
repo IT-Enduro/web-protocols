@@ -13,6 +13,6 @@ class LogInterceptor : ServerInterceptor {
         call: ServerCall<REQ, RESP>, headers: Metadata, next: ServerCallHandler<REQ, RESP>
     ): ServerCall.Listener<REQ> {
         logger.info("Call method '{}::{}'", call.methodDescriptor.serviceName, call.methodDescriptor.bareMethodName)
-        return next.startCall(call, headers);
+        return next.startCall(call, headers)
     }
 }

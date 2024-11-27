@@ -1,7 +1,7 @@
 package ru.romanow.protocols.grpc.server.web
 
 import io.grpc.stub.StreamObserver
-import org.lognet.springboot.grpc.GRpcService
+import net.devh.boot.grpc.server.service.GrpcService
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServerResponse
 import ru.romanow.protocols.api.model.StateInfo
@@ -14,7 +14,7 @@ import ru.romanow.protocols.grpc.ServerServiceModels.ID
 import ru.romanow.protocols.grpc.ServerServiceModels.Purpose
 import ru.romanow.protocols.grpc.server.interceptors.LogInterceptor
 
-@GRpcService(interceptors = [LogInterceptor::class])
+@GrpcService(interceptors = [LogInterceptor::class])
 class GrpcServerService(
     private val serverService: ServerService
 ) : ServerServiceGrpc.ServerServiceImplBase() {

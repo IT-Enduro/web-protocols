@@ -1,0 +1,12 @@
+---
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "kotlin"
+        versions: [ "2.x" ]
+    commit-message:
+      prefix: "[deps]"

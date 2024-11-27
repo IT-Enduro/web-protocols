@@ -1,5 +1,6 @@
 package ru.romanow.protocols.grpc.service
 
+import net.devh.boot.grpc.client.inject.GrpcClient
 import org.springframework.stereotype.Service
 import ru.romanow.protocols.common.client.service.ServerClient
 import ru.romanow.protocols.grpc.ServerServiceGrpc.ServerServiceBlockingStub
@@ -12,6 +13,7 @@ import ru.romanow.protocols.grpc.ServerServiceModels.StateInfo
 
 @Service
 class GrpcServerClient(
+    @GrpcClient("local-grpc-server")
     private val serverService: ServerServiceBlockingStub
 ) : ServerClient {
 

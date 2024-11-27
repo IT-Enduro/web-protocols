@@ -1,6 +1,7 @@
-# Протоколы обмена информацией
-
 [![Build project](https://github.com/Romanow/web-protocols/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/Romanow/web-protocols/actions/workflows/build.yml)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
+# Протоколы обмена информацией
 
 ## Сборка и запуск
 

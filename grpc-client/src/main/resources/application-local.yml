@@ -1,3 +1,5 @@
-application:
-  services:
-    server-url: localhost:8080
+grpc:
+  client:
+    local-grpc-server:
+      address: 'static://127.0.0.1:8080'
+      negotiationType: plaintext

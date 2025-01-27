@@ -5,7 +5,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.jpa" version "1.9.25"
     id "org.jetbrains.kotlin.plugin.noarg" version "1.9.25"
     id "io.spring.dependency-management" version "1.1.6"
-    id "org.springframework.boot" version "3.3.6" apply false
+    id "org.springframework.boot" version "3.4.2" apply false
     id "org.springframework.cloud.contract" version "4.1.4" apply false
     id "org.asciidoctor.jvm.convert" version "3.3.2" apply false
     id "io.mateo.cxf-codegen" version "1.2.0" apply false

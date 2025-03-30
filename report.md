@@ -57,178 +57,265 @@ REST — это аббревиатура от Representational State Transfer (�
 ```yaml
 openapi: 3.0.1
 info:
-  title: Person Service
-  version: "1.0"
+    title: Servers API
+    version: "1.0"
 servers:
-  - url: http://localhost:8080
+    - url: http://localhost:8080
 paths:
-  /api/v1/persons:
-    get:
-      tags:
-        - REST API
-      summary: Информация по всем людям
-      operationId: all
-      responses:
-        '200':
-          description: Все люди
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PersonResponse'
-    post:
-      tags:
-        - REST API
-      summary: Создание новой записи о человеке
-      operationId: create
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PersonRequest'
-        required: true
-      responses:
-        '201':
-          description: Новая запись успешно создана
-          headers:
-            Location:
-              description: Path to new Person
-              style: simple
-              schema:
-                type: string
-        '400':
-          description: Ошибка входных данных
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-  /api/v1/persons/{id}:
-    get:
-      tags:
-        - REST API
-      summary: Информация о человеке
-      operationId: getById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Данные о человеке
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PersonResponse'
-        '404':
-          description: Человек с таким ID не найден
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      tags:
-        - REST API
-      summary: Удаление записи о человеке
-      operationId: delete
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '204':
-          description: Человек с таким ID успешно удален
-    patch:
-      tags:
-        - REST API
-      summary: Обновление существующей записи о человеке
-      operationId: update
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PersonRequest'
-        required: true
-      responses:
-        '200':
-          description: Человек с таким ID успешно обновлен
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PersonResponse'
-        '400':
-          description: Ошибка входных данных
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationErrorResponse'
-        '404':
-          description: Человек с таким ID не найден
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+    /api/v1/servers:
+        get:
+            tags:
+                - Servers API
+            summary: Найти сервера в городе
+            operationId: findInCity
+            parameters:
+                - name: city
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: Список серверов
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ServersResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ServersResponse'
+        post:
+            tags:
+                - Servers API
+            summary: Создать новый сервер
+            operationId: create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateServerRequest'
+                    application/xml:
+                        schema:
+                            $ref: '#/components/schemas/CreateServerRequest'
+                required: true
+            responses:
+                '201':
+                    description: Сервер успешно создан
+                    headers:
+                        Location:
+                            description: Ссылка на созданный сервер
+                            style: simple
+                            schema:
+                                type: string
+                '400':
+                    description: Некорректные параметры запроса
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ValidationErrorResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ValidationErrorResponse'
+    /api/v1/servers/{id}:
+        get:
+            tags:
+                - Servers API
+            summary: Найти сервер по Id
+            operationId: getById
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int32
+            responses:
+                '200':
+                    description: Информация о сервере
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ServerResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ServerResponse'
+                '404':
+                    description: Сервер не найден по Id
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
+        delete:
+            tags:
+                - Servers API
+            summary: Удалить сервер по Id
+            operationId: delete
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int32
+            responses:
+                '204':
+                    description: Сервер успешно удален
+        patch:
+            tags:
+                - Servers API
+            summary: Редактировать данные сервера по Id
+            operationId: update
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateServerRequest'
+                    application/xml:
+                        schema:
+                            $ref: '#/components/schemas/UpdateServerRequest'
+                required: true
+            responses:
+                '200':
+                    description: Сервер успешно обновлен
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ServerResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ServerResponse'
+                '400':
+                    description: Некорректные параметры запроса
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ValidationErrorResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ValidationErrorResponse'
+                '404':
+                    description: Сервер не найден по Id
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
 components:
-  schemas:
-    ValidationErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        errors:
-          type: object
-          additionalProperties:
-            type: string
-    PersonRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        age:
-          type: integer
-          format: int32
-        address:
-          type: string
-        work:
-          type: string
-      required:
-        - name
-    PersonResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-        age:
-          type: integer
-          format: int32
-        address:
-          type: string
-        work:
-          type: string
-      required:
-        - id
-        - name
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
+    schemas:
+        ErrorDescription:
+            type: object
+            properties:
+                field:
+                    type: string
+                error:
+                    type: string
+        ValidationErrorResponse:
+            required:
+                - error
+                - message
+            type: object
+            properties:
+                message:
+                    type: string
+                error:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ErrorDescription'
+        CreateServerRequest:
+            required:
+                - bandwidth
+                - latency
+                - purpose
+                - state
+            type: object
+            properties:
+                purpose:
+                    type: string
+                latency:
+                    maximum: 100
+                    minimum: 0
+                    type: integer
+                    format: int32
+                bandwidth:
+                    maximum: 10000000
+                    minimum: 0
+                    type: integer
+                    format: int32
+                state:
+                    $ref: '#/components/schemas/StateInfo'
+        StateInfo:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                city:
+                    type: string
+                country:
+                    type: string
+        ErrorResponse:
+            type: object
+            properties:
+                message:
+                    type: string
+        UpdateServerRequest:
+            type: object
+            properties:
+                purpose:
+                    type: string
+                latency:
+                    maximum: 100
+                    minimum: 0
+                    type: integer
+                    format: int32
+                bandwidth:
+                    maximum: 10000000
+                    minimum: 0
+                    type: integer
+                    format: int32
+                state:
+                    $ref: '#/components/schemas/StateInfo'
+        ServerResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int32
+                purpose:
+                    type: string
+                    enum:
+                        - FRONTEND
+                        - BACKEND
+                        - DATABASE
+                latency:
+                    type: integer
+                    format: int32
+                bandwidth:
+                    type: integer
+                    format: int32
+                state:
+                    $ref: '#/components/schemas/StateInfo'
+        ServersResponse:
+            required:
+                - servers
+            type: object
+            properties:
+                servers:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ServerResponse'
 ```
 
 ### gRPC
@@ -245,49 +332,71 @@ gRPC описывается через `.proto`-файлы (в файле опи
 ```protobuf
 syntax = "proto3";
 
-package ru.romanow.persons;
+package ru.romanow.protocols.grpc;
 
 import "google/protobuf/empty.proto";
+import "google/rpc/status.proto";
 
-service PersonService {
-  rpc getById(IdRequest) returns (PersonResponse);
-  rpc persons(google.protobuf.Empty) returns (ListPersonsResponse);
-  rpc create(CreatePersonRequest) returns (PersonResponse);
-  rpc update(UpdatePersonRequest) returns (PersonResponse);
-  rpc delete(IdRequest) returns (google.protobuf.Empty);
+option java_outer_classname = "ServerServiceModels";
+option java_package = "ru.romanow.protocols.grpc";
+
+service ServerService {
+    rpc getById(ID) returns (ServerResponse) {};
+    rpc findAll(Empty) returns (ServersResponse) {};
+    rpc findInCity(City) returns (ServersResponse) {};
+    rpc create(CreateServerRequest) returns (ServerResponse) {};
+    rpc update(UpdateServerRequest) returns (ServerResponse) {};
+    rpc delete(ID) returns (Empty) {};
 }
 
-message IdRequest {
-  int32 id = 1;
+message ID {
+    int32 id = 1;
 }
 
-message CreatePersonRequest {
-  int32 id = 1;
-  string name = 2;
-  int32 age = 3;
-  string address = 4;
-  string work = 5;
+message City {
+    string city = 1;
 }
 
-message UpdatePersonRequest {
-  int32 id = 1;
-  string name = 2;
-  int32 age = 3;
-  string address = 4;
-  string work = 5;
+message Empty {}
+
+message CreateServerRequest {
+    Purpose purpose = 1;
+    int32 latency = 2;
+    int32 bandwidth = 3;
+    StateInfo state = 4;
 }
 
-message PersonResponse {
-  int32 id = 1;
-  string name = 2;
-  int32 age = 3;
-  string address = 4;
-  string work = 5;
+message UpdateServerRequest {
+    int32 id = 1;
+    optional Purpose purpose = 2;
+    optional int32 latency = 3;
+    optional int32 bandwidth = 4;
+    optional StateInfo state = 5;
 }
 
-message ListPersonsResponse {
-  repeated PersonResponse persons = 1;
+message ServerResponse {
+    int32 id = 1;
+    Purpose purpose = 2;
+    int32 latency = 3;
+    int32 bandwidth = 4;
+    StateInfo state = 5;
 }
+
+message ServersResponse {
+    repeated ServerResponse server = 1;
+}
+
+message StateInfo {
+    optional string city = 1;
+    optional string country = 2;
+}
+
+enum Purpose {
+    FRONTEND = 0;
+    BACKEND = 1;
+    DATABASE = 2;
+}
+
 ```
 
 ### Сравнение RESTful от gRPC
@@ -422,7 +531,7 @@ $ call getById
 >     "city": "Moscow",
 >     "country": "Russia"
 >   }
-> } 
+> }
 ```
 
 #### Архитектурные паттерны

@@ -25,16 +25,13 @@ management:
 springdoc:
   api-docs.path: /api-docs
   paths-to-match: /api/**
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
 
 logbook:
-  include:
-    - /api/**
-  exclude:
-    - /manage/**
+  predicate:
+    include:
+      - path: /api/**
   filter.enabled: true
-  format.style: http
+  format.style: curl
   minimum-status: 200
   obfuscate:
     headers:

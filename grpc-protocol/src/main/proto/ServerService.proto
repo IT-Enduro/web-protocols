@@ -10,11 +10,11 @@ option java_package = "ru.romanow.protocols.grpc";
 
 service ServerService {
   rpc getById(ID) returns (ServerResponse) {};
-  rpc findAll(Empty) returns (ServersResponse) {};
+  rpc findAll(google.protobuf.Empty) returns (ServersResponse) {};
   rpc findInCity(City) returns (ServersResponse) {};
   rpc create(CreateServerRequest) returns (ServerResponse) {};
   rpc update(UpdateServerRequest) returns (ServerResponse) {};
-  rpc delete(ID) returns (Empty) {};
+  rpc delete(ID) returns (google.protobuf.Empty) {};
 }
 
 message ID {
@@ -24,8 +24,6 @@ message ID {
 message City {
   string city = 1;
 }
-
-message Empty {}
 
 message CreateServerRequest {
   Purpose purpose = 1;

@@ -1,16 +1,11 @@
 package ru.romanow.protocols.grpc.service
 
+import com.google.protobuf.Empty
 import net.devh.boot.grpc.client.inject.GrpcClient
 import org.springframework.stereotype.Service
 import ru.romanow.protocols.common.client.service.ServerClient
 import ru.romanow.protocols.grpc.ServerServiceGrpc.ServerServiceBlockingStub
-import ru.romanow.protocols.grpc.ServerServiceModels.City
-import ru.romanow.protocols.grpc.ServerServiceModels.CreateServerRequest
-import ru.romanow.protocols.grpc.ServerServiceModels.Empty
-import ru.romanow.protocols.grpc.ServerServiceModels.ID
-import ru.romanow.protocols.grpc.ServerServiceModels.Purpose
-import ru.romanow.protocols.grpc.ServerServiceModels.StateInfo
-import ru.romanow.protocols.grpc.ServerServiceModels.UpdateServerRequest
+import ru.romanow.protocols.grpc.ServerServiceModels.*
 
 @Service
 class GrpcServerClient : ServerClient {

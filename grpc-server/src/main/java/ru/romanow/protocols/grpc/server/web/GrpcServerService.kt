@@ -1,5 +1,6 @@
 package ru.romanow.protocols.grpc.server.web
 
+import com.google.protobuf.Empty
 import io.grpc.Status.INVALID_ARGUMENT
 import io.grpc.Status.NOT_FOUND
 import io.grpc.StatusRuntimeException

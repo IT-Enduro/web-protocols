@@ -45,5 +45,10 @@ class ExceptionController {
         bindingResult.allErrors.map { it.defaultMessage }
 
     private fun buildErrors(bindingResult: BindingResult) =
-        bindingResult.fieldErrors.map { ErrorDescription(it.field, it.defaultMessage!!) }
+        bindingResult.fieldErrors.map {
+            ErrorDescription().apply {
+                field = it.field
+                error = it.defaultMessage
+            }
+        }
 }

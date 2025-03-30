@@ -1,14 +1,26 @@
 package ru.romanow.protocols.api.model
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import jakarta.xml.bind.annotation.XmlAccessType
+import jakarta.xml.bind.annotation.XmlAccessorType
 import jakarta.xml.bind.annotation.XmlElement
 
-@NoArgConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "server")
-data class ServerResponse(
-    @field:XmlElement val id: Int,
-    @field:XmlElement val purpose: Purpose,
-    @field:XmlElement val latency: Int,
-    @field:XmlElement val bandwidth: Int,
-    @field:XmlElement val state: StateInfo
-)
+class ServerResponse {
+
+    @XmlElement
+    var id: Int? = null
+
+    @XmlElement
+    var purpose: Purpose? = null
+
+    @XmlElement
+    var latency: Int? = null
+
+    @XmlElement
+    var bandwidth: Int? = null
+
+    @XmlElement
+    var state: StateInfo? = null
+}

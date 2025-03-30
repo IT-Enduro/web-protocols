@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ru.romanow.protocols.soap.web.ServerWebService
 
-
 @Configuration
 class WebServerConfiguration {
 
@@ -30,5 +29,4 @@ class WebServerConfiguration {
         endpoint.publish("/servers")
         return endpoint
     }
-
 }

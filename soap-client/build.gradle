@@ -23,6 +23,8 @@ tasks.register("generateStubs", Wsdl2Java) {
     }
 }
 
+runKtlintCheckOverMainSourceSet.mustRunAfter(generateStubs)
+
 dependencies {
     implementation project(":common-client")
 

@@ -1,11 +1,17 @@
 package ru.romanow.protocols.api.model
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import jakarta.xml.bind.annotation.XmlAccessType
+import jakarta.xml.bind.annotation.XmlAccessorType
 import jakarta.xml.bind.annotation.XmlElement
 
-@NoArgConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "description")
-data class ErrorDescription(
-    @field:XmlElement val field: String,
-    @field:XmlElement val error: String
-)
+class ErrorDescription {
+
+    @XmlElement
+    var field: String? = null
+
+    @XmlElement
+    var error: String? = null
+}

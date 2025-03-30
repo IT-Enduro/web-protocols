@@ -23,9 +23,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
 import org.springframework.restdocs.payload.JsonFieldType.NUMBER
 import org.springframework.restdocs.payload.JsonFieldType.STRING
-import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
-import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
-import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
@@ -84,9 +82,11 @@ class ServerControllerTest {
             .andExpect(jsonPath("$.state.id").value(server.state?.id))
             .andExpect(jsonPath("$.state.city").value(server.state?.city))
             .andExpect(jsonPath("$.state.country").value(server.state?.country))
-            .andDo(verify().wiremock(
-                WireMock.get(urlMatching("/api/v1/servers/\\d+"))
-            ))
+            .andDo(
+                verify().wiremock(
+                    WireMock.get(urlMatching("/api/v1/servers/\\d+"))
+                )
+            )
             .andDo(
                 document(
                     "Get Server by ID",
@@ -165,12 +165,15 @@ class ServerControllerTest {
 
     @Test
     fun testCreate() {
-        val request = CreateServerRequest(
-            purpose = Purpose.BACKEND.name,
-            latency = nextInt(100),
-            bandwidth = nextInt(1000),
-            state = StateInfo(city = CITY, country = COUNTRY)
-        )
+        val request = CreateServerRequest().apply {
+            purpose = Purpose.BACKEND.name
+            latency = nextInt(100)
+            bandwidth = nextInt(1000)
+            state = StateInfo().apply {
+                city = CITY
+                country = COUNTRY
+            }
+        }
 
         mockMvc.perform(
             post("/api/v1/servers")
@@ -190,59 +193,6 @@ class ServerControllerTest {
                 )
             )
             .andDo(document("Create new Server", requestFieldsSnippet()))
-
-    }
-
-    @Test
-    fun testFullUpdate() {
-        var server = Server(
-            purpose = Purpose.DATABASE,
-            latency = nextInt(1000),
-            bandwidth = nextInt(1000),
-            state = State(city = "Moscow", country = "Russia")
-        )
-        server = serverRepository.saveAndFlush(server)
-
-        val request = CreateServerRequest(
-            purpose = Purpose.BACKEND.name,
-            latency = nextInt(100),
-            bandwidth = nextInt(1000),
-            state = StateInfo(city = CITY, country = COUNTRY)
-        )
-
-        mockMvc.perform(
-            put("/api/v1/servers/{id}", server.id)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request))
-        )
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(server.id))
-            .andExpect(jsonPath("$.purpose").value(request.purpose))
-            .andExpect(jsonPath("$.latency").value(request.latency))
-            .andExpect(jsonPath("$.bandwidth").value(request.bandwidth))
-            .andExpect(jsonPath("$.state.id").value(server.state?.id))
-            .andExpect(jsonPath("$.state.city").value(server.state?.city))
-            .andExpect(jsonPath("$.state.country").value(server.state?.country))
-            .andDo(
-                verify().wiremock(
-                    WireMock.put(urlMatching("/api/v1/servers/\\d+"))
-                        .withRequestBody(match("$.purpose", or(regex("(BACKEND|FRONTEND|DATABASE)"), absent())))
-                        .withRequestBody(match("$.latency", or(regex("\\d{1,3}"), absent())))
-                        .withRequestBody(match("$.bandwidth", or(regex("\\d{1,8}"), absent())))
-                        .withRequestBody(match("$.state.city", equalTo(CITY)))
-                        .withRequestBody(match("$.state.country", equalTo(COUNTRY)))
-                )
-            )
-            .andDo(
-                document(
-                    "Full update Server",
-                    pathParameters(parameterWithName("id").description("Server ID")),
-                    requestFieldsSnippet(),
-                    responseFieldsSnippet()
-                )
-            )
     }
 
     @Test
@@ -255,12 +205,15 @@ class ServerControllerTest {
         )
         server = serverRepository.saveAndFlush(server)
 
-        val request = CreateServerRequest(
-            purpose = Purpose.BACKEND.name,
-            latency = nextInt(100),
-            bandwidth = nextInt(1000),
-            state = StateInfo(city = CITY, country = COUNTRY)
-        )
+        val request = CreateServerRequest().apply {
+            purpose = Purpose.BACKEND.name
+            latency = nextInt(100)
+            bandwidth = nextInt(1000)
+            state = StateInfo().apply {
+                city = CITY
+                country = COUNTRY
+            }
+        }
 
         mockMvc.perform(
             patch("/api/v1/servers/{id}", server.id)
@@ -309,9 +262,11 @@ class ServerControllerTest {
 
         mockMvc.perform(delete("/api/v1/servers/{id}", server.id))
             .andExpect(status().isNoContent)
-            .andDo(verify().wiremock(
-                WireMock.delete(urlMatching("/api/v1/servers/\\d+"))
-            ))
+            .andDo(
+                verify().wiremock(
+                    WireMock.delete(urlMatching("/api/v1/servers/\\d+"))
+                )
+            )
             .andDo(document("Remove Server by ID", pathParameters(parameterWithName("id").description("Server ID"))))
     }
 
@@ -334,7 +289,7 @@ class ServerControllerTest {
     )
 
     companion object {
-        private const val CITY = "Yerevan"
-        private const val COUNTRY = "Armenia"
+        private const val CITY = "Rostov"
+        private const val COUNTRY = "Russia"
     }
 }

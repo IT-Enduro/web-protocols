@@ -7,6 +7,7 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping
 import org.springframework.stereotype.Controller
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServerResponse
+import ru.romanow.protocols.api.model.UpdateServerRequest
 import ru.romanow.protocols.common.server.service.ServerService
 
 @Controller
@@ -27,7 +28,7 @@ class GraphQLServerController(
     fun create(@Argument("request") request: CreateServerRequest) = serverService.create(request)
 
     @MutationMapping("update")
-    fun update(@Argument("id") id: Int, @Argument("request") request: CreateServerRequest) =
+    fun update(@Argument("id") id: Int, @Argument("request") request: UpdateServerRequest) =
         serverService.update(id, request)
 
     @MutationMapping("delete")
@@ -37,6 +38,6 @@ class GraphQLServerController(
 
     @SchemaMapping(typeName = "ServerResponse", field = "serversInCity")
     fun serversInCity(response: ServerResponse): Int {
-        return serverService.findInCity(response.state.city!!).size
+        return serverService.findInCity(response.state?.city!!).size
     }
 }

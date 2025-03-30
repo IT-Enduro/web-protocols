@@ -17,10 +17,10 @@ $ curl https://localhost:8443/api/v1/servers -v -k | jq
 * SSL connection using TLSv1.2 / AES256-SHA
 * ALPN: server did not agree on a protocol. Uses default.
 * Server certificate:
-*  subject: C=AM; ST=Yerevan; L=Yerevan; O=IT Enduro; CN=it-endu.ro
+*  subject: C=AM; ST=Moscow; L=Moscow; O=IT Enduro; CN=it-endu.ro
 *  start date: Apr 24 21:02:18 2023 GMT
 *  expire date: Apr 23 21:02:18 2024 GMT
-*  issuer: C=AM; ST=Yerevan; L=Yerevan; O=IT Enduro; CN=it-endu.ro
+*  issuer: C=AM; ST=Moscow; L=Moscow; O=IT Enduro; CN=it-endu.ro
 *  SSL certificate verify result: self signed certificate (18), continuing anyway.
 > GET /api/v1/servers/1 HTTP/1.1
 > Host: localhost:8443

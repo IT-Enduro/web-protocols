@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package ru.romanow.protocols.grpc;
 
+import "google/protobuf/empty.proto";
+import "google/rpc/status.proto";
+
 option java_outer_classname = "ServerServiceModels";
 option java_package = "ru.romanow.protocols.grpc";
 
@@ -10,7 +13,7 @@ service ServerService {
   rpc findAll(Empty) returns (ServersResponse) {};
   rpc findInCity(City) returns (ServersResponse) {};
   rpc create(CreateServerRequest) returns (ServerResponse) {};
-  rpc update(CreateServerRequest) returns (ServerResponse) {};
+  rpc update(UpdateServerRequest) returns (ServerResponse) {};
   rpc delete(ID) returns (Empty) {};
 }
 
@@ -25,7 +28,14 @@ message City {
 message Empty {}
 
 message CreateServerRequest {
-  optional int32 id = 1;
+  Purpose purpose = 1;
+  int32 latency = 2;
+  int32 bandwidth = 3;
+  StateInfo state = 4;
+}
+
+message UpdateServerRequest {
+  int32 id = 1;
   optional Purpose purpose = 2;
   optional int32 latency = 3;
   optional int32 bandwidth = 4;

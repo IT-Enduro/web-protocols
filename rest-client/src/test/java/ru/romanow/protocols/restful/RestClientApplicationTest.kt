@@ -46,8 +46,8 @@ class RestClientApplicationTest {
             purpose = "DATABASE",
             latency = 10,
             bandwidth = 10000,
-            city = "Yerevan",
-            country = "Armenia"
+            city = "Moscow",
+            country = "Russia"
         )
     }
 

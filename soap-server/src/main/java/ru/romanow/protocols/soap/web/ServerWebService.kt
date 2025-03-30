@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServerResponse
 import ru.romanow.protocols.api.model.ServersResponse
+import ru.romanow.protocols.api.model.UpdateServerRequest
 import ru.romanow.protocols.common.server.service.ServerService
 
 @Controller
@@ -45,7 +46,10 @@ class ServerWebService(
 
     @WebResult(name = "ServerResponse")
     @WebMethod(operationName = "update")
-    fun update(@WebParam(name = "id") id: Int, @WebParam(name = "request") request: CreateServerRequest): ServerResponse {
+    fun update(
+        @WebParam(name = "id") id: Int,
+        @WebParam(name = "request") request: UpdateServerRequest
+    ): ServerResponse {
         return serverService.update(id, request)
     }
 

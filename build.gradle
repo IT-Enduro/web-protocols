@@ -8,6 +8,7 @@ plugins {
     id "org.springframework.boot" version "3.3.6" apply false
     id "org.springframework.cloud.contract" version "4.1.4" apply false
     id "org.asciidoctor.jvm.convert" version "3.3.2" apply false
+    id "org.jlleitschuh.gradle.ktlint" version "12.1.1" apply false
     id "io.mateo.cxf-codegen" version "1.2.0" apply false
     id "com.google.protobuf" version "0.9.4" apply false
 }
@@ -42,9 +43,10 @@ ext {
 allprojects { ->
     apply plugin: "idea"
     apply plugin: "kotlin"
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
     apply plugin: "io.spring.dependency-management"
 
-    [compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "21"
+    [compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "17"
 
     repositories {
         mavenCentral()
@@ -70,6 +72,13 @@ allprojects { ->
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
         implementation "org.jetbrains.kotlin:kotlin-reflect"
         implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+    }
+
+    ktlint {
+        version.set("1.2.1")
+        filter {
+            exclude { entry -> entry.file.toString().contains("generated") }
+        }
     }
 
     test {

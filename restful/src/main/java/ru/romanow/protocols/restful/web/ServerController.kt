@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromC
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServerResponse
 import ru.romanow.protocols.api.model.ServersResponse
+import ru.romanow.protocols.api.model.UpdateServerRequest
 import ru.romanow.protocols.common.server.service.ServerService
 import java.util.concurrent.TimeUnit
 
@@ -67,22 +68,13 @@ class ServerController(
             .build()
     }
 
-    @Operation(summary = "Full update server by Id")
-    @PutMapping(
-        value = ["/{id}"],
-        consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
-    )
-    fun fullUpdate(@PathVariable id: Int, @Valid @RequestBody request: CreateServerRequest) =
-        serverService.update(id, request)
-
     @Operation(summary = "Edit server by Id")
     @PatchMapping(
         value = ["/{id}"],
         consumes = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE]
     )
-    fun partialUpdate(@PathVariable id: Int, @RequestBody request: CreateServerRequest) =
+    fun partialUpdate(@PathVariable id: Int, @Valid @RequestBody request: UpdateServerRequest) =
         serverService.update(id, request)
 
     @Operation(summary = "Delete server by Id")

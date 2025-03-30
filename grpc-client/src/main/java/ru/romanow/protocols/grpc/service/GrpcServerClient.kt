@@ -10,6 +10,7 @@ import ru.romanow.protocols.grpc.ServerServiceModels.Empty
 import ru.romanow.protocols.grpc.ServerServiceModels.ID
 import ru.romanow.protocols.grpc.ServerServiceModels.Purpose
 import ru.romanow.protocols.grpc.ServerServiceModels.StateInfo
+import ru.romanow.protocols.grpc.ServerServiceModels.UpdateServerRequest
 
 @Service
 class GrpcServerClient : ServerClient {
@@ -19,7 +20,10 @@ class GrpcServerClient : ServerClient {
 
     override fun create(purpose: String): String {
         val request = CreateServerRequest.newBuilder()
+            .setLatency(10)
+            .setBandwidth(10000)
             .setPurpose(Purpose.valueOf(purpose))
+            .setState(StateInfo.newBuilder().setCity("Moscow").setCountry("Russia"))
             .build()
         return serverService.create(request).toString()
     }
@@ -44,7 +48,7 @@ class GrpcServerClient : ServerClient {
         city: String?,
         country: String?
     ): String {
-        val request = CreateServerRequest.newBuilder().setId(id)
+        val request = UpdateServerRequest.newBuilder().setId(id)
         purpose?.let { request.setPurpose(Purpose.valueOf(it)) }
         latency?.let { request.setLatency(it) }
         bandwidth?.let { request.setBandwidth(bandwidth) }
@@ -52,7 +56,7 @@ class GrpcServerClient : ServerClient {
         city?.let { state.setCity(it) }
         country?.let { state.setCountry(it) }
         request.setState(state)
-        return serverService.create(request.build()).toString()
+        return serverService.update(request.build()).toString()
     }
 
     override fun delete(id: Int) {

@@ -3,10 +3,7 @@ package ru.romanow.protocols.common.server.service
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import ru.romanow.protocols.api.model.CreateServerRequest
-import ru.romanow.protocols.api.model.ServerResponse
-import ru.romanow.protocols.api.model.StateInfo
-import ru.romanow.protocols.api.model.findPurpose
+import ru.romanow.protocols.api.model.*
 import ru.romanow.protocols.common.server.domain.Server
 import ru.romanow.protocols.common.server.domain.State
 import ru.romanow.protocols.common.server.repository.ServerRepository
@@ -52,7 +49,7 @@ class ServerServiceImpl(
     }
 
     @Transactional
-    override fun update(id: Int, request: CreateServerRequest): ServerResponse {
+    override fun update(id: Int, request: UpdateServerRequest): ServerResponse {
         val server = serverRepository.findById(id)
             .orElseThrow { EntityNotFoundException("Server not found for ID $id") }
 
@@ -65,15 +62,15 @@ class ServerServiceImpl(
     }
 
     private fun buildServerResponse(server: Server) =
-        ServerResponse(
-            id = server.id!!,
-            bandwidth = server.bandwidth!!,
-            latency = server.latency!!,
-            purpose = server.purpose!!,
-            state = StateInfo(
-                id = server.state?.id,
-                city = server.state?.city,
+        ServerResponse().apply {
+            id = server.id
+            bandwidth = server.bandwidth
+            latency = server.latency
+            purpose = server.purpose
+            state = StateInfo().apply {
+                id = server.state?.id
+                city = server.state?.city
                 country = server.state?.country
-            )
-        )
+            }
+        }
 }

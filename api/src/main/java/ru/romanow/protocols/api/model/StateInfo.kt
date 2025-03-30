@@ -1,20 +1,20 @@
 package ru.romanow.protocols.api.model
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-import jakarta.validation.constraints.NotEmpty
+import jakarta.xml.bind.annotation.XmlAccessType
+import jakarta.xml.bind.annotation.XmlAccessorType
 import jakarta.xml.bind.annotation.XmlElement
 
-@NoArgConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "state")
-data class StateInfo(
-    @field:XmlElement
-    val id: Int? = null,
+class StateInfo {
 
-    @field:XmlElement
-    @NotEmpty(message = "{field.not.empty}")
-    val city: String? = null,
+    @XmlElement
+    var id: Int? = null
 
-    @field:XmlElement
-    @NotEmpty(message = "{field.not.empty}")
-    val country: String? = null
-)
+    @XmlElement
+    var city: String? = null
+
+    @XmlElement
+    var country: String? = null
+}

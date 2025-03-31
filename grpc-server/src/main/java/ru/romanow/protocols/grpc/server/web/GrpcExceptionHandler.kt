@@ -29,5 +29,6 @@ class GrpcExceptionHandler {
         return INTERNAL.withDescription(exception.message)
     }
 
-    fun buildMessage(violations: Set<ConstraintViolation<*>>) = violations.joinToString { "${it.propertyPath}: ${it.message}" }
+    fun buildMessage(violations: Set<ConstraintViolation<*>>) =
+        violations.joinToString { "${it.propertyPath}: ${it.message}" }
 }

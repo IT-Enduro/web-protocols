@@ -18,7 +18,8 @@
     * Стриминг данных.
     * Кеширование.
     * Работа с браузерами и из консоли.
-    * Архитектурные паттерны: Load Balancing, Retry, Timeouts, Circuit Breaker.
+    * Архитектурные паттерны: Retry, Timeouts, Circuit Breaker.
+    * Отмена запроса.
     * Производительность (тут нужны benchmarks).
     * Безопасность (сертификаты (в том числе mTLS)), Token-based авторизация.
     * Observability: трассировка и логгирование запросов.
@@ -54,269 +55,271 @@ REST — это аббревиатура от Representational State Transfer (�
 * `PUT` или `PATCH` для обновления.
 * `DELETE` для удаления.
 
+[//]: # (@formatter:off)
 ```yaml
 openapi: 3.0.1
 info:
-    title: Servers API
-    version: "1.0"
+  title: Servers API
+  version: "1.0"
 servers:
-    -   url: http://localhost:8080
+  - url: http://localhost:8080
 paths:
-    /api/v1/servers:
-        get:
-            tags:
-                - Servers API
-            summary: Найти сервера в городе
-            operationId: findInCity
-            parameters:
-                -   name: city
-                    in: query
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                '200':
-                    description: Список серверов
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ServersResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ServersResponse'
-        post:
-            tags:
-                - Servers API
-            summary: Создать новый сервер
-            operationId: create
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/CreateServerRequest'
-                    application/xml:
-                        schema:
-                            $ref: '#/components/schemas/CreateServerRequest'
-                required: true
-            responses:
-                '201':
-                    description: Сервер успешно создан
-                    headers:
-                        Location:
-                            description: Ссылка на созданный сервер
-                            style: simple
-                            schema:
-                                type: string
-                '400':
-                    description: Некорректные параметры запроса
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ValidationErrorResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ValidationErrorResponse'
-    /api/v1/servers/{id}:
-        get:
-            tags:
-                - Servers API
-            summary: Найти сервер по Id
-            operationId: getById
-            parameters:
-                -   name: id
-                    in: path
-                    required: true
-                    schema:
-                        type: integer
-                        format: int32
-            responses:
-                '200':
-                    description: Информация о сервере
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ServerResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ServerResponse'
-                '404':
-                    description: Сервер не найден по Id
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ErrorResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ErrorResponse'
-        delete:
-            tags:
-                - Servers API
-            summary: Удалить сервер по Id
-            operationId: delete
-            parameters:
-                -   name: id
-                    in: path
-                    required: true
-                    schema:
-                        type: integer
-                        format: int32
-            responses:
-                '204':
-                    description: Сервер успешно удален
-        patch:
-            tags:
-                - Servers API
-            summary: Редактировать данные сервера по Id
-            operationId: update
-            parameters:
-                -   name: id
-                    in: path
-                    required: true
-                    schema:
-                        type: integer
-                        format: int32
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UpdateServerRequest'
-                    application/xml:
-                        schema:
-                            $ref: '#/components/schemas/UpdateServerRequest'
-                required: true
-            responses:
-                '200':
-                    description: Сервер успешно обновлен
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ServerResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ServerResponse'
-                '400':
-                    description: Некорректные параметры запроса
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ValidationErrorResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ValidationErrorResponse'
-                '404':
-                    description: Сервер не найден по Id
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ErrorResponse'
-                        application/xml:
-                            schema:
-                                $ref: '#/components/schemas/ErrorResponse'
+  /api/v1/servers:
+    get:
+      tags:
+        - Servers API
+      summary: Найти сервера в городе
+      operationId: findInCity
+      parameters:
+        - name: city
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Список серверов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServersResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServersResponse'
+    post:
+      tags:
+        - Servers API
+      summary: Создать новый сервер
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServerRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CreateServerRequest'
+        required: true
+      responses:
+        '201':
+          description: Сервер успешно создан
+          headers:
+            Location:
+              description: Ссылка на созданный сервер
+              style: simple
+              schema:
+                type: string
+        '400':
+          description: Некорректные параметры запроса
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+  /api/v1/servers/{id}:
+    get:
+      tags:
+        - Servers API
+      summary: Найти сервер по Id
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Информация о сервере
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServerResponse'
+        '404':
+          description: Сервер не найден по Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Servers API
+      summary: Удалить сервер по Id
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: Сервер успешно удален
+    patch:
+      tags:
+        - Servers API
+      summary: Редактировать данные сервера по Id
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateServerRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UpdateServerRequest'
+        required: true
+      responses:
+        '200':
+          description: Сервер успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ServerResponse'
+        '400':
+          description: Некорректные параметры запроса
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '404':
+          description: Сервер не найден по Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
-    schemas:
-        ErrorDescription:
-            type: object
-            properties:
-                field:
-                    type: string
-                error:
-                    type: string
-        ValidationErrorResponse:
-            required:
-                - error
-                - message
-            type: object
-            properties:
-                message:
-                    type: string
-                error:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/ErrorDescription'
-        CreateServerRequest:
-            required:
-                - bandwidth
-                - latency
-                - purpose
-                - state
-            type: object
-            properties:
-                purpose:
-                    type: string
-                latency:
-                    maximum: 100
-                    minimum: 0
-                    type: integer
-                    format: int32
-                bandwidth:
-                    maximum: 10000000
-                    minimum: 0
-                    type: integer
-                    format: int32
-                state:
-                    $ref: '#/components/schemas/StateInfo'
-        StateInfo:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: int32
-                city:
-                    type: string
-                country:
-                    type: string
-        ErrorResponse:
-            type: object
-            properties:
-                message:
-                    type: string
-        UpdateServerRequest:
-            type: object
-            properties:
-                purpose:
-                    type: string
-                latency:
-                    maximum: 100
-                    minimum: 0
-                    type: integer
-                    format: int32
-                bandwidth:
-                    maximum: 10000000
-                    minimum: 0
-                    type: integer
-                    format: int32
-                state:
-                    $ref: '#/components/schemas/StateInfo'
-        ServerResponse:
-            type: object
-            properties:
-                id:
-                    type: integer
-                    format: int32
-                purpose:
-                    type: string
-                    enum:
-                        - FRONTEND
-                        - BACKEND
-                        - DATABASE
-                latency:
-                    type: integer
-                    format: int32
-                bandwidth:
-                    type: integer
-                    format: int32
-                state:
-                    $ref: '#/components/schemas/StateInfo'
-        ServersResponse:
-            required:
-                - servers
-            type: object
-            properties:
-                servers:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/ServerResponse'
+  schemas:
+    ErrorDescription:
+      type: object
+      properties:
+        field:
+          type: string
+        error:
+          type: string
+    ValidationErrorResponse:
+      required:
+        - error
+        - message
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDescription'
+    CreateServerRequest:
+      required:
+        - bandwidth
+        - latency
+        - purpose
+        - state
+      type: object
+      properties:
+        purpose:
+          type: string
+        latency:
+          maximum: 100
+          minimum: 0
+          type: integer
+          format: int32
+        bandwidth:
+          maximum: 10000000
+          minimum: 0
+          type: integer
+          format: int32
+        state:
+          $ref: '#/components/schemas/StateInfo'
+    StateInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        city:
+          type: string
+        country:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    UpdateServerRequest:
+      type: object
+      properties:
+        purpose:
+          type: string
+        latency:
+          maximum: 100
+          minimum: 0
+          type: integer
+          format: int32
+        bandwidth:
+          maximum: 10000000
+          minimum: 0
+          type: integer
+          format: int32
+        state:
+          $ref: '#/components/schemas/StateInfo'
+    ServerResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        purpose:
+          type: string
+          enum:
+            - FRONTEND
+            - BACKEND
+            - DATABASE
+        latency:
+          type: integer
+          format: int32
+        bandwidth:
+          type: integer
+          format: int32
+        state:
+          $ref: '#/components/schemas/StateInfo'
+    ServersResponse:
+      required:
+        - servers
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerResponse'
 ```
+[//]: # (@formatter:on)
 
 ### gRPC
 
@@ -661,17 +664,53 @@ Postman умеет работать как с REST (например, загру
 
 #### Архитектурные паттерны
 
-##### Load Balancing
-
-[//]: # (TODO: Load Balancing)
-
 ##### Retry
+
+Fail Fast – это принцип проектирования программного обеспечения, который заключается в том, чтобы быстро обнаруживать
+ошибки и сбои в системе и немедленно прекращать выполнение задачи при их возникновении. Основная идея этого подхода
+состоит в том, чтобы минимизировать ущерб от ошибок и избежать дальнейшего выполнения кода, который может привести к еще
+большим проблемам.
+
+Retry — это механизм повторного выполнения операции в случае временного сбоя. Это особенно полезно в распределенных
+системах, где ошибки могут быть вызваны временной недоступностью сети, перегрузками или краткосрочными отказами.
+
+* Повторная отправка HTTP-запроса при временном сбое сети.
+* Повтор вызова API, если он завершился с кодом 5xx или timeout.
+
+Механика retry может включать:
+
+* Фиксированные интервалы: попытка через 100 мс.
+* Экспоненциальная задержка (Exponential Backoff): увеличение времени ожидания перед каждой новой попыткой (100мс,
+  200мс, 400 мс и т.д.).
+* Jitter (случайное добавление задержки) — уменьшает вероятность массовых повторов в кластере, если сбой затронул сразу
+  много клиентов.
+
+* Retry можно использовать только если это временный сбой (недоступность сети, 5xx ошибки, таймауты), иначе (например,
+  403 Permission Denied – ошибка прав доступа) это замедлит систему. Так же Retry нужно комбинировать с Circuit Breaker,
+  чтобы не перегружать сервис. Retry хорошо работает на операциях чтения, а для модификации нужно предусмотреть
+  идемпотентность операции.
 
 [//]: # (TODO: Retry)
 
 ##### Timeouts
 
-[//]: # (TODO: Timeouts)
+Timeout (таймаут) — это предельное время ожидания ответа перед тем, как считать операцию неудачной. Они помогают
+ограничить время ожидания между попытками и предотвращают бесконечные циклы повторений. Таймаут обычно устанавливается
+для каждой попытки, а также для общего времени работы механизма Retry.
+
+Вычисление величины таймаута для сервиса — это баланс между пользовательским опытом, производительностью и устойчивостью
+системы. Таймаут должен быть достаточно большим, чтобы дать системе шанс обработать запрос, но достаточно коротким,
+чтобы избежать зависаний и неэффективного использования ресурсов.
+
+В HTTP/REST таймаут задается только на клиенте, сервер не знает об ограничении времени и если сервер начал работать, но
+не успел ответить, он всё равно завершит обработку (даже если клиент уже закрыл соединение).
+
+В gRPC используется понятие Deadline: т.е. время, до которого вызов должен завершиться. Это значение передаётся через
+метаданные, и _все сервисы по цепочке знают об этом_. Чтобы защититься от проблемы не синхронизированного времени на
+серверах, gRPC преобразует крайний срок в тайм-аут, из которого уже вычитается прошедшее время.
+
+Если сервер превысил срок обработки запроса, клиент отменяет запрос и завершит RPC-вызов со статусом
+`DEADLINE_EXCEEDED`. Промежуточные сервисы тоже узнают об этом и могут прекратить работу.
 
 ##### Circuit Breaker
 
@@ -712,7 +751,12 @@ HTTP соединения), то скорость REST сопоставима с
 
 ##### Трассировка
 
-[//]: # (TODO: Трассировка)
+Распределённая трассировка — это метод мониторинга и анализа производительности приложений, работающих в микросервисной
+архитектуре. Основная цель этого метода заключается в том, чтобы отслеживать выполнение запросов через множество
+сервисов и компонентов системы, выявлять узкие места и проблемы, а также улучшать общую производительность и надёжность
+приложения.
+
+Как и в HTTP/REST, так и в gRPC для трассировки используются interceptors.
 
 ##### Логгирование запросов и ответов
 
@@ -789,8 +833,29 @@ gRPC (проверка `Context.current().isCancelled()`), чтобы гаран
 * gRPC дает хорошую производительность из коробки.
 * Но для работы с UI вам все равно ряд не самых простых приседаний.
 * RESTful привычный и понятный, на нем уже все есть и не нужно ничего изобретать.
+* К тому же работает в браузере без лишних приседаний.
 * Если вы хотите увеличить производительность, то лучше в первую очередь смотреть на оптимизацию кода и структуры БД.
   Сетевая коммуникация обычно занимает менее 1% времени.
+
+И такие выводы я написал, когда только начинал работу над докладом. Они строились на моем обширном опыте работы с
+HTTP/REST и всего лишь 3-х летним опыте работы с gRPC несколько лет назад. И для меня это выглядело действительно так:
+yet another protocol. Но потом я начал разбирать сложные механизмы gRPC и стало понятно, что как только вы прекращаете
+проектировать gRPC как REST API, то у вас появляется очень много крутых инструментов:
+
+* Стриминг данных (а может уже и очередь не так нужна)?
+* Flow Control чтобы не перегружать потребителей.
+* Отмена запроса и распространение отмены по всей цепочке вызовов (как тебе такое, Илон Маск?).
+* Удобные таймауты, которые распространяются на всю цепочку вызовов.
+* Действительно лучшая производительность за счет HTTP/2.
+* Вообще-то браузер поддерживает только GET, поэтому для всего, что сложнее вам все равно придется использовать
+  консольные клиенты.
+* Ну а для работы с Front End потребуется развернуть Gateway API, который будет преобразовывать REST в gRPC (не
+  обязательно Envoy, есть
+  реализация [JsonToGrpc](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/jsontogrpc-factory.html)
+  для Spring Cloud Gateway).
+
+Исходя из вышесказанного, для своего следующего проекта я возьму gRPC, т.к. это зрелый протокол, предоставляющий большое
+количество полезных инструментов.
 
 ## Ссылки
 

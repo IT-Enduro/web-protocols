@@ -21,7 +21,7 @@
     * Архитектурные паттерны: Load Balancing, Retry, Timeouts, Circuit Breaker.
     * Производительность (тут нужны benchmarks).
     * Безопасность (сертификаты (в том числе mTLS)), Token-based авторизация.
-    * Observability: трассировка, логгирование, мониторинг запросов.
+    * Observability: трассировка и логгирование запросов.
 4. Вместо выводов: когда и что выбирать для вашего проекта.
 
 ## Доклад
@@ -516,7 +516,29 @@ Development (TDD), что в результате даст хорошее пок
 
 #### Стриминг данных
 
-[//]: # (TODO: Стриминг данных)
+gRPC использует HTTP/2 для передачи данных, а стриминг работает за счёт мультиплексированных потоков внутри одного
+соединения.
+
+* **Server Streaming** – сервер отправляет поток данных на один запрос клиента.
+* **Client Streaming** – клиент отправляет поток данных, получая один ответ от сервера.
+* **Bidirectional Streaming** – асинхронный обмен сообщениями.
+
+В контексте стриминга важно упомянуть встроенный механизм Flow Control – это механизм, гарантирующий, что получатель
+сообщений не будет перегружен быстрым отправителем. Управление потоком предотвращает потерю данных, улучшает
+производительность и повышает надежность. gRPC использует механизм плавающего окна (Floating Window): когда данные
+считываются на принимающей стороне, отправителю возвращается подтверждение, сообщающее, что у получателя больше емкости.
+При необходимости фреймворк gRPC будет ждать перед возвратом из вызова записи. За реализацию Flow Control отвечает сам
+gRPC.
+
+HTTP/REST напрямую не поддерживают стриминг данных и для этого используется несколько решений:
+
+* Chunked Transfer Encoding – сервер отправляет данные частями (`Chunks`) без указания заголовка `Content-Length`.
+  Каждый chunk начинается с размера в шестнадцатеричном формате. В основном применяется в стриминге файлов, логов и т.п.
+* WebSocket – протокол двунаправленной связи (может передавать и принимать одновременно) поверх TCP-соединения,
+  предназначенный для обмена сообщениями между браузером и сервером в режиме реального времени.
+
+Важно заметить, что ни в одной реализации стриминга в HTTP нет механизма Flow Control, следовательно, клиент может быть
+не готов обработать столько данных (именно обработать, за получение отвечает Flow Control на уровне TCP).
 
 #### Кеширование
 
@@ -669,7 +691,7 @@ Postman умеет работать как с REST (например, загру
 помощью [Resilience4j](https://resilience4j.readme.io/) или через Envoy Proxy.
 
 * HTTP/REST: [RestServerClient](rest-client/src/main/java/ru/romanow/protocols/restful/service/RestServerClient.kt)
-* gRPC:
+* gRPC: [GrpcServerClient](grpc-client/src/main/java/ru/romanow/protocols/grpc/service/GrpcServerClient.kt)
 
 #### Производительность
 
@@ -702,11 +724,64 @@ HTTP соединения), то скорость REST сопоставима с
 HTTP/REST: [LoggingFilter](restful/src/main/java/ru/romanow/protocols/restful/filters/LoggingFilter.kt)
 gRPC: [LogInterceptor](grpc-server/src/main/java/ru/romanow/protocols/grpc/server/interceptors/LogInterceptor.kt)
 
-### Что еще есть в gRPC
+### Отмена запроса
 
-* Health Checking
-* Cancellation
-* Flow Control
+Протокол HTTP не поддерживает отмену запроса и для реализации отмены нужно использовать механизм асинхронного выполнения
+и остановки.
+
+```kotlin
+@RestController
+@RequestMapping("/api/v1/tasks")
+class TaskController(private val taskService: TaskService) {
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    fun accept(@RequestBody request: Map<String, Double>): UUID {
+        return taskService.accept { Thread.sleep(10000) }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{operationId}/cancel")
+    fun cancelOrder(@PathVariable operationId: UUID) {
+        taskService.cancel(operationId)
+    }
+}
+
+@Service
+class TaskService {
+    private val executorService = Executors.newCachedThreadPool()
+    private val operations = ConcurrentHashMap<UUID, Future<*>>()
+
+    fun accept(task: Runnable): UUID {
+        val operationId = UUID.randomUUID()
+        val future = executorService.submit {
+            try {
+                task.run()
+            } catch (exception: InterruptedException) {
+                println("Task $operationId cancelled")
+            }
+        }
+        operations[operationId] = future
+        return operationId
+    }
+
+    fun cancel(operationId: UUID) {
+        operations.remove(operationId)?.cancel(true)
+    }
+}
+```
+
+В gRPC отмена операций поддерживается на уровне контекста выполнения (`Context`). Когда клиент прерывает запрос, это
+событие автоматически распространяется _по всей цепочке вызовов_, позволяя серверам освобождать ресурсы и завершать
+выполнение (аналогично происходит при превышении deadline и ошибках I/O).
+
+Для отмены операции создается контекст `Context.current().withCancellation()` и внутри контекста вызывается Runnable
+блок. Операция `cancel` вызывается на этом контексте. Хотя клиенты gRPC не предоставляют серверу дополнительных сведений
+о причине отмены, вызов `cancel` принимает `Throwable` с описанием причины, что приведет к исключению на стороне клиента
+и записи в лог, содержащий указанную причину.
+
+При получении нотификации о прерывании запроса, обработчик на сервере должен сам координировать работу с библиотекой
+gRPC (проверка `Context.current().isCancelled()`), чтобы гарантировать прекращение локальной обработки запроса.
 
 ### Вместо выводов: когда и что выбирать для вашего проекта
 

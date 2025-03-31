@@ -2,6 +2,8 @@ package ru.romanow.protocols.grpc.service
 
 import com.google.protobuf.Empty
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
+import io.grpc.Status.Code.INVALID_ARGUMENT
+import io.grpc.Status.Code.NOT_FOUND
 import io.grpc.StatusRuntimeException
 import net.devh.boot.grpc.client.inject.GrpcClient
 import org.springframework.stereotype.Service
@@ -23,31 +25,33 @@ class GrpcServerClient : ServerClient {
             .setPurpose(Purpose.valueOf(purpose))
             .setState(StateInfo.newBuilder().setCity("Moscow").setCountry("Russia"))
             .build()
-        return serverService.create(request).toString()
+        try {
+            return serverService.create(request).toString()
+        } catch (exception: StatusRuntimeException) {
+            throw handleError(exception)
+        }
     }
 
     @CircuitBreaker(name = "find-all", fallbackMethod = "findAllFallback")
-    override fun findAll(): String {
-        try {
-            val result = serverService.findAll(Empty.newBuilder().build())
-        } catch (exception: StatusRuntimeException) {
-            when (exception.status.code) {
-
-            }
-        }
-        return result
-            .toString()
+    override fun findAll() = try {
+        serverService.findAll(Empty.newBuilder().build()).toString()
+    } catch (exception: StatusRuntimeException) {
+        throw handleError(exception)
     }
 
     @CircuitBreaker(name = "get-by-id", fallbackMethod = "getByIdFallback")
-    override fun getById(id: Int) = serverService
-        .getById(ID.newBuilder().setId(id).build())
-        .toString()
+    override fun getById(id: Int) = try {
+        serverService.getById(ID.newBuilder().setId(id).build()).toString()
+    } catch (exception: StatusRuntimeException) {
+        throw handleError(exception)
+    }
 
     @CircuitBreaker(name = "find-in-city", fallbackMethod = "findInCityFallback")
-    override fun findInCity(city: String) = serverService
-        .findInCity(City.newBuilder().setCity(city).build())
-        .toString()
+    override fun findInCity(city: String) = try {
+        serverService.findInCity(City.newBuilder().setCity(city).build()).toString()
+    } catch (exception: StatusRuntimeException) {
+        throw handleError(exception)
+    }
 
     override fun update(
         id: Int,
@@ -65,11 +69,28 @@ class GrpcServerClient : ServerClient {
         city?.let { state.setCity(it) }
         country?.let { state.setCountry(it) }
         request.setState(state)
-        return serverService.update(request.build()).toString()
+
+        try {
+            return serverService.update(request.build()).toString()
+        } catch (exception: StatusRuntimeException) {
+            throw handleError(exception)
+        }
     }
 
     override fun delete(id: Int) {
-        serverService.delete(ID.newBuilder().setId(id).build())
+        try {
+            serverService.delete(ID.newBuilder().setId(id).build())
+        } catch (exception: StatusRuntimeException) {
+            throw handleError(exception)
+        }
+    }
+
+    private fun handleError(exception: StatusRuntimeException): RuntimeException {
+        return when (exception.status.code) {
+            INVALID_ARGUMENT -> IllegalArgumentException(exception.message)
+            NOT_FOUND -> IllegalArgumentException(exception.message)
+            else -> RuntimeException(exception.message)
+        }
     }
 
     private fun findAllFallback(exception: Exception) = "[]"

@@ -6,6 +6,8 @@ dependencies {
     implementation project(":grpc-protocol")
     implementation project(":common-client")
 
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "io.github.resilience4j:resilience4j-spring-boot3:$resilience4jVersion"
     implementation "net.devh:grpc-client-spring-boot-starter:$grpcSpringVersion"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"

@@ -5,3 +5,18 @@ spring:
   main:
     banner-mode: off
     web-application-type: none
+
+resilience4j:
+  timelimiter:
+    instances:
+      backend:
+        timeout-duration: 1s
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        max-wait-duration-in-half-open-state: 10s
+
+logging.level:
+  io.github.resilience4j.circuitbreaker.internal.CircuitBreakerStateMachine: debug

@@ -7,6 +7,9 @@ dependencies {
     implementation project(":common-client")
 
     implementation "org.springframework:spring-webflux"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "io.github.resilience4j:resilience4j-spring-boot3:$resilience4jVersion"
+    implementation "io.github.resilience4j:resilience4j-reactor:$resilience4jVersion"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 

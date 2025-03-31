@@ -1,13 +1,9 @@
 package ru.romanow.protocols.grpc.server.web
 
 import com.google.protobuf.Empty
-import io.grpc.Status.INVALID_ARGUMENT
-import io.grpc.Status.NOT_FOUND
-import io.grpc.StatusRuntimeException
 import io.grpc.stub.StreamObserver
-import jakarta.persistence.EntityNotFoundException
+import jakarta.validation.ConstraintViolationException
 import net.devh.boot.grpc.server.service.GrpcService
-import org.springframework.validation.FieldError
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 import ru.romanow.protocols.api.model.CreateServerRequest
 import ru.romanow.protocols.api.model.ServerResponse
@@ -26,13 +22,9 @@ class GrpcServerService(
 ) : ServerServiceGrpc.ServerServiceImplBase() {
 
     override fun getById(request: ID, responseObserver: StreamObserver<ServerServiceModels.ServerResponse>) {
-        try {
-            val server = serverService.getById(request.id)
-            responseObserver.onNext(buildServerResponse(server))
-            responseObserver.onCompleted()
-        } catch (exception: EntityNotFoundException) {
-            responseObserver.onError(StatusRuntimeException(NOT_FOUND.withDescription(exception.message)))
-        }
+        val server = serverService.getById(request.id)
+        responseObserver.onNext(buildServerResponse(server))
+        responseObserver.onCompleted()
     }
 
     override fun findAll(request: Empty, responseObserver: StreamObserver<ServersResponse>) {
@@ -60,45 +52,36 @@ class GrpcServerService(
                 country = request.state.country
             }
         }
-        val errors = validator.validateObject(createServerRequest)
-        if (!errors.hasErrors()) {
-            val server = serverService.create(createServerRequest)
-            responseObserver.onNext(buildServerResponse(server))
-            responseObserver.onCompleted()
-        } else {
-            responseObserver.onError(
-                StatusRuntimeException(INVALID_ARGUMENT.withDescription(buildErrors(errors.fieldErrors)))
-            )
+        val violations = validator.validate(createServerRequest)
+        if (violations.isNotEmpty()) {
+            throw ConstraintViolationException(violations)
         }
+
+        val server = serverService.create(createServerRequest)
+        responseObserver.onNext(buildServerResponse(server))
+        responseObserver.onCompleted()
     }
 
     override fun update(
         request: ServerServiceModels.UpdateServerRequest,
         responseObserver: StreamObserver<ServerServiceModels.ServerResponse>
     ) {
-        try {
-            val updateServerRequest = UpdateServerRequest().apply {
-                purpose = request.purpose.name
-                latency = request.latency
-                bandwidth = request.bandwidth
-                state = StateInfo().apply {
-                    city = request.state.city
-                    country = request.state.country
-                }
+        val updateServerRequest = UpdateServerRequest().apply {
+            purpose = request.purpose.name
+            latency = request.latency
+            bandwidth = request.bandwidth
+            state = StateInfo().apply {
+                city = request.state.city
+                country = request.state.country
             }
-            val errors = validator.validateObject(updateServerRequest)
-            if (!errors.hasErrors()) {
-                val server = serverService.update(id = request.id, request = updateServerRequest)
-                responseObserver.onNext(buildServerResponse(server))
-                responseObserver.onCompleted()
-            } else {
-                responseObserver.onError(
-                    StatusRuntimeException(INVALID_ARGUMENT.withDescription(buildErrors(errors.fieldErrors)))
-                )
-            }
-        } catch (exception: EntityNotFoundException) {
-            responseObserver.onError(StatusRuntimeException(NOT_FOUND.withDescription(exception.message)))
         }
+        val violations = validator.validate(updateServerRequest)
+        if (violations.isNotEmpty()) {
+            throw ConstraintViolationException(violations)
+        }
+        val server = serverService.update(id = request.id, request = updateServerRequest)
+        responseObserver.onNext(buildServerResponse(server))
+        responseObserver.onCompleted()
     }
 
     override fun delete(request: ID, responseObserver: StreamObserver<Empty>) {
@@ -119,7 +102,4 @@ class GrpcServerService(
             .setState(state)
             .build()
     }
-
-    private fun buildErrors(errors: List<FieldError>) =
-        errors.joinToString(";") { "${it.field} has error: ${it.defaultMessage}" }
 }

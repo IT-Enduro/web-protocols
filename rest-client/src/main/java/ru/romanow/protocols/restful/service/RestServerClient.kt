@@ -1,5 +1,6 @@
 package ru.romanow.protocols.restful.service
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
@@ -11,6 +12,7 @@ import ru.romanow.protocols.common.client.service.ServerClient
 import ru.romanow.protocols.restful.utils.prettyPrint
 
 @Service
+@Suppress("UNUSED_PARAMETER")
 class RestServerClient(
     private val webClient: WebClient
 ) : ServerClient {
@@ -39,6 +41,7 @@ class RestServerClient(
         return location.path.split("/").last()
     }
 
+    @CircuitBreaker(name = "find-all", fallbackMethod = "findAllFallback")
     override fun findAll() =
         webClient.get()
             .uri("/api/v1/servers")
@@ -48,6 +51,7 @@ class RestServerClient(
             .map { prettyPrint(it) }
             .block()!!
 
+    @CircuitBreaker(name = "get-by-id", fallbackMethod = "getByIdFallback")
     override fun getById(id: Int) =
         webClient.get()
             .uri("/api/v1/servers/{id}", id)
@@ -58,6 +62,7 @@ class RestServerClient(
             .onErrorResume { Mono.just(it.message!!) }
             .block()!!
 
+    @CircuitBreaker(name = "find-in-city", fallbackMethod = "findInCityFallback")
     override fun findInCity(city: String) =
         webClient.get()
             .uri { it.path("/api/v1/servers").queryParam("city", city).build() }
@@ -102,4 +107,8 @@ class RestServerClient(
             .bodyToMono(Void::class.java)
             .block()
     }
+
+    private fun findAllFallback(exception: Exception) = "[]"
+    private fun findInCityFallback(city: String, exception: Exception) = "[]"
+    private fun getByIdFallback(id: Int, exception: Exception) = "{}"
 }

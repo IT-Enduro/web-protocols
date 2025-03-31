@@ -31,7 +31,7 @@ logbook:
     include:
       - path: /api/**
   filter.enabled: true
-  format.style: curl
+  format.style: json
   minimum-status: 200
   obfuscate:
     headers:
@@ -39,4 +39,5 @@ logbook:
 
 logging:
   level:
-    org.zalando.logbook: TRACE
+    ru.romanow.protocols.restful.filters.LoggingFilter: info
+    org.zalando.logbook: trace

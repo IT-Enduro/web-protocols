@@ -24,6 +24,7 @@ ext {
     // RESTful
     openApiVersion = "2.1.0"
     logbookVersion = "3.10.0"
+    resilience4jVersion = "2.3.0"
     springCloudContractVersion = "4.0.2"
 
     // SOAP

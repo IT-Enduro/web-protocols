@@ -1,6 +1,8 @@
 package ru.romanow.protocols.grpc.service
 
 import com.google.protobuf.Empty
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
+import io.grpc.StatusRuntimeException
 import net.devh.boot.grpc.client.inject.GrpcClient
 import org.springframework.stereotype.Service
 import ru.romanow.protocols.common.client.service.ServerClient
@@ -8,6 +10,7 @@ import ru.romanow.protocols.grpc.ServerServiceGrpc.ServerServiceBlockingStub
 import ru.romanow.protocols.grpc.ServerServiceModels.*
 
 @Service
+@Suppress("UNUSED_PARAMETER")
 class GrpcServerClient : ServerClient {
 
     @GrpcClient("default")
@@ -23,14 +26,25 @@ class GrpcServerClient : ServerClient {
         return serverService.create(request).toString()
     }
 
-    override fun findAll() = serverService
-        .findAll(Empty.newBuilder().build())
-        .toString()
+    @CircuitBreaker(name = "find-all", fallbackMethod = "findAllFallback")
+    override fun findAll(): String {
+        try {
+            val result = serverService.findAll(Empty.newBuilder().build())
+        } catch (exception: StatusRuntimeException) {
+            when (exception.status.code) {
 
+            }
+        }
+        return result
+            .toString()
+    }
+
+    @CircuitBreaker(name = "get-by-id", fallbackMethod = "getByIdFallback")
     override fun getById(id: Int) = serverService
         .getById(ID.newBuilder().setId(id).build())
         .toString()
 
+    @CircuitBreaker(name = "find-in-city", fallbackMethod = "findInCityFallback")
     override fun findInCity(city: String) = serverService
         .findInCity(City.newBuilder().setCity(city).build())
         .toString()
@@ -57,4 +71,8 @@ class GrpcServerClient : ServerClient {
     override fun delete(id: Int) {
         serverService.delete(ID.newBuilder().setId(id).build())
     }
+
+    private fun findAllFallback(exception: Exception) = "[]"
+    private fun findInCityFallback(city: String, exception: Exception) = "[]"
+    private fun getByIdFallback(id: Int, exception: Exception) = "{}"
 }

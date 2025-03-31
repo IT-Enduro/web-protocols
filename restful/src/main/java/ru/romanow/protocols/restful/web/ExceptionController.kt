@@ -27,7 +27,7 @@ class ExceptionController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException::class)
-    fun handleNotFound(exception: EntityNotFoundException): ErrorResponse {
+    fun notFound(exception: EntityNotFoundException): ErrorResponse {
         return ErrorResponse(exception.message)
     }
 

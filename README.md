@@ -64,7 +64,7 @@ $ java -jar rest-client/build/libs/rest-client.jar
 $ ./gradlew graphql:bootRun
 ```
 
-Для навигации по API можно использовать [GraphiQL][http://localhost:8080/graphiql].
+Для навигации по API можно использовать [GraphiQL](http://localhost:8080/graphiql)ю
 
 ### gRPC
 

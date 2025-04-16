@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles.active: local,common
-  application.name: gRPC
+  application.name: GraphQL
   main.banner-mode: off
   jpa:
     hibernate.ddl-auto: validate

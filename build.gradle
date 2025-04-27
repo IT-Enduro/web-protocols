@@ -19,7 +19,7 @@ ext {
     springContractVersion = "4.1.4"
     springShellVersion = "3.3.3"
     kotlinVersion = "1.9.25"
-    jetbrainsAnnotationsVersion = "22.0.0"
+    jetbrainsAnnotationsVersion = "26.0.2"
 
     // RESTful
     openApiVersion = "2.1.0"

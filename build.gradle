@@ -4,9 +4,9 @@ plugins {
     id "org.jetbrains.kotlin.plugin.spring" version "1.9.25"
     id "org.jetbrains.kotlin.plugin.jpa" version "1.9.25"
     id "org.jetbrains.kotlin.plugin.noarg" version "1.9.25"
-    id "io.spring.dependency-management" version "1.1.6"
-    id "org.springframework.boot" version "3.3.6" apply false
-    id "org.springframework.cloud.contract" version "4.1.4" apply false
+    id "io.spring.dependency-management" version "1.1.7"
+    id "org.springframework.boot" version "3.5.3" apply false
+    id "org.springframework.cloud.contract" version "4.2.0" apply false
     id "org.asciidoctor.jvm.convert" version "3.3.2" apply false
     id "org.jlleitschuh.gradle.ktlint" version "12.1.1" apply false
     id "io.mateo.cxf-codegen" version "1.2.0" apply false
@@ -15,14 +15,14 @@ plugins {
 
 ext {
     // Common
-    springBootVersion = "3.3.6"
-    springContractVersion = "4.1.4"
+    springBootVersion = "3.5.3"
+    springContractVersion = "4.2.0"
     springShellVersion = "3.3.3"
     kotlinVersion = "1.9.25"
     jetbrainsAnnotationsVersion = "22.0.0"
 
     // RESTful
-    openApiVersion = "2.1.0"
+    openApiVersion = "2.7.0"
     logbookVersion = "3.10.0"
     resilience4jVersion = "2.3.0"
     springCloudContractVersion = "4.0.2"

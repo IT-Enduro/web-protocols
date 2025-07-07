@@ -13,8 +13,6 @@ import kotlin.text.Charsets.UTF_8
 
 @Component
 class LoggingFilter : OncePerRequestFilter() {
-    private final val logger = LoggerFactory.getLogger(javaClass)
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,

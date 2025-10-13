@@ -47,7 +47,7 @@ allprojects { ->
     apply plugin: "org.jlleitschuh.gradle.ktlint"
     apply plugin: "io.spring.dependency-management"
 
-    [compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "17"
+    [compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "21"
 
     repositories {
         mavenCentral()

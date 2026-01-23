@@ -1,0 +1,5 @@
+schema: src/main/resources/graphql/servers.graphqls
+extensions:
+  endpoints:
+    Local Server:
+      url: http://localhost:8080/graphql
